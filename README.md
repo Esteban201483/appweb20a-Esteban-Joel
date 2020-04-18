@@ -74,3 +74,54 @@ https://www.ravensburger.org/uk/discover/labyrinth/index.html
 - how to play the board game labyrinth. Video de Youtube, 12 sep. 2018.
 https://www.youtube.com/watch?v=gMQ5GaBKXus
 
+## Contenido:
+
+|Contenido:|Sesión de Juego: Grupo creado por un jugador donde se pueden unir otros jugadores para poder comenzar una o más partidas|
+| ---------| -----------------------------------|
+|Propósito|Permite que varias personas puedan jugar una o más partidas entre sí.|
+|Autoría|Se crea por una persona que adquiere el rol de organizador de la sesión (Host).|
+|Medio|Es un concepto abstracto. Se almacena en una base de datos, con un tiempo de inactividad limitado|
+|Dinamismo|Se genera de forma dinámica según se desee iniciar una.|
+|Metadatos|Nombres de los jugadores (incluido el organizador), cantidad de jugadores, fecha, cantidad de partidas.|
+|Volumen|No se tiene una estimación de la cantidad de sesiones de juego|
+|Relaciones|En una sesión de juego se encuentran 1 ó más jugadores. Una sesión de juego puede contener 0 o más partidas, pero NO de forma simultánea.|
+
+|Contenido:|Sesión de jugador: Sesión en la que una persona puede ser un jugador, es decir, tener un nombre y la posibilidad de pertenecer a sesiones de juego.|
+| ---------| -----------------------------------|
+|Propósito|Permite que el jugador participe en las partidas.|
+|Autoría|Es creado por el usuario.|
+|Medio|Es un concepto abstracto. Se almacena en una base de datos, con un tiempo de inactividad limitado (Más permisivo que otros tiempos de inactividad limitados)|
+|Dinamismo|Se genera de forma dinámica cuando un jugador desea ingresar a la sesión de juego.|
+|Metadatos|Nombre del jugador, avatar seleccionado.|
+|Volumen|No se tiene una estimación de la cantidad de sesiones de jugadores.|
+|Relaciones|Un jugador puede pertenecer a una o ninguna sesión de juego. |
+
+|Contenido:|Partida|
+| ---------| -----------------------------------|
+|Propósito|Permite a los jugadores participar en el juego del laberinto.|
+|Autoría|Un jugador que pertenezca a una sesión con la cantidad permitida de jugadores|
+|Medio|Una página web, con todos los elementos requeridos por el juego, además de incluir el nombre de los participantes.|
+|Dinamismo|Es generado aleatoriamente por el sistema, asegurándose de respetar con las reglas de juego.|
+|Metadatos|Identificador de la partida, contador de tiempo de la partida, cantidad de jugadores, cantidad de tesoros descubiertos por cada jugador, tesoro actual buscado por cada jugador, turno del jugador, estado de la partida|
+|Volumen|Solo una partida por sesión de juego.|
+|Relaciones|Una partida pertenece a una sesión de juego.|
+
+|Contenido:|Tablero|
+| ---------| -----------------------------------|
+|Propósito|Permite que los jugadores visualicen el estado del laberinto actual.|
+|Autoría|Se crea al iniciar una partida.|
+|Medio|Imagenes superpuestas|
+|Dinamismo|Se genera de forma dinámica cuando se da inicio a una partida.|
+|Metadatos|Dimensiones, ubicación de cada jugador, ubicación de cada tesoro, orientación de cada ficha del tablero|
+|Volumen|Solo un tablero por cada  partida.|
+|Relaciones|Un tablero pertenece a una partida. Un tablero contiene muchos tesoros.|
+
+|Contenido:|Tesoro|
+| ---------| -----------------------------------|
+|Propósito|Indicar al jugador a cuál casilla del tablero debe llegar.|
+|Autoría|Es asignado a cada jugador al iniciar una partida|
+|Medio|Texto e imágenes|
+|Dinamismo|Los tesoros son estáticos, lo que varía es la asignación de estos los usuarios.|
+|Metadatos|Imagen, nombre en japonés.|
+|Volumen|Múltiples tesoros por partida.|
+|Relaciones|Una partida tiene múltiples tesoros.|
