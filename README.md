@@ -176,6 +176,16 @@ Personas representativas de cada grupo:
 
 	Si bien esta técnica es efectiva cuando los equipos se encuentran en la misma ubicación física, a la hora de trabajar con equipos de forma remota se vuelve más complicada de coordinar, dado que requiere de un juego en línea que incluya a muchas personas y que sea lo suficientemente casual para no desperdiciar tiempo o requerir de mucho esfuerzo.
 
+## Matriz de roles
+
+| Contenido | Host |Jugador |
+|--|--| --|
+| Sesión de jugador | crud  | crud |
+| Sesión de juego| crud  |- - U - |
+| partida| crud |- r - - |
+| tablero | - -u- |- - u - |
+| tesoro | ----- | ----|
 
 
 
+	
