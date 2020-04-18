@@ -125,3 +125,57 @@ https://www.youtube.com/watch?v=gMQ5GaBKXus
 |Metadatos|Imagen, nombre en japonés.|
 |Volumen|Múltiples tesoros por partida.|
 |Relaciones|Una partida tiene múltiples tesoros.|
+
+## Usuarios:
+
+|Usuario  |Descripción y Necesidades  |
+|--|--|
+| Jugador |Es la persona que puede unirse a sesiones de juegos, con el objetivo de poder participar en una partida. Durante las partidas, se encarga de esperar su turno, realizar inserciones de fichas, decidir si mueve o no ficha y a donde, y visualizar el estado del mapa, los tesoros encontrados y la ubicación de los demás jugadores.  |
+| Host |Es la persona que se encarga de crear una sesión de juegos, y de iniciar la partida. Además, puede participar en las partidas igual que cualquier otro jugador.  |
+
+Personas representativas de cada grupo:
+
+
+1) Carlos Salazar
+	
+	Jugador
+
+	Estudiante Universitario
+
+  
+
+	Carlos es una persona extrovertida que le encanta realizar diversas actividades en las que pueda interactuar con varias personas al mismo tiempo. Debido a esto, suele participar en clubes deportivos y artísticos.
+
+	 
+	Sin embargo, debido al poco tiempo que tiene debido a sus estudios, está buscando alternativas que le permitan divertirse y mantenerse en contacto con sus amigos, de forma rápida y sin restricciones de lugar.
+
+	 
+	Carlos tiene un computador, que si bien no es de última generación, le permite realizar con éxito todos sus trabajos universitarios. Además, cuenta con una conexión a internet estable.
+
+	 
+	Él ha oído del juego del laberinto, el cual le ha parecido muy interesante, dado que se adapta a su situación y a la capacidad de su equipo de computo. Por lo que ha decido contarle a sus amigos sobre lo bueno que sería poder jugarlo entre todos. Todos tienen horarios disponibles diferentes, excepto en la noche, donde cuentan con tiempo disponible pero solamente pueden permanecer en sus respectivas casas.
+
+  
+  
+
+2.	Monica Salas
+
+	Host
+
+	Administradora de Proyectos
+
+	  
+
+	Mónica debe trabajar en diferentes equipos conformados entre 5 a 8 personas aproximadamente. Debido a esto, la primer etapa de los proyectos suele ser un poco complicada debido a que son nuevas personas a las que está conociendo.
+
+	  
+
+	Debido a esto, Monica suele investigar acerca de varias técnicas para facilitar la adaptación de todos los miembros del equipo en estos casos. Una de las formas más efectivas para ella es la organización de juegos que involucren a todos los miembros del equipo.
+
+	  
+
+	Si bien esta técnica es efectiva cuando los equipos se encuentran en la misma ubicación física, a la hora de trabajar con equipos de forma remota se vuelve más complicada de coordinar, dado que requiere de un juego en línea que incluya a muchas personas y que sea lo suficientemente casual para no desperdiciar tiempo o requerir de mucho esfuerzo.
+
+
+
+
