@@ -6,11 +6,13 @@ Este proyecto consiste en la implementación del juego del laberinto. Dicha impl
 
 - Tablero de tamaño n x n, con n un número impar del 5 al 9, en donde cada ficha corresponde a un camino que puede contener o no un tesoro.
 
-- Pueden jugar de 2 a 8 personas, si el usuario elige de 2 a 4 jugadores se coloca aleatoriamente el avatar de un jugador en una esquina, si el número de jugador es mayor a 4 entonces se coloca el avatar de los jugadores 5, 6, 7 u 8 en la posición media entre dos esquinas, siendo el número máximo de jugadores 8 (4 esquina y 4 posiciones entre esquinas).
+- Pueden jugar de 2 a 8 personas, si el usuario elige de 2 a 4 jugadores se coloca aleatoriamente el avatar de un jugador en una esquina, si el número de jugador es mayor a 4 entonces se coloca el avatar de los jugadores 5, 6, 7 u 8 en la posición media entre dos esquinas contiguas, siendo el número máximo de jugadores 8 (4 esquina y 4 posiciones entre esquinas).
 
 - Para iniciar una partida un jugador debe iniciar la sesión, elegir el tamaño del tablero, la cantidad de jugadores y elegir su avatar, los otros usuarios deben unirse a esa sesión y elegir entre los siete avatares restantes, una vez se una la cantidad necesaria se da inicio a la partida.
 
-- Se pueden realizar inserciones de fichas al principio y al final las filas y columnas que tienen la imagen del triángulo amarillo (que en la matriz de fichas representan una fila o columna par o impar si contamos desde 0), siempre y cuando la inserción no sea en dirección contraria a la última inserción realizada, dichas inserciones serán por turnos de dos minutos, si un usuario no insertara la ficha en ese tiempo sería expulsado.
+- El tablero de juego consiste en una cuadrícula de fichas, las cuales se interpretan como caminos que del laberinto y pueden contener tesoros y alojar a los avatares de los jugadores.
+
+- Se pueden realizar inserciones de fichas al principio y al final las filas y columnas que tienen la imagen del triángulo amarillo (que en la matriz de fichas representan una fila o columna par o impar si contamos desde 0), siempre y cuando la inserción no sea en dirección contraria a la última inserción realizada, dichas inserciones serán por turnos de dos minutos, si un usuario no insertara la ficha en ese tiempo sería expulsado. Cabe recalcar que el número total de fichas es n+1 (n el número de casillas en el tablero), esa ficha extra es la que se inserta al tablero, el siguiente jugador inserta la ficha que salió del tablero en el turno anterior.
 
 - Al tablero se le agregan fichas fijas que no se pueden mover pero que no estorben con las fichas que se pueden insertar por las casillas con triángulo amarillo.
 
@@ -20,9 +22,9 @@ Este proyecto consiste en la implementación del juego del laberinto. Dicha impl
 
 - Es obligatorio que cada jugador realice una inserción antes de mover su ficha.
 
-- Con respecto al movimiento, el jugador puede llegar a cualquier ubicación siempre y cuando el camino se lo permita. Puede atravesar caminos en los que se encuentren otros jugadores, e incluso varios jugadores pueden estar en la misma ficha. Solamente se puede realizar un movimiento por turno seleccionando la casilla a la que desear ir y haciendo click en un boton que diga “listo”. Es posible omitir el movimiento, y existe la posibilidad de que el jugador no pueda realizar un movimiento debido al camino que lo rodea.
+- Con respecto al movimiento, el jugador puede llegar a cualquier ubicación siempre y cuando el camino se lo permita. Puede atravesar caminos en los que se encuentren otros jugadores, pero varios jugadores NO pueden estar sobre la misma ficha. Solamente se puede realizar un movimiento por turno seleccionando la casilla a la que desear ir y haciendo click en un boton que diga “listo”. Es posible omitir el movimiento, y existe la posibilidad de que el jugador no pueda realizar un movimiento debido al camino que lo rodea.
 
-- Cada jugador recibe 6 cartas correspondientes a tesoros que se encuentran en el tablero de juego. El objetivo del juego es que el jugador llegue a ese tesoro. Las cartas se comportan en forma de pila, lo que significa que el jugador solamente sabrá cual es el primer tesoro que debe encontrar. Conforme se vayan encontrando tesoros se desbloquearan los tesoros siguientes.
+- Cada jugador recibe 6 cartas correspondientes a tesoros que se encuentran en el tablero de juego, los tesoros son únicos por jugador, dos jugadores no pueden buscar un mismo tesoro. El objetivo del juego es que el jugador llegue a ese tesoro. Las cartas se comportan en forma de pila, lo que significa que el jugador solamente sabrá cual es el primer tesoro que debe encontrar. Conforme se vayan encontrando tesoros se desbloquearan los tesoros siguientes.
 
 - El jugador puede ver únicamente la carta corresponde al tesoro que debe encontrar y se verá de una manera resaltada (por el momento consideramos que se vería un poco más grande que las otras tarjetas), las que que ya encontró aparecen al lado izquierdo de la que está buscando y las restantes aparecen boca abajo del lado derecho de la que está buscando. No puede ver la carta que están buscando los rivales , pero sí puede ver cuales tesoros han encontrado los otros jugadores, las restantes aparecen boca abajo.
 
@@ -30,7 +32,7 @@ Este proyecto consiste en la implementación del juego del laberinto. Dicha impl
 
 ## Ideas originales para el juego:
 
-- Si un jugador se desconectara de la partida esta continúa pero se elimina este jugador (sus cartas del tesoro restantes no serán reveladas al resto de jugadores), excepto si quedan menos de dos jugadores, si este fuera el caso se declara como ganador al jugador todavía activo.
+- Si un jugador se desconectara (ya sea con dolo o por un error de conexión)de la partida esta continúa pero se elimina este jugador (sus cartas del tesoro restantes no serán reveladas al resto de jugadores), excepto si quedan menos de dos jugadores, si este fuera el caso se declara como ganador al jugador todavía activo. 
 
 - Como restricción, el tesoro del juego no debe ser exactamente igual al tesoro en las fichas, sino que debe realizarse un mapeo entre las cartas y los “tesoros” representados.
 - El mapeo realizado estará enfocado en la enseñanza del vocabulario japonés. Para ello, cada carta contendra caracteres en kanji, los cuales deberan ser asociados a imagenes en el tablero o palabras en español. 
@@ -39,7 +41,7 @@ Este proyecto consiste en la implementación del juego del laberinto. Dicha impl
 
 - Una restricción adicional consiste en prohibir que más de un jugador se encuentre en la misma posición. De este modo, al final del juego se incrementa la competitivad dado que los jugadores podrán bloquear temporalmente los tesoros restantes, los cuales serán faciles de deducir debido a la cantidad de tesoros encontrados
 
-- Cuando se realiza una inserción y se expulsa a un jugador del tablero, el jugador expulsado perderá su carta, la cual será devuelta al final de la pila, obligando al jugador a sacar la próxima carta. En caso de que el jugador tenga una sola carta, está situación no aplicará.
+- Cuando se realiza una inserción y se expulsa a un jugador del tablero, el jugador expulsado perderá su carta, la cual será devuelta al final de la pila (propia de cada jugador), obligando al jugador a sacar la próxima carta. En caso de que el jugador tenga una sola carta, está situación no aplicará.
 
 - Se agregan nuevas fichas que pueden causar efectos especiales: Uno de ellos consiste en una ficha que no conecta a ningún otro camino, de modo que bloquee el movimiento. Si un jugador es desplazado a esta ficha debido a una inserción, entonces podra moverse en cualquiera de las 4 direcciones, la llamariamos "ficha trampolin".
 
@@ -48,7 +50,7 @@ Este proyecto consiste en la implementación del juego del laberinto. Dicha impl
 
 ## Contexto:
 
-Laberinto es un juego de mesa para para dos, tres o cuatro jugadores. El juego consiste en que los jugadores vayan obteniendo, uno por uno, los tesoros que seleccionaron al azar de un grupo más grande de tesoros. Al iniciar la partida cada jugador elige su avatar y escoge al azar sus seis tesoros (de los cuales solo podrá observar el tesoro que se encuentre de primero en su pila de tesoros), se colocan las fichas de manera aleatoria en el tablero, de modo que siempre  sobrará una ficha. Durante su turno, cada jugador deberá insertar la ficha por un lado del tablero para así mover el laberinto a su favor y lograr acercarse (el jugador debe insertar la ficha pero no está obligado a mover su avatar) o llegar a su tesoro.  No es posible insertar una ficha al lado opuesto del tablero donde se insertó la ficha anterior. Durante cada inserción, una ficha será sacada del tablero, por lo que dicha ficha le será entregada  al siguiente jugador, para que este proceda con su turno. El jugador que logre conseguir todos sus tesoros es el ganador.
+Laberinto es un juego de mesa para dos, tres o cuatro jugadores. El juego consiste en que los jugadores vayan obteniendo, uno por uno, los tesoros que seleccionaron al azar de un grupo más grande de tesoros. Al iniciar la partida cada jugador elige su avatar y escoge al azar sus seis tesoros (de los cuales solo podrá observar el tesoro que se encuentre de primero en su pila de tesoros), se colocan las fichas de manera aleatoria en el tablero, de modo que siempre  sobrará una ficha. Durante su turno, cada jugador deberá insertar la ficha por un lado del tablero para así mover el laberinto a su favor y lograr acercarse (el jugador debe insertar la ficha pero no está obligado a mover su avatar) o llegar a su tesoro.  No es posible insertar una ficha al lado opuesto del tablero donde se insertó la ficha anterior. Durante cada inserción, una ficha será sacada del tablero, por lo que dicha ficha le será entregada  al siguiente jugador, para que este proceda con su turno. El jugador que logre conseguir todos sus tesoros es el ganador.
 
 Existen dos objetivos principales con este proyecto: El principal objetivo al implementar el juego de laberinto en una página web consiste en aplicar los temas académicos vistos en el curso de Desarrollo de Aplicaciones para Internet. El segundo objetivo consiste en implementar ideas propias para crear un producto original y promover el aprendizaje del idioma japonés.
 
@@ -84,7 +86,7 @@ https://www.youtube.com/watch?v=gMQ5GaBKXus
 |Dinamismo|Se genera de forma dinámica según se desee iniciar una.|
 |Metadatos|Nombres de los jugadores (incluido el organizador), cantidad de jugadores, fecha, cantidad de partidas.|
 |Volumen|No se tiene una estimación de la cantidad de sesiones de juego|
-|Relaciones|En una sesión de juego se encuentran 1 ó más jugadores. Una sesión de juego puede contener 0 o más partidas, pero NO de forma simultánea.|
+|Relaciones|En una sesión de juego se encuentran uno ó más jugadores. Una sesión de juego puede contener cero o más partidas, pero NO de forma simultánea.|
 
 |Contenido:|Sesión de jugador: Sesión en la que una persona puede ser un jugador, es decir, tener un nombre y la posibilidad de pertenecer a sesiones de juego.|
 | ---------| -----------------------------------|
