@@ -198,4 +198,4 @@ Personas representativas de cada grupo:
 
 ## Diseño del sitio web
 
-![Descripción](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/Mapa%20de%20sitio.jpg)
+![Descripción](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/sitemap/Mapa%20de%20sitio.jpg)
