@@ -141,23 +141,31 @@ Personas representativas de cada grupo:
 1) Carlos Salazar
 	
 	Jugador
-
+	
 	Estudiante Universitario
 
   
 
+
+
+
+
 	Carlos es una persona extrovertida que le encanta realizar diversas actividades en las que pueda interactuar con varias personas al mismo tiempo. Debido a esto, suele participar en clubes deportivos y artísticos.
 
-	 
-	Sin embargo, debido al poco tiempo que tiene debido a sus estudios, está buscando alternativas que le permitan divertirse y mantenerse en contacto con sus amigos, de forma rápida y sin restricciones de lugar.
 
-	 
-	Carlos tiene un computador, que si bien no es de última generación, le permite realizar con éxito todos sus trabajos universitarios. Además, cuenta con una conexión a internet estable.
+​	 
+​	Sin embargo, debido al poco tiempo que tiene debido a sus estudios, está buscando alternativas que le permitan divertirse y mantenerse en contacto con sus amigos, de forma rápida y sin restricciones de lugar.
 
-	 
-	Él ha oído del juego del laberinto, el cual le ha parecido muy interesante, dado que se adapta a su situación y a la capacidad de su equipo de computo. Por lo que ha decido contarle a sus amigos sobre lo bueno que sería poder jugarlo entre todos. Todos tienen horarios disponibles diferentes, excepto en la noche, donde cuentan con tiempo disponible pero solamente pueden permanecer en sus respectivas casas.
+
+​	 
+​	Carlos tiene un computador, que si bien no es de última generación, le permite realizar con éxito todos sus trabajos universitarios. Además, cuenta con una conexión a internet estable.
+
+
+​	 
+​	Él ha oído del juego del laberinto, el cual le ha parecido muy interesante, dado que se adapta a su situación y a la capacidad de su equipo de computo. Por lo que ha decido contarle a sus amigos sobre lo bueno que sería poder jugarlo entre todos. Todos tienen horarios disponibles diferentes, excepto en la noche, donde cuentan con tiempo disponible pero solamente pueden permanecer en sus respectivas casas.
 
   
+
   
 
 2.	Monica Salas
@@ -188,11 +196,8 @@ Personas representativas de cada grupo:
 | tablero | - -u- |- - u - |
 | tesoro | ----- | ----|
 
-
 ## Diseño del sitio web
 
-![](design/Mapa de sitio.jpg)
 
 
-
-	
+![](./design\Mapa de sitio.jpg)
