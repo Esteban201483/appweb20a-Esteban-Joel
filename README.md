@@ -189,7 +189,7 @@ Personas representativas de cada grupo:
 | tesoro | ----- | ----|
 
 
-##Diseño del sitio web
+## Diseño del sitio web
 
 ![](design/Mapa de sitio.jpg)
 
