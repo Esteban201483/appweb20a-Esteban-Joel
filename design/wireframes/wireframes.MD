@@ -7,7 +7,7 @@
    ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/1.%20Frame%20Base.svg)
 2. Pantalla Inicio
 
-   ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/2.%20Inicio.svg)
+   ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/2.%20Inicio.png)
 3. Pantalla Autenticación (Para crear Juego)
 
    ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/3.%20Autenticaci%C3%B3n%20%5BCrearJuego%5D.svg)
@@ -28,10 +28,10 @@
    ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/8.%20Autenticaci%C3%B3n%20(Con%20datos)%20%5BUnirse%20a%20Juego%5D.svg)
 9. Pantalla Partida del Jugador 1
 
-   ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/9.%20Partida%20jugador%201.svg)
+   ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/9.%20Partida%20jugador%201.png)
 10. Pantalla Partida del Jugador 2
 
-   ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/10.%20Partida%20jugador%202.svg)
+   ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/10.%20Partida%20jugador%202.png)
 
 11. Overlay Instrucciones
 
