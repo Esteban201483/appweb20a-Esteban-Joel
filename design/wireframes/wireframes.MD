@@ -26,20 +26,18 @@
 8. Pantalla Autenticación (Para Unirse a un juego) [Con Datos]
 
    ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/8.%20Autenticaci%C3%B3n%20(Con%20datos)%20%5BUnirse%20a%20Juego%5D.svg)
-9. Pantalla Buscar Juego
+9. Pantalla Partida del Jugador 1
 
-   ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/9.%20Buscar%20Juego.svg)
-10. Pantalla Buscar Juego(Con Datos)
+   ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/9.%20Partida%20jugador%201.svg)
+10. Pantalla Partida del Jugador 2
 
-   ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/10.%20Buscar%20Juego%20(Con%20datos).svg)
+   ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/10.%20Partida%20jugador%202.svg)
 
-11. Pantalla Iniciar Partida
+11. Overlay Instrucciones
 
-   ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/11.%20Inicio%20de%20la%20Partida.svg)
+   ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/11.%20Instrucciones.svg)
 
-12. Pantalla Instrucciones
 
-   ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/12.%20Instrucciones.svg)
 
 
 **El link del figma es:** https://www.figma.com/file/GQBOYzZ8Jxd74m6oOEzYQi/Wireframe-del-proyecto-Juego-del-Laberinto?node-id=46%3A78 
