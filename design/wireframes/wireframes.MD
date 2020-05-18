@@ -36,6 +36,11 @@
 11. Overlay Instrucciones
 
    ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/11.%20Instrucciones.svg)
+   
+   
+12. Overlay Seleccionar Avatar
+
+   ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wireframes/src/12.Overlay%20Avatares.svg)
 
 
 
