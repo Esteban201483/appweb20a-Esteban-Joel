@@ -2,6 +2,19 @@
 
 ## Mapa del sitio
 ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/sitemap/Mapa%20de%20sitio.jpg)
+
+En este mapa del sitio se muestra la ruta de navegación del sitio web del juego.  Dentro de la circunferencia se encuentran las páginas accesibles desde la página principal. Tanto crear sesión como unirse a sesión pueden llevar a la página principal si se decide cancelar la respectiva acción. En caso la acción se complete, ambas pantallas dirigen a la pantalla de Sala de espera. Desde esta pantalla, se puede acceder a la pantalla de partida, la cual utiliza como contenido el tablero. El tablero posee fichas, de las cuales podrían ser también tesoros. Es a partir de la página de crear sesión  o unirse a sesión en donde se dedice si el jugador será un jugador normal o si será un host.
+
+En el overlay de instrucciones se despliega material multimedia que indica como se juega y se explican las reglas del juego.
+
+En la pantalla de crear sesión un usuario puede crear una nueva sesión de juego, desde la cual puede especificar las opciones de la partida, tales como el tamaño del tablero y la duración del turno. Además, indica su nombre y avatar. Una vez el proceso se haya completado, dicho usuario ahora será un host y será redirigido a la sala de espera.
+
+ En la pantalla de unirse a sesión un usuario puede unirse a una sesión al ingresar el ID de la sesión correspondiente. Además, puede indicar si quiere ver traducciones al español de los kanjis y debe suministrar su nombre de jugador y avatar. Una vez el proceso se haya completado, dicho usuario ahora será un jugador y será redirigido a la sala de espera.
+ 
+ En la pantalla de sala de espera se despliega el ID de la sesión y un listado de jugadores unidos a la sesión. En esta pantalla, el moderador puede empezar la partida (si hay la cantidad mínima de jugadores requerida).
+ 
+ En la pantalla de Partida es en donde ocurre todo el proceso del juego. Es aquí donde los jugadores participan en la partida, indiferentemente de si son jugadores normales o host. En esta pantalla los jugadores podrán ver información acerca del estado del juego, además de ver el tablero y datos de los demás participantes.
+
  
 ## Wireframes
 
