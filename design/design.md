@@ -38,6 +38,7 @@ Esta es la pantalla que ve un jugador en la partida, permite visualizar por cual
 Esta es la pantalla que ven los jugadores antes de iniciar la partida. (1) Muestra el id de la Sesión de Juego con el objetivo de que sea compartido y así más jugadores puedan unirse a la sesión. En (2) se muestran los jugadores que se encuentran unidos en la sesión, mientras que en la parte (3) le permite exclusivamente al Host expulsar jugadores unidos. El botón iniciar partida (4) le permite al host empezar la partida. Dicha opción solo estará disponible cuando se encuentren unidos la mínima cantidad de jugadores requerida. El botón cancelar (5) le permite al host cancelar la partida, de modo que los jugadores que se encuentran en dicha sesión serán notificados del cierre de la sesión.
 
 7. Seleccionar Avatar
+
 ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/src/seleccionar%20avatar.png)
 
 Este overlay le permite el usuario seleccionar una imagen de avatar. En la X de la esquina superior derecha (1) puede cerrar el modal manteniendo el avatar seleccionado anteriormente. La parte (2) despliega un listado de avatares a escoger. El jugador debe presionar sobre uno de ellos, el cual se resaltará con un borde de color azul para indicar que será el nuevo avatar. De igual forma, el jugador puede cambiar su elección volviendo a presionar sobre otro avatar. Al presionar el botón aceptar (3), el avatar seleccionado será su nuevo avatar. 
