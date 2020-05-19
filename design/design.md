@@ -56,6 +56,33 @@ Esta es la pantalla que ven los jugadores antes de iniciar la partida. (1) Muest
 
 Este overlay le permite el usuario seleccionar una imagen de avatar. En la X de la esquina superior derecha (1) puede cerrar el modal manteniendo el avatar seleccionado anteriormente. La parte (2) despliega un listado de avatares a escoger. El jugador debe presionar sobre uno de ellos, el cual se resaltará con un borde de color azul para indicar que será el nuevo avatar. De igual forma, el jugador puede cambiar su elección volviendo a presionar sobre otro avatar. Al presionar el botón aceptar (3), el avatar seleccionado será su nuevo avatar. 
 
+## Wirestate
+
+![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/wirestates/wirestates%20diagram.svg)
+
+**Preparar crear sesión: Prepara los campos necesarios para que el usuario configure la nueva partida**
+
+**Crear sesión: Permite crear la sesión, configurando el websocket y almacenando datos de la nueva sesión*
+
+**Unirse a sesión: Permite unirse a una nueva sesión mediante un código. Conecta al jugador al websocket de la sesión**
+
+**Preparar Juego: Crea el tablero, distribuye tesoros, determinar el orden de los jugadores y determina la ficha a insertar.**
+
+**Actualizar posición: actualiza la posición hacia la cual el usuario va a moverse**
+
+**Realizar movimiento: Realiza el movimiento definitivo, o bien, lo omite si es lo que el jugador indicó.**
+
+**Finalizar Partida: Determina al ganador, libera memoria y despliega mensajes de victoria/derrota a cada jugador.**
+
+**Regresar al Lobby: Devuelve al jugador al lobby, manteniendo activa la comunicación con el websocket**
+
+
+
+
+
+
+
+
 
 
 **El link del figma es:** https://www.figma.com/file/GQBOYzZ8Jxd74m6oOEzYQi/Wireframe-del-proyecto-Juego-del-Laberinto?node-id=46%3A78 
