@@ -81,3 +81,22 @@ Este overlay le permite el usuario seleccionar una imagen de avatar. En la X de 
 
 ## Messages
 ![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/messages/src/fichas.png)
+
+|  Instrucción |Parámetros|Significado|
+|---|---|---|
+|iniciar_sesión | -  |  Simbólico, da a entender que ya se inicio la sesión y se está en espera de jugadores  |
+|  ingreso_a_sala_de_espera |  nombreNuevoJugador,avatar |  Cuando un jugador se une a la partida, indica el nombre y avatar que escogió  |
+| distribuir_datos_jugador  |  jugadorDestino,nombreNuevoJugador,avatar|  El servidor lo utiliza ya sea para darle sus datos al nuevo jugador, o bien, para cuando un nuevo jugador se une y avisarle   |
+| datos_partida  | jugador, duracionTimer (segundos), filas, columnas, jugadores| Le envía los datos de la partida al jugador    |
+|distribuir_tablero   | vector<(int tipoFicha, int rotación)>  |  Envía las  (filas*columnas + 1) fichas. La ficha (filas*columnas + 1) es la ficha sobrante, por lo que cada cliente debe inferir este dato  |
+| distribuir_jugadores  |  vector<(String nombreTesoro, int fila, int columna)>|  El servidor aplica la función para ordenar aleatoriamente los jugadores  |
+|  distribuir_tesoros_tablero | vector<(String nombreTesoro, int fila, int columna)>  |   Cada tupla representa un tesoro, indica el tipo de tesoro y posición |
+| dar_tesoro  |  jugador, tesoro |   El servidor le asigna un tesoro a un jugador. Los tesoros se envían uno por uno, para evitar que el cliente pueda interceptar el mensaje y descubrir sus tesoros restantes  |
+|  asignar_turno |  int ordenJugador |  en distribuir_jugadores, cada nodo debe crear una tabla que mapee el ordenJugador con el jugador, así pueden saber si es su turno o no  |
+|  insertar_ficha | flecha, anguloRotacion  |  El cliente indica al servidor a donde insertó la ficha  |
+|actualizar_tablero   |  flecha, anguloRotacion | Usado por el servidor para indicarle a los demás jugadores la inserción realizada   |
+|  mover_avatar | int fila, int columna  |  El jugador le indica al servidor donde desea moverse  |
+|  omitir_movimiento | -  |   el cliente indica al servidor que no se desea mover el avatar |
+|  remover_tesoro | tesoro  |  El servidor avisa que se tomó el tesoro. No es necesario especificar el jugador porque se puede deducir del turno actual  |
+|  especificar_ganador |  - | El servidor indica que hubo ganador y cual fue   |
+
