@@ -77,12 +77,7 @@ Este overlay le permite el usuario seleccionar una imagen de avatar. En la X de 
 **Regresar al Lobby: Devuelve al jugador al lobby, manteniendo activa la comunicación con el websocket**
 
 
-
-
-
-
-
-
-
-
 **El link del figma es:** https://www.figma.com/file/GQBOYzZ8Jxd74m6oOEzYQi/Wireframe-del-proyecto-Juego-del-Laberinto?node-id=46%3A78 
+
+## Messages
+![](https://github.com/Esteban201483/appweb20a-Esteban-Joel/blob/master/design/messages/src/fichas.png)
