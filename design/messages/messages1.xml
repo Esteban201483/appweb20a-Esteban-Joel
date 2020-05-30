@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<inciarSesion destino = "broadcast">
+</inciarSesion>
+
+<ingresoSalaEspera destino="servidor">
+	<jugador>Joel</jugador>
+	<avatar>avatar_verde</avatar>
+</ingresoSalaEspera>
+
+<ingresoSalaEspera destino="servidor">
+	<jugador>Esteban</jugador>
+	<avatar>avatar_morado</avatar>
+</ingresoSalaEspera>
+
+<datosPartida destino = "broadcast">
+	<partida>
+	    <host>Joel</host>
+	    <timer>120</timer>
+	    <numeroJugadores>2</numeroJugadores>
+	    <jugadores>
+	    	<jugador>
+	    		<nombre>Joel</nombre>
+	    		<avatar>avatar_verde</avatar>
+	    	</jugador>
+	    	<jugador>
+	    		<nombre>Esteban</nombre>
+	    		<avatar>avatar_morado</avatar>
+	    	</jugador>
+	    </jugadores>
+	    <dimensiones>
+	        <filas>5</filas>
+	        <columnas>5</columnas>
+	    </dimensiones>
+	    <fichasTablero>
+	        <ficha>
+	            <tipoFicha>l</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>t</tipoFicha>
+	            <rotacion>180</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>bloqueo</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>cruz</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>recta</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>t</tipoFicha>
+	            <rotacion>90</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>t</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>bloqueo</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>l</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>t</tipoFicha>
+	            <rotacion>180</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>recta</tipoFicha>
+	            <rotacion>90</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>recta</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>l</tipoFicha>
+	            <rotacion>270</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>cruz</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>l</tipoFicha>
+	            <rotacion>90</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>t</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>cruz</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>t</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>bloqueo</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>t</tipoFicha>
+	            <rotacion>180</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>l</tipoFicha>
+	            <rotacion>270</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>recta</tipoFicha>
+	            <rotacion>90</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>cruz</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>l</tipoFicha>
+	            <rotacion>90</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>bloqueo</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	        <ficha>
+	            <tipoFicha>t</tipoFicha>
+	            <rotacion>0</rotacion>
+	        </ficha>
+	    </fichasTablero>
+	    <tesoros>
+	        <tesoro>
+	            <nombre>Luna</nombre>
+	            <fila>2</fila>
+	            <columna>1</columna>
+	        </tesoro>
+	        <tesoro>
+	            <nombre>Estrella</nombre>
+	            <fila>2</fila>
+	            <columna>1</columna>
+	        </tesoro>
+	        <tesoro>
+	            <nombre>Cofre</nombre>
+	            <fila>2</fila>
+	            <columna>3</columna>
+	        </tesoro>
+	        <tesoro>
+	            <nombre>Agua</nombre>
+	            <fila>3</fila>
+	            <columna>2</columna>
+	        </tesoro>
+	    </tesoros>
+	</partida>
+</datosPartida>
+
+<darTesoro destino = 1>
+	<tesoro>estrella</tesoro>
+</darTesoro>
+
+<darTesoro destino = 2>
+	<tesoro>agua</tesoro>
+</darTesoro>
+
+<asignarTurno destino="broadcast">
+	<JugadorAsignado> 1 </JugadorAsignado>
+</asignarTurno>
+
+<insertarFicha destino = "servidor">
+	<flecha>6</flecha>
+	<rotacion>0</rotacion>
+</insertarFicha>
+
+<actualizarTablero destino = "broadcast">
+    <flecha>6</flecha>
+	<rotacion>0</rotacion>
+</actualizarTablero>
+
+<moverAvatar destino = "servidor">
+	<fila>0</fila>
+	<columna>1</columna>
+</moverAvatar>
+
+<actualizarAvatar destino = "broadcast">
+	<fila>0</fila>
+	<columna>1</columna>
+</actualizarAvatar>
+
+<asignarTurno destino="broadcast">
+	<JugadorAsignado> 2 </JugadorAsignado>
+</asignarTurno>
+
+<insertarFicha destino = "servidor">
+	<flecha>5</flecha>
+	<rotacion>0</rotacion>
+</insertarFicha>
+
+<actualizarTablero destino = "broadcast">
+    <flecha>5</flecha>
+	<rotacion>0</rotacion>
+</actualizarTablero>
+
+<moverAvatar destino = "servidor">
+	<fila>3</fila>
+	<columna>2</columna>
+</moverAvatar>
+
+<actualizarAvatar destino = "broadcast">
+	<fila>3</fila>
+	<columna>2</columna>
+</actualizarAvatar>
+
+<removerTesoro destino = "broadcast">
+</removerTesoro>
+
+<darTesoro destino = 2>
+	<tesoro>cofre</tesoro>
+</darTesoro>
+
+<asignarTurno destino="broadcast">
+	<JugadorAsignado> 1 </JugadorAsignado>
+</asignarTurno>
+
+<insertarFicha destino = "servidor">
+	<flecha>1</flecha>
+	<rotacion>90</rotacion>
+</insertarFicha>
+
+<actualizarTablero destino = "broadcast">
+    <flecha>1</flecha>
+	<rotacion>90</rotacion>
+</actualizarTablero>
+
+<omitirMovimiento destino = "servidor">
+</omitirMovimiento>
+
+<asignarTurno destino="broadcast">
+	<JugadorAsignado> 2 </JugadorAsignado>
+</asignarTurno>
+
+<insertarFicha destino = "servidor">
+	<flecha>1</flecha>
+	<rotacion>0</rotacion>
+</insertarFicha>
+
+<actualizarTablero destino = "broadcast">
+    <flecha>1</flecha>
+	<rotacion>0</rotacion>
+</actualizarTablero>
+
+<moverAvatar destino = "servidor">
+	<fila>1</fila>
+	<columna>2</columna>
+</moverAvatar>
+
+<actualizarAvatar destino = "broadcast">
+	<fila>1</fila>
+	<columna>2</columna>
+</actualizarAvatar>
+
+<removerTesoro destino = "broadcast">
+</removerTesoro>
+
+<especificarGanador destino = "broadcast">
+</especificarGanador>
+
+
+
+
+
+
