@@ -1,0 +1,75 @@
+
+    <!ENTITY % tesoros
+    "agua|luna|estrella|cofre">
+
+    <!ELEMENT mensaje (iniciarSesion|ingresoSalaEspera|partida| darCarta| asignarTurno|insertarFicha|actualizarTablero|
+    moverAvatar| actualizarAvatar| otorgarTesoro| finalizarTurno| especificarGanador)*>
+
+    <!ELEMENT iniciarSesion EMPTY>
+
+    <!ELEMENT ingresoSalaEspera EMPTY>
+    <!ATTLIST ingresoSalaEspera
+        nombre NMTOKEN #REQUIRED
+        avatar NMTOKEN #REQUIRED>
+
+    <!ELEMENT partida (jugadores+,fichasTablero+)>
+    <!ATTLIST partida
+    host NMTOKEN #REQUIRED
+    hostID NMTOKEN #REQUIRED
+    avatarHost NMTOKEN #REQUIRED
+    timer NMTOKEN #REQUIRED
+    numeroJugadores NMTOKEN #REQUIRED
+    filas NMTOKEN #REQUIRED
+    columnas NMTOKEN #REQUIRED>
+
+    <!ELEMENT jugadores (jugador+)>
+    <!ELEMENT jugador EMPTY>
+    <!ATTLIST jugador
+        nombre NMTOKEN #REQUIRED
+        avatar NMTOKEN #REQUIRED
+        jugadorID NMTOKEN #REQUIRED>
+    
+    <!ELEMENT fichasTablero (ficha+)>
+    <!ELEMENT ficha EMPTY>
+    <!ATTLIST ficha
+        tipo NMTOKEN #REQUIRED
+        tesoro NMTOKEN #IMPLIED
+        jugador NMTOKEN #IMPLIED>
+
+    <!ELEMENT darCarta EMPTY>
+    <!ATTLIST darCarta 
+        carta (agua|luna|estrella|cofre) #REQUIRED>
+
+    <!ELEMENT asignarTurno EMPTY>
+    <!ATTLIST asignarTurno
+        jugador NMTOKEN #REQUIRED>
+
+    <!ELEMENT insertarFicha EMPTY>
+    <!ATTLIST insertarFicha
+        fila NMTOKEN #REQUIRED
+        columna NMTOKEN #REQUIRED
+        ficha NMTOKEN #REQUIRED>
+
+    <!ELEMENT actualizarTablero EMPTY>
+    <!ATTLIST actualizarTablero
+        fila NMTOKEN #REQUIRED
+        columna NMTOKEN #REQUIRED
+        ficha NMTOKEN #REQUIRED>
+
+    <!ELEMENT moverAvatar EMPTY>
+    <!ATTLIST moverAvatar
+        fila NMTOKEN #REQUIRED
+        columna NMTOKEN #REQUIRED>
+
+    <!ELEMENT actualizarAvatar EMPTY>
+    <!ATTLIST actualizarAvatar
+        fila NMTOKEN #REQUIRED
+        columna NMTOKEN #REQUIRED>
+
+    <!ELEMENT finalizarTurno EMPTY>
+
+    <!ELEMENT otorgarTesoro EMPTY>
+    <!ATTLIST otorgarTesoro 
+        tesoroEncontrado (agua|luna|estrella|cofre) #REQUIRED>
+
+    <!ELEMENT especificarGanador EMPTY>
