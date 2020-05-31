@@ -1,280 +1,142 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<inciarSesion destino = "broadcast">
-</inciarSesion>
+<!-- from server to all -->
+<iniciarSesion/>
 
-<ingresoSalaEspera destino="servidor">
-	<jugador>Joel</jugador>
-	<avatar>avatar_verde</avatar>
-</ingresoSalaEspera>
+<!-- from server to all -->
+<ingresoSalaEspera nombre="Joel" avatar="avatar_verde"/>
 
-<ingresoSalaEspera destino="servidor">
-	<jugador>Esteban</jugador>
-	<avatar>avatar_morado</avatar>
-</ingresoSalaEspera>
+<!-- from server to all -->
+<ingresoSalaEspera nombre="Esteban" avatar="avatar_morado"/>
 
-<datosPartida destino = "broadcast">
-	<partida>
-	    <host>Joel</host>
-	    <timer>120</timer>
-	    <numeroJugadores>2</numeroJugadores>
-	    <jugadores>
-	    	<jugador>
-	    		<nombre>Joel</nombre>
-	    		<avatar>avatar_verde</avatar>
-	    	</jugador>
-	    	<jugador>
-	    		<nombre>Esteban</nombre>
-	    		<avatar>avatar_morado</avatar>
-	    	</jugador>
-	    </jugadores>
-	    <dimensiones>
-	        <filas>5</filas>
-	        <columnas>5</columnas>
-	    </dimensiones>
-	    <fichasTablero>
-	        <ficha>
-	            <tipoFicha>l</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>t</tipoFicha>
-	            <rotacion>180</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>bloqueo</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>cruz</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>recta</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>t</tipoFicha>
-	            <rotacion>90</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>t</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>bloqueo</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>l</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>t</tipoFicha>
-	            <rotacion>180</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>recta</tipoFicha>
-	            <rotacion>90</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>recta</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>l</tipoFicha>
-	            <rotacion>270</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>cruz</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>l</tipoFicha>
-	            <rotacion>90</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>t</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>cruz</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>t</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>bloqueo</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>t</tipoFicha>
-	            <rotacion>180</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>l</tipoFicha>
-	            <rotacion>270</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>recta</tipoFicha>
-	            <rotacion>90</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>cruz</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>l</tipoFicha>
-	            <rotacion>90</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>bloqueo</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	        <ficha>
-	            <tipoFicha>t</tipoFicha>
-	            <rotacion>0</rotacion>
-	        </ficha>
-	    </fichasTablero>
-	    <tesoros>
-	        <tesoro>
-	            <nombre>Luna</nombre>
-	            <fila>2</fila>
-	            <columna>1</columna>
-	        </tesoro>
-	        <tesoro>
-	            <nombre>Estrella</nombre>
-	            <fila>2</fila>
-	            <columna>1</columna>
-	        </tesoro>
-	        <tesoro>
-	            <nombre>Cofre</nombre>
-	            <fila>2</fila>
-	            <columna>3</columna>
-	        </tesoro>
-	        <tesoro>
-	            <nombre>Agua</nombre>
-	            <fila>3</fila>
-	            <columna>2</columna>
-	        </tesoro>
-	    </tesoros>
-	</partida>
-</datosPartida>
+<!-- from server to all -->
+<partida host="Joel" avatarHost="avatar_verde" timer="120" numeroJugadores="2" filas="5" columnas="5">
+    <jugadores>
+    	<jugador nombre="Esteban" avatar="avatar_morado"/>
+    </jugadores>
+    <fichasTablero>
+        <ficha tipo="6"/>
+        <ficha tipo="7"/>
+        <ficha tipo="0"/>
+        <ficha tipo="5"/>
+        <ficha tipo="7"/>
+        <ficha tipo="0"/>
+        <ficha tipo="10"/>
+        <ficha tipo="5" tesoro="Estrella"/>
+        <ficha tipo="3"/>
+        <ficha tipo="3"/>
+        <ficha tipo="9"/>
+        <ficha tipo="7" tesoro="Luna"/>
+        <ficha tipo="5"/>
+        <ficha tipo="5" tesoro="Cofre"/>
+        <ficha tipo="3"/>
+        <ficha tipo="6"/>
+        <ficha tipo="0"/>
+        <ficha tipo="5" tesoro="Agua"/>
+        <ficha tipo="0"/>
+        <ficha tipo="3"/>
+        <ficha tipo="7"/>
+        <ficha tipo="10"/>
+        <ficha tipo="6"/>
+        <ficha tipo="10"/>
+        <ficha tipo="9"/>
+        <ficha tipo="6"/>
+    </fichasTablero>
+</partida>
+<!-- from server to Joel -->
+<darCarta carta="estrella"/>
 
-<darTesoro destino = 1>
-	<tesoro>estrella</tesoro>
-</darTesoro>
+<!-- from server to Esteban -->
+<darCarta carta="agua"/>
 
-<darTesoro destino = 2>
-	<tesoro>agua</tesoro>
-</darTesoro>
+<!-- from server to all -->
+<asignarTurno jugador="1"/>
 
-<asignarTurno destino="broadcast">
-	<JugadorAsignado> 1 </JugadorAsignado>
-</asignarTurno>
+<!-- from Joel to server -->
+<insertarFicha fila="4" columna="1" ficha="6"/>
 
-<insertarFicha destino = "servidor">
-	<flecha>6</flecha>
-	<rotacion>0</rotacion>
-</insertarFicha>
+<!-- from server to all -->
+<actualizarTablero fila="4" columna="1" ficha="6"/>
 
-<actualizarTablero destino = "broadcast">
-    <flecha>6</flecha>
-	<rotacion>0</rotacion>
-</actualizarTablero>
+<!-- from Joel to server -->
+<moverAvatar fila="0" columna="1"/>
 
-<moverAvatar destino = "servidor">
-	<fila>0</fila>
-	<columna>1</columna>
-</moverAvatar>
+<!-- from server to all -->
+<actualizarAvatar fila="0" columna="1"/>
 
-<actualizarAvatar destino = "broadcast">
-	<fila>0</fila>
-	<columna>1</columna>
-</actualizarAvatar>
+<!-- from Joel to server -->
+<finalizarTurno/>
 
-<asignarTurno destino="broadcast">
-	<JugadorAsignado> 2 </JugadorAsignado>
-</asignarTurno>
+<!-- from server to all -->
+<asignarTurno jugador="2"/>
 
-<insertarFicha destino = "servidor">
-	<flecha>5</flecha>
-	<rotacion>0</rotacion>
-</insertarFicha>
+<!-- from Esteban to server -->
+<insertarFicha fila="4" columna="3" ficha="7"/>
 
-<actualizarTablero destino = "broadcast">
-    <flecha>5</flecha>
-	<rotacion>0</rotacion>
-</actualizarTablero>
+<!-- from server to all -->
+<actualizarTablero fila="4" columna="3" ficha="7"/>
 
-<moverAvatar destino = "servidor">
-	<fila>3</fila>
-	<columna>2</columna>
-</moverAvatar>
+<!-- from Esteban to server -->
+<moverAvatar fila="3" columna="2"/>
 
-<actualizarAvatar destino = "broadcast">
-	<fila>3</fila>
-	<columna>2</columna>
-</actualizarAvatar>
+<!-- from server to all -->
+<actualizarAvatar fila="3" columna="2"/>
 
-<removerTesoro destino = "broadcast">
-</removerTesoro>
+<!-- from Esteban to server -->
+<finalizarTurno/>
 
-<darTesoro destino = 2>
-	<tesoro>cofre</tesoro>
-</darTesoro>
+<!-- from Server to all -->
+<otorgarTesoro tesoroEncontrado="agua"/>
 
-<asignarTurno destino="broadcast">
-	<JugadorAsignado> 1 </JugadorAsignado>
-</asignarTurno>
+<!-- from Server to Esteban -->
+<darCarta carta="cofre"/>
 
-<insertarFicha destino = "servidor">
-	<flecha>1</flecha>
-	<rotacion>90</rotacion>
-</insertarFicha>
 
-<actualizarTablero destino = "broadcast">
-    <flecha>1</flecha>
-	<rotacion>90</rotacion>
-</actualizarTablero>
 
-<omitirMovimiento destino = "servidor">
-</omitirMovimiento>
 
-<asignarTurno destino="broadcast">
-	<JugadorAsignado> 2 </JugadorAsignado>
-</asignarTurno>
 
-<insertarFicha destino = "servidor">
-	<flecha>1</flecha>
-	<rotacion>0</rotacion>
-</insertarFicha>
+<!-- from Server to all -->
+<asignarTurno jugador="1"/>
 
-<actualizarTablero destino = "broadcast">
-    <flecha>1</flecha>
-	<rotacion>0</rotacion>
-</actualizarTablero>
+<!-- from Joel to server -->
+<insertarFicha fila="0" columna="1" ficha="9">
 
-<moverAvatar destino = "servidor">
-	<fila>1</fila>
-	<columna>2</columna>
-</moverAvatar>
+<!-- from server to all -->
+<actualizarTablero fila="0" columna="1" ficha="9"/>
 
-<actualizarAvatar destino = "broadcast">
-	<fila>1</fila>
-	<columna>2</columna>
-</actualizarAvatar>
+<!-- from Joel to server -->
+<moverAvatar fila="0" columna="1"/>
 
-<removerTesoro destino = "broadcast">
-</removerTesoro>
+<!-- from server to all -->
+<actualizarAvatar fila="0" columna="1"/>
 
-<especificarGanador destino = "broadcast">
-</especificarGanador>
+<!-- from Joel to server -->
+<finalizarTurno/>
 
 
 
 
 
 
+<!-- from server to all -->
+<asignarTurno jugador="2"/>
+
+<!-- from Esteban to server -->
+<insertarFicha fila="0" columna="1" ficha="3"/>
+
+<!-- from server to all -->
+<actualizarTablero fila="0" columna="1" ficha="3"/>
+
+<!-- from Esteban to server -->
+<moverAvatar fila="1" columna="2"/>
+
+<!-- from server to all -->
+<actualizarAvatar fila="1" columna="2"/>
+
+<!-- from Esteban to server -->
+<finalizarTurno/>
+
+<!-- from Server to all -->
+<otorgarTesoro tesoroEncontrado="cofre"/>
+
+<especificarGanador/>
