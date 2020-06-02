@@ -1,75 +1,205 @@
 
-    <!ENTITY % tesoros
-    "agua|luna|estrella|cofre">
+<!--
+Document Type Definition para el xml con el protocolo de mensajes del juego del laberinto v1.0 2020-05-31 
+Esteban Rojas Solís   <esteban201483@gmail.com>  
+Joel Chaves Sequeira  <joelchvs93@gmail.com>
+-->
 
-    <!ELEMENT mensaje (iniciarSesion|ingresoSalaEspera|partida| darCarta| asignarTurno|insertarFicha|actualizarTablero|
-    moverAvatar| actualizarAvatar| otorgarTesoro| finalizarTurno| especificarGanador)*>
 
-    <!ELEMENT iniciarSesion EMPTY>
+<!-- Un Mensaje puede contener cualquiera de los siguientes comandos: iniciarSesión, ingresoSalaEspera, partida, darCarta, asignarTurno.
+insertarFicha, actualizarTablero, moverAvatar, actualizarAvatar otorgarTesoro, finalizarTurno y especificarGanador. No contiene atributo
 
-    <!ELEMENT ingresoSalaEspera EMPTY>
-    <!ATTLIST ingresoSalaEspera
-        nombre NMTOKEN #REQUIRED
-        avatar NMTOKEN #REQUIRED>
+*El comando iniciarSesión simplemente indica que el host inicio sesión. No tiene atributos ni contiene elementos
 
-    <!ELEMENT partida (jugadores+,fichasTablero+)>
-    <!ATTLIST partida
-    host NMTOKEN #REQUIRED
-    hostID NMTOKEN #REQUIRED
-    avatarHost NMTOKEN #REQUIRED
-    timer NMTOKEN #REQUIRED
-    numeroJugadores NMTOKEN #REQUIRED
-    filas NMTOKEN #REQUIRED
-    columnas NMTOKEN #REQUIRED>
+*El comando ingresoSalaEspera es enviado por el servidor a todos los clientes, para indicar que un unuevo jugador se ha unido
+a la sala de espera.
 
-    <!ELEMENT jugadores (jugador+)>
-    <!ELEMENT jugador EMPTY>
-    <!ATTLIST jugador
-        nombre NMTOKEN #REQUIRED
-        avatar NMTOKEN #REQUIRED
-        jugadorID NMTOKEN #REQUIRED>
-    
-    <!ELEMENT fichasTablero (ficha+)>
-    <!ELEMENT ficha EMPTY>
-    <!ATTLIST ficha
-        tipo NMTOKEN #REQUIRED
-        tesoro NMTOKEN #IMPLIED
-        jugador NMTOKEN #IMPLIED>
+ingresoSalaEspera tiene dos atributos:
 
-    <!ELEMENT darCarta EMPTY>
-    <!ATTLIST darCarta 
-        carta (agua|luna|estrella|cofre) #REQUIRED>
+nombre:
+        El nombre del jugador que se unio a la sesión
 
-    <!ELEMENT asignarTurno EMPTY>
-    <!ATTLIST asignarTurno
-        jugador NMTOKEN #REQUIRED>
+avatar:
+        El avatar escogido o asignado automáticamente al jugador
 
-    <!ELEMENT insertarFicha EMPTY>
-    <!ATTLIST insertarFicha
-        fila NMTOKEN #REQUIRED
-        columna NMTOKEN #REQUIRED
-        ficha NMTOKEN #REQUIRED>
+ingresoSalaEspera no contiene ningún otro elemento
 
-    <!ELEMENT actualizarTablero EMPTY>
-    <!ATTLIST actualizarTablero
-        fila NMTOKEN #REQUIRED
-        columna NMTOKEN #REQUIRED
-        ficha NMTOKEN #REQUIRED>
+*El comando partida indica el comienzo de una partida. Tiene los siguientes atributos:
 
-    <!ELEMENT moverAvatar EMPTY>
-    <!ATTLIST moverAvatar
-        fila NMTOKEN #REQUIRED
-        columna NMTOKEN #REQUIRED>
+host:
+        El nombre del host de la partida
 
-    <!ELEMENT actualizarAvatar EMPTY>
-    <!ATTLIST actualizarAvatar
-        fila NMTOKEN #REQUIRED
-        columna NMTOKEN #REQUIRED>
+hostID:
+        El ID del host de la partida
 
-    <!ELEMENT finalizarTurno EMPTY>
+avatarHost:
+        El avatar del host de la partida
 
-    <!ELEMENT otorgarTesoro EMPTY>
-    <!ATTLIST otorgarTesoro 
-        tesoroEncontrado (agua|luna|estrella|cofre) #REQUIRED>
+timer:
+        Indica la duración de cada turno, en segundos. Si es 0, entonces significa que el timer está desactivado
 
-    <!ELEMENT especificarGanador EMPTY>
+numeroJugadores:
+        Indica el número de jugadores en la partida
+
+filas:
+        Indica la cantidad de filas del tablero
+
+columnas:
+        Indica la cantidad de columnas del tablero
+
+Una partida contiene varios jugadores y varias fichasTablero
+
+-El elemento jugadores contiene los datos de cada uno de los jugadores participantes en la partida.
+
+-El elemento jugador almacena datos necesarios para la identificación del jugador. Sus atributos son:
+
+nombre:
+        El nombre del jugador
+
+avatar:
+        El avatar utilizado por el jugador
+
+jugadorID:
+        El identificador del jugador
+
+-El elemento fichas tablero contiene una serie de fichas
+
+-Cada ficha representa una posición en el tablero. Además, indica si contiene a un jugador o tesoro.
+
+Una ficha tiene los siguientes atributos:
+
+tipo:
+        Indica el tipo de ficha, de acuerdo a la representación binaria de la ficha.
+
+jugador:
+        (Opcional) Indica cual jugador se encuentra sobre la ficha
+
+tesoro:
+        (Opcional) Indica cual tesoro se encuentra sobte la ficha
+
+*El comando darCarta indica que a un jugador se le asignó la busqueda de un determinado tesoro. Su atributo es:
+
+carta:  
+        Indica la carta del tesoro a buscar.
+
+*El comando asignarTurno indica de cual jugador es el turno actual. No contiene ningún elemento. Su atributo es:
+
+jugador:
+        El identificador del jugador que posee el turno actual.
+
+*El comando actualizarTablero es un mensaje del servidor que indica que una ficha se insertó en una posición. No
+contiene ningún elemento. Sus tres atributos son:
+
+ficha:
+        El tipo de ficha insertado
+
+fila:
+        La fila donde ocurrió la inserción
+
+columna:
+        La columna donde ocurrio la inserción 
+
+*El comando moverAvatar es enviado del cliente al servidor, e indica que se realizo un movimiento pero que no es precisamente
+el movimiento definitivo, por lo que los demás clientes deben estar atentos a futuros movimientos o bien, al mensaje de confirmación.
+
+No contiene ningún elemento, y sus atributos son:
+
+fila:
+        La fila hacia donde se movió el jugador 
+
+columna:
+        La columna hacia donde se movio el jugador 
+
+*El comando actualizarAvatar se envía a todos los clientes una vez que el servidor haya recibido el comando moverAvatar. No
+contiene ningún elemento y sus atributos son:
+
+fila:
+        La fila hacia donde se movió el jugador con el turno actual
+
+columna:
+        La columna hacia donde se movio el jugador con el turno actual 
+
+*El comando finalizarTurno indica que el jugador con el turno actual no va a realizar ningún cambio al movimiento realizado, o bien, no se
+va a mover del todo. No contiene ningún elemento o atributo 
+
+*El comando otorgarTesoro indica que un jugador obtuvo el tesoro que estaba buscando. No contiene ningún elemento, y su atributo es:
+
+tesoroEncontrado:
+        Identificador del tesoro buscado por el jugador
+
+*El comando especificarGanador indica que el jugador con el turno actual ganó la partida.
+No contiene atributos ni elementos
+
+-->
+
+<!ELEMENT mensaje (iniciarSesion|ingresoSalaEspera|partida| darCarta| asignarTurno|insertarFicha|actualizarTablero|
+moverAvatar| actualizarAvatar| otorgarTesoro| finalizarTurno| especificarGanador)*>
+
+<!ELEMENT iniciarSesion EMPTY>
+
+<!ELEMENT ingresoSalaEspera EMPTY>
+<!ATTLIST ingresoSalaEspera
+    nombre NMTOKEN #REQUIRED
+    avatar NMTOKEN #REQUIRED>
+
+<!ELEMENT partida (jugadores+,fichasTablero+)>
+<!ATTLIST partida
+host NMTOKEN #REQUIRED
+hostID NMTOKEN #REQUIRED
+avatarHost NMTOKEN #REQUIRED
+timer NMTOKEN #REQUIRED
+numeroJugadores NMTOKEN #REQUIRED
+filas NMTOKEN #REQUIRED
+columnas NMTOKEN #REQUIRED>
+
+<!ELEMENT jugadores (jugador+)>
+<!ELEMENT jugador EMPTY>
+<!ATTLIST jugador
+    nombre NMTOKEN #REQUIRED
+    avatar NMTOKEN #REQUIRED
+    jugadorID NMTOKEN #REQUIRED>
+
+<!ELEMENT fichasTablero (ficha+)>
+<!ELEMENT ficha EMPTY>
+<!ATTLIST ficha
+    tipo NMTOKEN #REQUIRED
+    tesoro NMTOKEN #IMPLIED
+    jugador NMTOKEN #IMPLIED>
+
+<!ELEMENT darCarta EMPTY>
+<!ATTLIST darCarta 
+    carta (agua|luna|estrella|cofre) #REQUIRED>
+
+<!ELEMENT asignarTurno EMPTY>
+<!ATTLIST asignarTurno
+    jugador NMTOKEN #REQUIRED>
+
+<!ELEMENT insertarFicha EMPTY>
+<!ATTLIST insertarFicha
+    fila NMTOKEN #REQUIRED
+    columna NMTOKEN #REQUIRED
+    ficha NMTOKEN #REQUIRED>
+
+<!ELEMENT actualizarTablero EMPTY>
+<!ATTLIST actualizarTablero
+    fila NMTOKEN #REQUIRED
+    columna NMTOKEN #REQUIRED
+    ficha NMTOKEN #REQUIRED>
+
+<!ELEMENT moverAvatar EMPTY>
+<!ATTLIST moverAvatar
+    fila NMTOKEN #REQUIRED
+    columna NMTOKEN #REQUIRED>
+
+<!ELEMENT actualizarAvatar EMPTY>
+<!ATTLIST actualizarAvatar
+    fila NMTOKEN #REQUIRED
+    columna NMTOKEN #REQUIRED>
+
+<!ELEMENT finalizarTurno EMPTY>
+
+<!ELEMENT otorgarTesoro EMPTY>
+<!ATTLIST otorgarTesoro 
+    tesoroEncontrado (agua|luna|estrella|cofre) #REQUIRED>
+
+<!ELEMENT especificarGanador EMPTY>
