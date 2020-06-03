@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"> </meta>
+        <title>
+                Juego del Laberinto
+        </title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> </link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        
+
+        <script src="res/js/logica.js" type="text/javascript"> </script>
+
+
+        <style>
+            .SelectedImage
+            {
+                border: 5px solid blue;
+            }
+            .NonSelectedImage
+            {
+                border: none;
+            }
+
+            article
+            {
+                  float: left;
+                  width: 60%;
+                  height: 500px;
+                  padding: 20px;  
+            }
+
+            contenedorDatos
+            {
+                float: right;
+                width: 40%;
+                background-color: white;
+                padding : 20px;
+                height: 100%;
+            }
+
+
+            datosTesoros
+            {
+                float: left;
+                width: 50%;
+                padding: 20px;
+ 
+            }
+
+            datosJugadores
+            {
+                float: right;
+                width: 50%;
+                padding: 20px;
+
+            }
+
+            .imagenFichaDatos
+            {
+                margin-bottom: 35px;
+                width: 75px;
+                height: 75px;
+
+            }
+
+            .tituloDato
+            {
+                font-size: 20px;
+                margin-bottom: 15px;
+            }
+
+            .datoRespuesta
+            {
+                margin-bottom: 50px;
+            }
+
+
+
+        </style>
+
+   
+    </head>
+
+    <body style="background-color:#e6f0ff">
+        
+        <div class="jumbotron" style="background-color:#0066ff;">
+
+        </div>
+
+
+        <div class="container" style="background-color:white" id="mainContainer">
+
+
+            <header>
+                <h2>Juego del laberinto</h2>
+                <br><br></br></br>
+            </header>
+
+            <section>
+                <contenedorDatos>
+                    <datosTesoros>
+                            <p class="tituloDato">Buscando</p>
+
+                        <img src="../Avatares/Avatar1.png" class="imagenFichaDatos"></img>
+
+                        <p class="tituloDato">Insertar</p>
+                        <img src="../Avatares/Avatar2.png" class="imagenFichaDatos"></img>
+
+                        <p class="tituloDato">Encontrados</p>
+                        <img src="../Avatares/Avatar3.png" class="imagenFichaDatos"></img>
+
+                        
+                        <p class="tituloDato">Pendientes</p>
+                        <img src="../Avatares/Avatar4.png" class="imagenFichaDatos"></img>
+
+                    </datosTesoros>
+
+                    <datosJugadores>
+                        <p class="tituloDato">Turno Actual</p>
+                        <br><br></br></br>
+                        <p class="datoRespuesta">Juan</p>
+
+                        <p class="tituloDato">Tiempo Restante</p>
+                        <br><br></br></br>
+                        <p class="datoRespuesta">2:00</p>
+
+                        <p class="tituloDato">Jugadores</p>
+                    </datosJugadores>
+                </contenedorDatos>
+
+            </section>
+
+            <article  id = "contenedorTablero">
+                Juego principal <br></br>
+
+                
+            </article>
+
+
+
+        </div>
+
+    </body>
+
+</html>
