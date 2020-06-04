@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"> </meta>
+        <title>
+                Crear partida
+        </title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> </link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   
+    </head>
+
+    <body style="background-color:#e6f0ff">
+        
+        <div class="jumbotron" style="background-color:#0066ff;">
+
+        </div>
+
+        <div class="container" style="background-color:white" id="mainContainer">
+
+
+            <header>
+                <h2>Crear Partida</h2>
+                <br><br></br></br>
+            </header>
+
+        		<form>
+        		  	<div class="form-group">
+        		    	<label for="nombreDeJugador">Nombre del jugador</label>
+        		    	<input type="text" class="form-control" id="nombreDeJugador"/>
+        		  	</div>
+        		  	<div class="form-group">
+        		    	<label for="timer">Duración del turno (en segundos)</label>
+        		    	<input type="timer" class="form-control" id="timer"/>
+        		  	</div>
+        		  	<div class="form-group">
+        		    	<label for="cantidadDeJugadores">Cantidad de jugadores</label>
+        		    	<input type="cantidadDeJugadores" class="form-control" id="cantidadDeJugadores"/>
+        		  </div>
+        		  <div class="form-group">
+        		  	<label>Dimensiones del tablero</label>
+        		  </div>
+        		  <div class="form-group row">
+        			  <div class="col-xs-2">
+        			  	<label for="filas">Filas</label>
+        			    <input type="text" class="form-control" id="filas"/>
+        			  </div>
+        			  <div class="col-xs-2">
+        			  	<label for="columnas">Columnas</label>
+        			    <input type="text" class="form-control" id="columnas"/>
+        			  </div>
+        		   </div>
+        		   <div class="form-check">
+          		   	<input class="form-check-input" type="checkbox" value="" id="mostrarTraducciones"/>
+                  <label class="form-check-label" for="mostrarTraducciones"> Mostrar traducciones</label>
+                </div>
+                <div class="form-group">
+                   <button type="submit" class="btn btn-primary">Aceptar</button>
+                </div>
+        		</form>
+
+        </div>
+
+    </body>
+
+</html>
