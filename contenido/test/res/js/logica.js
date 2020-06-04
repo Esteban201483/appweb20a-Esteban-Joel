@@ -57,7 +57,7 @@
              */
             function obtenerSaltoLinea()
             {
-                return "<br></br>"
+                return "<br/>"
             }
 
             /**
