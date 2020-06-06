@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>
+                Crear partida
+        </title>
+
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+       
+        <link rel="stylesheet" href="res/css/general.css"/>
+
+        <script defer="defer" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script defer="defer" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+       
+    </head>
+
+    <body>
+       
+        <div class="jumbotron" id="barraSuperior">
+
+        <div class="container" id="mainContainer">
+
+            <header>
+                <h1>Crear Partida</h1>
+            </header>
+
+        		<form id="formulario">
+        		  	<item id="itemForm">
+	    		    	<label for="nombreJugador">Nombre de jugador</label>
+	   					<input type="text" id="nombreJugador" name="nombreJugador" size="50">
+	   				</item>
+	   				<item id="itemForm">
+	    				<label for="timer">Duración del tiempo (en segundos)</label>
+	    				<input type="text" id="timer" name="timer">
+	    			</item>
+    				<item id="itemForm">
+	    				<label for="cantidadJugadores">Cantidad de jugadores</label>
+	    				<input type="text" id="cantidadJugadores" name="cantidadJugadores" >
+	    			</item>
+    				<item id="itemForm">
+	    				<label>Dimensiones del tablero</label>
+	    				<label for="filas">Filas</label>
+	    				<input type="text" id="filas" name="filas" >
+	    				<label for="columnas">Columnas</label>
+	    				<input type="text" id="columnas" name="columnas">
+	    			</item>
+    				<item id="itemForm">
+	    				<input type="checkbox" id="mostrarTraducciones" name="mostrarTraducciones" value="traducciones">
+	  					<label for="mostrarTraducciones"> Mostrar traducciones</label>
+	  				</item>
+	  				<item id="itemForm">
+    					<input type="submit" value="Aceptar">
+    				</item>
+        		</form>
+
+        </div>
+
+    </body>
+
+</html>

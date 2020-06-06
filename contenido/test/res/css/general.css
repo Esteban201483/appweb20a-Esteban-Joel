@@ -12,3 +12,13 @@ body
 {
     background-color:white;
 }
+
+#formulario *
+{
+    display: block;
+}
+
+#itemForm
+{
+	margin-bottom: 20px;
+}
