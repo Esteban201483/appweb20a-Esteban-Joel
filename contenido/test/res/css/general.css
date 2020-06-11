@@ -8,14 +8,23 @@
     background-color:white;
 }
 
-body
-{
-    background-color:white;
-}
 
 #formulario *
 {
     display: block;
+}
+
+#tituloDeSitio
+{
+	color: white;
+	font-size: 40px;
+	font-family: Impact, Charcoal, sans-serif;
+
+}
+
+.logoDeSitio
+{
+	display: inline-block;
 }
 
 .itemForm

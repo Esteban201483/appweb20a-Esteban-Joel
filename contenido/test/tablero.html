@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="res/css/vistaTablero.css"/>
         <link rel="stylesheet" href="res/css/general.css"/>
+        <link rel="stylesheet" href="res/css/JuegoLaberinto.css"/>
 
         <script defer="defer" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script defer="defer" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -18,15 +19,18 @@
     </head>
 
     <body>
-        <div class="jumbotron" id="barraSuperior">
-            <!--Solamente despliega la barra superior-->
-        </div>
-
-
-        <div class="container" id="mainContainer">
-            <header>
-                <h1>Juego del laberinto</h1>    
+        
+            <header class="jumbotron"  id="barraSuperior">
+                <div class="container">
+                    <p id="tituloDeSitio"> 
+                        <img class="logoDeSitio" src="res/img/logo/logo.png" alt="logo del juego" width="75" >
+                        Juego de Laberinto
+                    </p>
+                </div>
             </header>
+
+            <main class="container">
+            <h1>Juego del laberinto</h1> 
 
             <section>
                 <section id="contenedorDatos">
@@ -62,9 +66,13 @@
 
             </section>
 
+
+
             <article id="contenedorTablero">
 
             </article>
-        </div>
+
+        </main>
+        
     </body>
 </html>
