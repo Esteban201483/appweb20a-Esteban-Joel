@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+        <title>
+                Crear partida
+        </title>
+
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+       
+        <link rel="stylesheet" href="res/css/general.css"/>
+        <link rel="stylesheet" href="res/css/JuegoLaberinto.css"/>
+
+        <script defer="defer" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script defer="defer" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+       
+    </head>
+
+    <body>
+        <header class="jumbotron"  id="barraSuperior">
+            <div class="container">
+                <p id="tituloDeSitio"> 
+                    <img class="logoDeSitio" src="res/img/logo/logo.png" alt="logo del juego" width="75"/>
+                    Juego de Laberinto
+                </p>
+            </div>
+        </header>
+        
+        <main class="container">
+                <h1>Crear partida</h1>
+        		<form id="formulario">
+        		  	<div>
+	    		    	<label for="nombreJugador">Nombre del anfitrión de la partida</label>
+	   					<input type="text" id="nombreJugador" name="nombreJugador" size="50"/>
+	   				</div>
+	   				<div>
+	    				<label for="timer">Duración del tiempo (en segundos)</label>
+	    				<input type="text" id="timer" name="timer"  value="0"/>
+	    			</div>
+    				<div>
+	    				<label for="cantidadJugadores">Cantidad de jugadores</label>
+	    				<input type="text" id="cantidadJugadores" name="cantidadJugadores"/>
+	    			</div>
+    				<div>
+	    				<label>Dimensiones del tablero</label>
+	    				<label for="filas">Filas</label>
+	    				<input type="text" id="filas" name="filas"/>
+	    				<label for="columnas">Columnas</label>
+	    				<input type="text" id="columnas" name="columnas"/>
+	    			</div>
+    				<div>
+	    				
+                      <label>Modo de juego (solo para este usuario)</label>
+                      <input class="radioFormulario" type="radio" id="modoFacil" name="mostrarTraducciones" value="true"/>
+                      <label for="modoFacil">Modo fácil (se muestran las traducciones de los kanjis)</label>
+                      <input type="radio" id="modoDificil" name="mostrarTraducciones" value="false"/>
+                      <label for="modoDificil">Modo dificil (no se muestran las traducciones de los kanjis)</label> 
+  
+	  				</div>
+	  				<div>
+    					<input type="submit" value="Aceptar"/>
+    				</div>
+        		</form>
+		</main>
+    </body>
+</html>

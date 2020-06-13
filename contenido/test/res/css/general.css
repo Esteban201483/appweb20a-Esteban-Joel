@@ -5,13 +5,18 @@
 
 #mainContainer
 {
-    background-color:white;
+    background-color:#101010;
 }
 
 
 #formulario *
 {
     display: block;
+}
+
+.radioFormulario
+{
+	display: inline;
 }
 
 #tituloDeSitio
@@ -32,16 +37,24 @@
 	margin-bottom: 20px;
 }
 
-.loader {
- 			  border: 8px solid #f3f3f3; /* Light grey */
-			  border-top: 8px solid #0066ff; /* Blue */
-			  border-radius: 50%;
-			  width:50px;
-			  height: 50px;
-			  animation: spin 2s linear infinite;
-			}
+.loader 
+{
+	border: 8px solid #f3f3f3;
+	border-top: 8px solid #0066ff;
+	border-radius: 50%;
+	width:50px;
+	height: 50px;
+	animation: spin 2s linear infinite;
+}
 
-		@keyframes spin {
-		  0% { transform: rotate(0deg); }
-		  100% { transform: rotate(360deg); }
-		}
+@keyframes spin
+{
+	0% 
+	{ 
+		transform: rotate(0deg); 
+	}
+	100% 
+	{ 
+		transform: rotate(360deg); 
+	}
+}
