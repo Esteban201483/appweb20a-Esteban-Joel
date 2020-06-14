@@ -9,15 +9,20 @@
 }
 
 
-#formulario *
+
+
+.formulario  *
 {
     display: block;
 }
 
-.radioFormulario
+.radioContainer *
 {
-	display: inline;
+	display:inline;
 }
+
+
+
 
 #tituloDeSitio
 {

@@ -30,13 +30,13 @@
         
         <main class="container">
                 <h1>Crear partida</h1>
-        		<form id="formulario">
+        		<form class="formulario">
         		  	<div>
 	    		    	<label for="nombreJugador">Nombre del anfitrión de la partida</label>
 	   					<input type="text" id="nombreJugador" name="nombreJugador" size="50"/>
 	   				</div>
 	   				<div>
-	    				<label for="timer">Duración del tiempo (en segundos)</label>
+	    				<label for="timer">Duración del turno (en segundos)</label>
 	    				<input type="text" id="timer" name="timer"  value="0"/>
 	    			</div>
     				<div>
@@ -51,12 +51,16 @@
 	    				<input type="text" id="columnas" name="columnas"/>
 	    			</div>
     				<div>
-	    				
+                      
                       <label>Modo de juego (solo para este usuario)</label>
-                      <input class="radioFormulario" type="radio" id="modoFacil" name="mostrarTraducciones" value="true"/>
-                      <label for="modoFacil">Modo fácil (se muestran las traducciones de los kanjis)</label>
-                      <input type="radio" id="modoDificil" name="mostrarTraducciones" value="false"/>
-                      <label for="modoDificil">Modo dificil (no se muestran las traducciones de los kanjis)</label> 
+                      <div class="radioContainer">
+                      <input  type="radio" id="modoFacil" name="mostrarTraducciones"  />
+                      <label  for="modoFacil"  >Modo fácil (se muestran las traducciones de los kanjis)</label>
+                     </div>
+                     <div class="radioContainer">
+                      <input  type="radio" id="modoDificil" name="mostrarTraducciones" />
+                      <label for="modoDificil"  >Modo dificil (no se muestran las traducciones de los kanjis)</label> 
+                    </div>
   
 	  				</div>
 	  				<div>
