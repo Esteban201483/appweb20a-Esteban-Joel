@@ -67,5 +67,12 @@ article
     margin-bottom: 1.25em;
 }
 
+#labelTraduccion
+{
+    display: block;
+    font-weight: normal;
+    color: darkcyan;
+}
+
 
 
