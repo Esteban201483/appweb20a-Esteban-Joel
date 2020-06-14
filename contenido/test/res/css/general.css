@@ -8,17 +8,27 @@
     background-color:#101010;
 }
 
-
+.separadorSeccion
+{
+	border: 1px solid cornflowerblue;
+}
 
 
 .formulario  *
 {
-    display: block;
+	display: block;
 }
+
+.formulario div
+{
+	margin-bottom: 15px;
+}
+
 
 .radioContainer *
 {
 	display:inline;
+
 }
 
 
