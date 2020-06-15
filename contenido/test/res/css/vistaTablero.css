@@ -9,14 +9,14 @@
     border: none;
 }
 
-header
+.contenedorFlex
 {
-
+    display: flex;
 }
 
 article
 {
-        float: left;
+
         width: 60%;
         height: 500px;
         padding: 20px;  
@@ -24,17 +24,24 @@ article
 
 #contenedorDatos
 {
-    float: right;
+
     width: 40%;
     background-color: white;
     padding : 20px;
     height: 100%;
+
+}
+
+.contenedorPrincipal
+{
+    display:flex;
+
 }
 
 
 #datosTesoros
 {
-    float: left;
+  
     width: 50%;
     padding: 20px;
 
@@ -42,7 +49,7 @@ article
 
 #datosJugadores
 {
-    float: right;
+
     width: 50%;
     padding: 20px;
 
