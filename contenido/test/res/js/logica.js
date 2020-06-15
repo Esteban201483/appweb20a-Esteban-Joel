@@ -165,7 +165,7 @@
                 inicializarVariables();
                 var  j = jugadores[0];
 
-                crearTablero();
+               // crearTablero();
 
             
             });

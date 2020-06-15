@@ -9,6 +9,14 @@
     border: none;
 }
 
+.fichaTablero
+{
+    width: 90;
+    height: 90px;
+    margin:0;
+    padding:0;
+}
+
 .contenedorFlex
 {
     display: flex;
