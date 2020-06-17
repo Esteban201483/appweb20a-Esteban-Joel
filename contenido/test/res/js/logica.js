@@ -1,4 +1,6 @@
 
+
+
             /**
              * Define la clase jugador, la cual será la encargada de almacenar todos los datos relacionados
              * a los jugadores de la partida
@@ -35,14 +37,21 @@
 
 
 
+            function setTesoroAvatar(imgId,imageSrc)
+            {
+               $("#" + imgId).attr("hidden",false);
+               $("#" + imgId).attr("src",imageSrc);
+             
+            }
+
             /**
              * Este método recibe las variables necesarias para el desarrollo del juego
              * 
              */
             function inicializarVariables()
             {
-                filas = 13;
-                columnas = 13;
+                filas = 7;
+                columnas = 7;
                 tiempoTurno = 120;
                 ayudas = true;
 
@@ -65,10 +74,42 @@
              * @param {String} id El identificador del nuevo elemento img
              * @param {int} dimension El ancho y alto al que se debe redimensionar la imagen
              * @param {String} rutaImagen La dirección de la imagen
+             * @param {String} classElement La clase del elemento img
              */
-            function obtenerElementoImg(id, dimension, rutaImagen)
+            function obtenerElementoImg(id, dimension, rutaImagen, classElement)
             {
-                return "<img id=\""+id+"\" src=\""+rutaImagen+"\" height=\""+dimension+"\" width=\""+dimension+"\" />";
+                return "<img id=\""+id+"\" class=\""+classElement+"\"" +
+                " src=\""+rutaImagen+"\" height=\""+dimension+"\" width=\""+dimension+"\" />";
+            }
+
+            function obtenerElementoImgOculto(id, dimension, classElement)
+            {
+                return "<img id=\""+id+"\" hidden=\"hidden\" class=\""+classElement+"\""+
+                " height=\""+dimension+"\" width=\""+dimension+"\" />";
+            }
+
+            function obtenerAperturaDivContenedor()
+            {
+                return "<div class=\"contenedorImagen\">"
+            }
+
+            /**
+             * Devuelve el código para crear todos los elementos que representan una ficha.
+             * Los elementos en total son:
+             *      div contenedor
+             *      img para la ficha del tablero
+             *      img para la ficha del avatar de jugador (Oculto por defecto)
+             *      img para la ficha del tesoro (Oculto por defecto)
+             * @param {String} id El identificador del nuevo elemento img
+             * @param {int} dimension El ancho y alto al que se debe redimensionar la imagen
+             * @param {String} rutaImagen La dirección de la imagen
+             */
+            function obtenerBloqueTablero(id, dimension, rutaImagen)
+            {
+                return obtenerAperturaDivContenedor() + " " + 
+                obtenerElementoImg("Ficha" + id,dimension,rutaImagen,"fichaTablero") + " " + 
+                obtenerElementoImgOculto("avatar" + id,dimension,"avatarTablero") + " " + 
+                obtenerElementoImgOculto("tesoro" + id, dimension,"tesoroTablero") +  " </div>";
             }
 
             /**
@@ -86,14 +127,16 @@
                 var nombreFlecha = "Flecha";
                 var nombreFicha = "Ficha";
 
+                var fichas = ["cruz.png","recta.png","bloqueo.png","l.png","t.png"];
+
                 var contadorFicha = 0;
 
-                contenedorTablero.append(obtenerElementoImg("",size, "res/img/fichas/vacía.png"));
+                contenedorTablero.append(obtenerElementoImg("",size, "res/img/fichas/vacia.png"));
                 //crea las flechas superiores
                 for(var columna = 0; columna < (columnas); ++columna)
                 {
                     if((columna % 2) == 0) //Coloca imagenes vacias en las posiciones pares
-                        contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacía.png"));
+                        contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
                     else //Coloca las imagenes de las flechas verticales
                     {
                         contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha superior.png"));
@@ -108,7 +151,7 @@
 
                     //Controla la creación de flechas al lado izquierdo del tablero
                     if(((fila+1) % 2 != 0) && (fila+1) != filas+2) //Coloca imagenes vacias en las posiciones pares
-                        contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacía.png"));
+                        contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
                     else //Coloca las imagenes de las flechas izquierdas
                     {
                         contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha izquierda.png"));
@@ -119,19 +162,23 @@
                     /////////////////////////////////Coloca las fichas de la fila actual
                     for(var columna = 0; columna < columnas; ++columna)
                     {
-                        if(contadorFicha % 2 == 0)
-                            contenedorTablero.append(obtenerElementoImg(+ nombreFicha  + "" + fila + "" + columna , size, 
+
+                        /*if(contadorFicha % 2 == 0)
+
+                            contenedorTablero.append(obtenerBloqueTablero(fila + "" + columna , size, 
                             "res/img/fichas/fichaNormal.png"));  
                         else
-                            contenedorTablero.append(obtenerElementoImg(+ nombreFicha  + "" + fila + "" + columna , size, 
-                            "res/img/fichas/vacía.png"));  
+                            contenedorTablero.append(obtenerBloqueTablero(fila + "" + columna , size, 
+                            "res/img/fichas/vacia.png"));*/  
+                        contenedorTablero.append(obtenerBloqueTablero(fila + "" + columna , size, 
+                            "res/img/fichas/" + fichas[Math.floor(Math.random() * 5)])); 
                         ++contadorFicha;
                     }
 
 
                     //Controla la creación de flechas al lado derecho del tablero
                     if(((fila+1) % 2 != 0) && (fila+1) != filas+2 ) //Coloca imagenes vacias en las posiciones pares
-                        contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacía.png"));
+                        contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
                     else //Coloca las imagenes de las flechas verticales
                     {
                         contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha derecha.png"));
@@ -142,17 +189,38 @@
                 }
 
                 //crea las flechas Inferiores
-                contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacía.png"));
+                contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
                 for(var columna = 0; columna < (columnas); ++columna)
                 {
                     if(columna % 2 == 0) //Coloca imagenes vacias en las posiciones pares
-                        contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacía.png") );
+                        contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png") );
                     else //Coloca las imagenes de las flechas verticales
                     {
                         contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha inferior.png") );
                         ++idFlecha;
                     }
                 }
+
+
+                //Pone avatares y tesoros en posiciones random
+                //SOLO PARA PRUEBA. 
+                setTesoroAvatar("avatar"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
+                "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
+                setTesoroAvatar("avatar"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
+                "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
+                setTesoroAvatar("avatar"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
+                "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
+                setTesoroAvatar("avatar"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
+                "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
+
+                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
+                "","res/img/tesoros/apple_red.png");
+                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
+                "","res/img/tesoros/apple_red.png");
+                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
+                "","res/img/tesoros/apple_red.png");
+                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
+                "","res/img/tesoros/apple_red.png");
                 
             }   
             
@@ -164,8 +232,5 @@
             {
                 inicializarVariables();
                 var  j = jugadores[0];
-
-               // crearTablero();
-
-            
+                crearTablero();
             });
