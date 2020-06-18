@@ -1,6 +1,36 @@
+.menuNavegacion
+{
+	background-color: cornflowerblue;
+	
+}
+
+.menuNavegacion > ul
+{
+	list-style: none;
+}
+
+.menuNavegacion > ul > li
+{
+	display:inline;
+	font-size: 1.5em;
+
+}
+
+.menuNavegacion > ul > li > a
+{
+	color:black;
+}
+
+.menuNavegacion > ul > li > a:hover
+{
+	background-color: white;
+}
+
 #barraSuperior
 {
-    background-color:#0066ff;
+	background-color:#0066ff;
+	 margin-bottom: 0px;
+
 }
 
 #mainContainer
@@ -50,7 +80,7 @@
 
 .itemForm
 {
-	margin-bottom: 20px;
+	margin-bottom: 40px;
 }
 
 .loader 

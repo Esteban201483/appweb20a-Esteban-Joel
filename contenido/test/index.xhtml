@@ -6,17 +6,16 @@
         <title>
          	Juego de Laberinto
         </title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
         <link rel="stylesheet" href="res/css/general.css"/>
         <link rel="stylesheet" href="res/css/JuegoLaberinto.css"/>
         
 
         <script defer="defer" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script defer="defer" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script defer="defer" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
 
-    <body>
-        
+    <body>   
 	    <header class="jumbotron"  id="barraSuperior">
             <div class="container">
                 <a id="tituloDeSitio" href="index.xhtml"> 
@@ -25,6 +24,14 @@
                 </a>
             </div>
         </header>
+
+
+        <nav class="menuNavegacion">
+            <ul>
+                <li><a href="#" data-toggle="modal" data-target="#myModal">Instrucciones</a></li>
+            </ul>
+        </nav>
+
         <main class="container">
             <section class="content_entry">
                 <h1><a href="crearPartida.xhtml">Crear una nueva partida</a></h1>
@@ -36,5 +43,80 @@
             </section>
 			
         </main>
+
+
+
+
+
+
+
+
+
+        <!--Modal de bootstrap-->
+        <section class="modal fade" id="myModal" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable"  role="document">       
+                    
+                    <div class="modal-content">
+                        <div class="modal-header headerModal">
+
+                                <h1>Instrucciones</h1>
+                                <button type="button" class="close" data-dismiss="modal">X</button>
+                        </div>
+                        <div class="modal-body modalFlex ">
+                            <!--Contenido de las instrucciones-->
+                            <nav class = "modalNav">
+                                <div style="position:fixed">
+                                    <h2>Items</h2>
+                                    <ul class="modalInstrucciones">
+                                            <li class="itemInstruccion"><a href="#reglas">Reglas del Juego</a></li> <hr/>
+                                            <li class="itemInstruccion"><a href="#kanjis">Kanjis</a></li> <hr/>
+                                    </ul>
+                                </div>
+                            </nav>
+
+                            <article class="modalArticle">
+                                <h2>Contenido</h2>
+                                <div>
+                                    <section id="reglas">
+                                            <h3>Reglas</h3>
+                                            <hr/>
+
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in felis a lectus vulputate porttitor eu non eros. Phasellus luctus enim odio, in suscipit augue consequat sit amet. Fusce pretium felis porttitor lorem fermentum maximus. In sem leo, imperdiet at velit in, mollis viverra lacus. Aenean id mauris ipsum. Duis facilisis augue tellus, et tempor eros molestie eget. Maecenas vel euismod diam. Praesent a nisl non neque aliquet iaculis. Proin fermentum euismod tortor in volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec quis rhoncus augue, a lacinia turpis.
+
+                                            Donec porta, nibh sed sodales aliquet, ex ex lobortis magna, iaculis blandit lectus lorem eu est. Vivamus vulputate sit amet mi sed molestie. Nulla in vestibulum orci. Nunc pulvinar orci venenatis, ultrices erat sed, lobortis elit. Nunc dictum vulputate sagittis. Praesent vitae elit enim. Suspendisse sagittis erat a mi tempor congue. Curabitur non velit convallis libero convallis feugiat eleifend quis urna. Proin tristique, ligula nec mollis fringilla, augue odio congue turpis, faucibus dictum tortor urna id leo. Aliquam eget aliquam purus. Vivamus at molestie quam. Quisque ac venenatis erat, id volutpat ex. Suspendisse ex turpis, ultrices id massa vitae, rutrum convallis metus.
+                                            
+                                            Pellentesque lacinia mauris ipsum, in tristique mi commodo quis. Proin fringilla eu arcu at eleifend. Fusce ac augue massa. Ut porttitor nec elit a pharetra. Duis pulvinar ligula risus, pulvinar porta eros facilisis eu. Donec convallis nisl ut massa venenatis tempor. Praesent sodales non tortor vel rutrum.
+                                            
+                                            Vestibulum sit amet tortor ac augue gravida venenatis. Praesent tincidunt mi eros, fringilla egestas ante tristique mattis. Aliquam posuere massa quis convallis laoreet. Proin maximus interdum diam ut commodo. Curabitur efficitur eu nunc dapibus malesuada. Nulla facilisi. Suspendisse massa arcu, convallis eu velit vel, venenatis vestibulum justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eleifend, enim ut varius venenatis, lorem tellus consectetur neque, eget vestibulum neque sem eget est. Aenean finibus tincidunt sapien at fringilla. Etiam at mattis neque.
+                                            
+                                            Phasellus feugiat mi et ultrices congue. Pellentesque erat purus, sollicitudin id pharetra ac, dignissim at augue. Cras tincidunt malesuada elit, nec consequat nulla hendrerit eu. Duis feugiat nunc vitae velit cursus blandit. Aliquam ut porta orci. Suspendisse potenti. Curabitur at eros at lorem pulvinar ornare sit amet ac ligula. Vivamus porttitor lorem ac ex placerat, id rhoncus magna varius. Nulla fermentum dolor sit amet enim pellentesque laoreet. Suspendisse dignissim facilisis viverra. Quisque lobortis in erat non convallis. Curabitur accumsan sit amet neque laoreet semper. Morbi cursus interdum neque ut egestas. Morbi a sagittis mi. In et est ut sem egestas posuere a quis justo. 
+                                    </section>
+
+                                    <section id="kanjis">
+                                            <h3>Kanjis</h3>
+                                            <hr/>
+
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in felis a lectus vulputate porttitor eu non eros. Phasellus luctus enim odio, in suscipit augue consequat sit amet. Fusce pretium felis porttitor lorem fermentum maximus. In sem leo, imperdiet at velit in, mollis viverra lacus. Aenean id mauris ipsum. Duis facilisis augue tellus, et tempor eros molestie eget. Maecenas vel euismod diam. Praesent a nisl non neque aliquet iaculis. Proin fermentum euismod tortor in volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec quis rhoncus augue, a lacinia turpis.
+
+                                            Donec porta, nibh sed sodales aliquet, ex ex lobortis magna, iaculis blandit lectus lorem eu est. Vivamus vulputate sit amet mi sed molestie. Nulla in vestibulum orci. Nunc pulvinar orci venenatis, ultrices erat sed, lobortis elit. Nunc dictum vulputate sagittis. Praesent vitae elit enim. Suspendisse sagittis erat a mi tempor congue. Curabitur non velit convallis libero convallis feugiat eleifend quis urna. Proin tristique, ligula nec mollis fringilla, augue odio congue turpis, faucibus dictum tortor urna id leo. Aliquam eget aliquam purus. Vivamus at molestie quam. Quisque ac venenatis erat, id volutpat ex. Suspendisse ex turpis, ultrices id massa vitae, rutrum convallis metus.
+                                            
+                                            Pellentesque lacinia mauris ipsum, in tristique mi commodo quis. Proin fringilla eu arcu at eleifend. Fusce ac augue massa. Ut porttitor nec elit a pharetra. Duis pulvinar ligula risus, pulvinar porta eros facilisis eu. Donec convallis nisl ut massa venenatis tempor. Praesent sodales non tortor vel rutrum.
+                                            
+                                            Vestibulum sit amet tortor ac augue gravida venenatis. Praesent tincidunt mi eros, fringilla egestas ante tristique mattis. Aliquam posuere massa quis convallis laoreet. Proin maximus interdum diam ut commodo. Curabitur efficitur eu nunc dapibus malesuada. Nulla facilisi. Suspendisse massa arcu, convallis eu velit vel, venenatis vestibulum justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eleifend, enim ut varius venenatis, lorem tellus consectetur neque, eget vestibulum neque sem eget est. Aenean finibus tincidunt sapien at fringilla. Etiam at mattis neque.
+                                            
+                                            Phasellus feugiat mi et ultrices congue. Pellentesque erat purus, sollicitudin id pharetra ac, dignissim at augue. Cras tincidunt malesuada elit, nec consequat nulla hendrerit eu. Duis feugiat nunc vitae velit cursus blandit. Aliquam ut porta orci. Suspendisse potenti. Curabitur at eros at lorem pulvinar ornare sit amet ac ligula. Vivamus porttitor lorem ac ex placerat, id rhoncus magna varius. Nulla fermentum dolor sit amet enim pellentesque laoreet. Suspendisse dignissim facilisis viverra. Quisque lobortis in erat non convallis. Curabitur accumsan sit amet neque laoreet semper. Morbi cursus interdum neque ut egestas. Morbi a sagittis mi. In et est ut sem egestas posuere a quis justo. 
+                                    
+                                    </section>
+                                </div>
+                            </article>
+
+                        </div>
+                        <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+        
+                    </div>
+                </div>
+            </section>
     </body>
 </html>
