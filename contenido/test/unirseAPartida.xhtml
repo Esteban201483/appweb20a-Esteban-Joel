@@ -28,7 +28,7 @@
 
         <main class="container">
             <h1>Unirse a Partida</h1>
-			<form class="formulario">
+			<form class="formulario" method="POST">
                     <section>
                         <h2>Datos del anfitrión</h2>
                         <hr class="separadorSeccion"/>
@@ -39,11 +39,11 @@
                             <div>
                                 <label>Modo de juego (solo para este jugador)</label>
                                 <div class="radioContainer">
-                                    <input  type="radio" id="modoFacil" name="mostrarTraducciones"  />
+                                    <input  type="radio" id="modoFacil" name="traduccion" value="facil"  />
                                     <label  for="modoFacil"  >Modo fácil (se muestran las traducciones de los kanjis)</label>
                                 </div>
                                 <div class="radioContainer">
-                                    <input  type="radio" id="modoDificil" name="mostrarTraducciones" />
+                                    <input  type="radio" id="modoDificil" name="traduccion" value="dificil" />
                                     <label for="modoDificil"  >Modo dificil (no se muestran las traducciones de los kanjis)</label> 
                                 </div>
                             </div>
@@ -52,8 +52,8 @@
                         <h2>Datos de la partida</h2>
                         <hr class="separadorSeccion"/>
                         <div>
-                            <label for="timer">ID de sesión</label>
-                            <input type="text" id="timer" name="timer"/>
+                            <label for="sesion">ID de sesión</label>
+                            <input type="text" id="sesion" name="sesion"/>
                         </div>
                         <div>
                             <input type="submit" value="Aceptar"/>

@@ -1,0 +1,30 @@
+{
+  "name": "proyectoweb",
+  "version": "1.0.0",
+  "description": "Aplicación Web para el curso Desarrollo de aplicaciones web",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Esteban Rojas Solís, Joel Chaves Sequeira",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect": "^3.7.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "filesystem": "^1.0.1",
+    "http": "0.0.1-security",
+    "nodemon": "^2.0.3",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "socket.io": "^2.3.0"
+  }
+}
