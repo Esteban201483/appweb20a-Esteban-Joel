@@ -127,7 +127,7 @@
                 var nombreFlecha = "Flecha";
                 var nombreFicha = "Ficha";
 
-                var fichas = ["cruz.png","recta.png","bloqueo.png","l.png","t.png"];
+                var fichas = ["0.png","3.png","5.png","6.png","7.png","9.png","10.png","11.png","12.png","13.png","14.png"];
 
                 var contadorFicha = 0;
 
@@ -171,7 +171,7 @@
                             contenedorTablero.append(obtenerBloqueTablero(fila + "" + columna , size, 
                             "res/img/fichas/vacia.png"));*/  
                         contenedorTablero.append(obtenerBloqueTablero(fila + "" + columna , size, 
-                            "res/img/fichas/" + fichas[Math.floor(Math.random() * 5)])); 
+                            "res/img/fichas/" + fichas[Math.floor(Math.random() * fichas.length )])); 
                         ++contadorFicha;
                     }
 
