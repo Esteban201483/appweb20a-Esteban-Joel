@@ -204,6 +204,17 @@
 
                 //Pone avatares y tesoros en posiciones random
                 //SOLO PARA PRUEBA. 
+
+                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
+                "","res/img/tesoros/apple_red.png");
+                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
+                "","res/img/tesoros/chest.png");
+                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
+                "","res/img/tesoros/key.png");
+                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
+                "","res/img/tesoros/sword_iron.png");
+                
+
                 setTesoroAvatar("avatar"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
                 "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
                 setTesoroAvatar("avatar"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
@@ -213,14 +224,6 @@
                 setTesoroAvatar("avatar"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
                 "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
 
-                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
-                "","res/img/tesoros/apple_red.png");
-                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
-                "","res/img/tesoros/apple_red.png");
-                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
-                "","res/img/tesoros/apple_red.png");
-                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
-                "","res/img/tesoros/apple_red.png");
                 
             }   
             
