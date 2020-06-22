@@ -16,6 +16,26 @@
 
 }
 
+#labelMuestra
+{
+    display: block;
+    font-weight: normal;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#labelTraduccionMuestra
+{
+    display: block;
+    font-weight: normal;
+    color: darkcyan;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
 .menuNavegacion > ul > li > a
 {
 	color:black;
@@ -61,6 +81,30 @@
 
 }
 
+
+
+.imagenFicha {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+  border-style: solid;
+  border-radius: 10px;
+}
+
+.imagenMuestra {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+}
+
+.imagenMuestra2 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
 
 
 

@@ -98,6 +98,8 @@ article
     margin-bottom: 35px;
     width: 75px;
     height: 75px;
+    border-style: solid;
+    border-radius: 10px;
 
 }
 
