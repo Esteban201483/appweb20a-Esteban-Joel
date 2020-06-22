@@ -8,7 +8,7 @@ http = http.createServer(app);
 
 //Permite que los recursos puedan ser accedidos de forma pública 
 var resources = require('path').join(__dirname + "/test/"); 
-app.use(express.static(resources));
+app.use('', express.static(resources));
 
 //Permite que los datos de los formularios sean capturados mediante solicitudes POST
 var urlEncodedParser = bodyParser.urlencoded({extended : false});
