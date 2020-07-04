@@ -1,239 +1,273 @@
 
 
 
-            /**
-             * Define la clase jugador, la cual será la encargada de almacenar todos los datos relacionados
-             * a los jugadores de la partida
-             */ 
-             class Jugador
-             {
+/**
+ * Define la clase jugador, la cual será la encargada de almacenar todos los datos relacionados
+ * a los jugadores de la partida
+ */ 
+class Jugador
+{
 
-                constructor(nombre,numeroJugador,avatar,filaActual,columnaActual)
-                {
-                    this.nombre = nombre; 
-                    this.numeroJugador = numeroJugador;
-                    this.avatar = avatar;
-                    this.filaActual = filaActual;
-                    this.columnaActual = columnaActual;
-                }
+    constructor(nombre,numeroJugador,avatar,filaActual,columnaActual)
+    {
+        this.nombre = nombre; 
+        this.numeroJugador = numeroJugador;
+        this.avatar = avatar;
+        this.filaActual = filaActual;
+        this.columnaActual = columnaActual;
+    }
 
-                debug()
-                {
-                    //alert(this.nombre);
-                }
+    debug()
+    {
+        //alert(this.nombre);
+    }
 
-             }
+}
 
+/**
+ * Define la clase partida, la cual será la encargada de almacenar algunos datos relacionados con la partida
+ */
+class Partida
+{
+    constructor(listaJugadores)
+    {
+        this.listaJugadores = listaJugadores;
+    }
+    /*constructor()
+    {
+        this.listaJugadores = [];
+    }   */
+}
 
+/**
+ * Define la clase tablero, la cual será la encargada de almacenar la representación lógica del tablero
+ * y algunos de sus atributos
+ */
+class Tablero
+{
+    constructor(filas, columnas, tiempoTurno, ayudas)
+    {
+        this.filas = filas;
+        this.columnas = columnas;
+        this.tiempoTurno = tiempoTurno;
+        this.ayudas = ayudas;
+    }
 
-            
-            //Variables de la partida
-            var filas, columnas; //Dimensiones del tablero
-            var tiempoTurno; //Duración del turno en segundos
-            var ayudas; //Indica si se muestra la traducción al español del elemento
-
-            //Variables del tablero
-            var jugadores = [];
-
-
-
-            function setTesoroAvatar(imgId,imageSrc)
-            {
-               $("#" + imgId).attr("hidden",false);
-               $("#" + imgId).attr("src",imageSrc);
-             
-            }
-
-            /**
-             * Este método recibe las variables necesarias para el desarrollo del juego
-             * 
-             */
-            function inicializarVariables()
-            {
-                filas = 7;
-                columnas = 7;
-                tiempoTurno = 120;
-                ayudas = true;
-
-                jugadores.push(new Jugador("Esteban",1,"",0,0));
-                jugadores.push(new Jugador("Joel",2,"",4,4));
-
-            }
-
-
-            /**
-             * Devuelve el código de un salto de línea semánticamente correcto
-             */
-            function obtenerSaltoLinea()
-            {
-                return "<br/>"
-            }
-
-            /**
-             * Devuelve el código para crear un elemento IMG.
-             * @param {String} id El identificador del nuevo elemento img
-             * @param {int} dimension El ancho y alto al que se debe redimensionar la imagen
-             * @param {String} rutaImagen La dirección de la imagen
-             * @param {String} classElement La clase del elemento img
-             */
-            function obtenerElementoImg(id, dimension, rutaImagen, classElement)
-            {
-                return "<img id=\""+id+"\" class=\""+classElement+"\"" +
-                " src=\""+rutaImagen+"\" height=\""+dimension+"\" width=\""+dimension+"\" />";
-            }
-
-            function obtenerElementoImgOculto(id, dimension, classElement)
-            {
-                return "<img id=\""+id+"\" hidden=\"hidden\" class=\""+classElement+"\""+
-                " height=\""+dimension+"\" width=\""+dimension+"\" />";
-            }
-
-            function obtenerAperturaDivContenedor()
-            {
-                return "<div class=\"contenedorImagen\">"
-            }
-
-            /**
-             * Devuelve el código para crear todos los elementos que representan una ficha.
-             * Los elementos en total son:
-             *      div contenedor
-             *      img para la ficha del tablero
-             *      img para la ficha del avatar de jugador (Oculto por defecto)
-             *      img para la ficha del tesoro (Oculto por defecto)
-             * @param {String} id El identificador del nuevo elemento img
-             * @param {int} dimension El ancho y alto al que se debe redimensionar la imagen
-             * @param {String} rutaImagen La dirección de la imagen
-             */
-            function obtenerBloqueTablero(id, dimension, rutaImagen)
-            {
-                return obtenerAperturaDivContenedor() + " " + 
-                obtenerElementoImg("Ficha" + id,dimension,rutaImagen,"fichaTablero") + " " + 
-                obtenerElementoImgOculto("avatar" + id,dimension,"avatarTablero") + " " + 
-                obtenerElementoImgOculto("tesoro" + id, dimension,"tesoroTablero") +  " </div>";
-            }
-
-            /**
-             * Se encarga de crear un tablero de forma dinámica.
-             * todo: Especificar como se obtienen los datos para la creación del tablero
-             */
-            function crearTablero()
-            {
-
-                var contenedorTablero = $("#contenedorTablero"); //Obtiene el div que almacenará al tablero
+    /*constructor()
+    {
+        this.filas = 0;
+        this.columnas = 0;
+        this.tiempoTurno = 0;
+        this.ayudas = true;
+    }*/
+}
 
 
-                var size = 550 / Math.min(filas + 2,columnas + 2); //El 2 es para incluir las flechas en todas las direcciones del tablero
-                var idFlecha = 0; //Contador para identificar las flechas
-                var nombreFlecha = "Flecha";
-                var nombreFicha = "Ficha";
-
-                var fichas = ["0.png","3.png","5.png","6.png","7.png","9.png","10.png","11.png","12.png","13.png","14.png"];
-
-                var contadorFicha = 0;
-
-                contenedorTablero.append(obtenerElementoImg("",size, "res/img/fichas/vacia.png"));
-                //crea las flechas superiores
-                for(var columna = 0; columna < (columnas); ++columna)
-                {
-                    if((columna % 2) == 0) //Coloca imagenes vacias en las posiciones pares
-                        contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
-                    else //Coloca las imagenes de las flechas verticales
-                    {
-                        contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha superior.png"));
-                        ++idFlecha;
-                    }
-                }
-
-                contenedorTablero.append(obtenerSaltoLinea());
-
-                for(var fila = 0; fila < filas; ++fila)
-                {
-
-                    //Controla la creación de flechas al lado izquierdo del tablero
-                    if(((fila+1) % 2 != 0) && (fila+1) != filas+2) //Coloca imagenes vacias en las posiciones pares
-                        contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
-                    else //Coloca las imagenes de las flechas izquierdas
-                    {
-                        contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha izquierda.png"));
-                        ++idFlecha;
-                    }
 
 
-                    /////////////////////////////////Coloca las fichas de la fila actual
-                    for(var columna = 0; columna < columnas; ++columna)
-                    {
 
-                        /*if(contadorFicha % 2 == 0)
+function setTesoroAvatar(imgId,imageSrc)
+{
+    $("#" + imgId).attr("hidden",false);
+    $("#" + imgId).attr("src",imageSrc);
+    
+}
 
-                            contenedorTablero.append(obtenerBloqueTablero(fila + "" + columna , size, 
-                            "res/img/fichas/fichaNormal.png"));  
-                        else
-                            contenedorTablero.append(obtenerBloqueTablero(fila + "" + columna , size, 
-                            "res/img/fichas/vacia.png"));*/  
-                        contenedorTablero.append(obtenerBloqueTablero(fila + "" + columna , size, 
-                            "res/img/fichas/" + fichas[Math.floor(Math.random() * fichas.length )])); 
-                        ++contadorFicha;
-                    }
-
-
-                    //Controla la creación de flechas al lado derecho del tablero
-                    if(((fila+1) % 2 != 0) && (fila+1) != filas+2 ) //Coloca imagenes vacias en las posiciones pares
-                        contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
-                    else //Coloca las imagenes de las flechas verticales
-                    {
-                        contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha derecha.png"));
-                        ++idFlecha;
-                    }
-
-                    contenedorTablero.append(obtenerSaltoLinea());
-                }
-
-                //crea las flechas Inferiores
-                contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
-                for(var columna = 0; columna < (columnas); ++columna)
-                {
-                    if(columna % 2 == 0) //Coloca imagenes vacias en las posiciones pares
-                        contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png") );
-                    else //Coloca las imagenes de las flechas verticales
-                    {
-                        contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha inferior.png") );
-                        ++idFlecha;
-                    }
-                }
+/**
+ * Este método recibe las variables necesarias para el desarrollo del juego
+ * 
+ */
+function inicializarVariables(partida,tablero)
+{
+    tablero.filas = 7;
+    tablero.columnas = 7;
+    tablero.tiempoTurno = 120;
+    tablero.ayudas = true;
 
 
-                //Pone avatares y tesoros en posiciones random
-                //SOLO PARA PRUEBA. 
+    let jugadores = Array();
+    jugadores.push(new Jugador("Esteban",1,"",0,0));
+    jugadores.push(new Jugador("Joel",2,"",4,4));
 
-                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
-                "","res/img/tesoros/apple_red.png");
-                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
-                "","res/img/tesoros/chest.png");
-                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
-                "","res/img/tesoros/key.png");
-                setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
-                "","res/img/tesoros/sword_iron.png");
-                
+    partida.jugadores = jugadores;
+}
 
-                setTesoroAvatar("avatar"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
-                "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
-                setTesoroAvatar("avatar"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
-                "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
-                setTesoroAvatar("avatar"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
-                "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
-                setTesoroAvatar("avatar"+(Math.floor(Math.random()*(filas-1)))+ +(Math.floor(Math.random()*(columnas-1))) +
-                "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
 
-                
-            }   
-            
-            /**
-             * Función ejecutada una vez que el documento está listo.
-             * Se encarga de inicializar las variables del juego  y de crear el tablero.
-             */
-            $(document).ready(function()
-            {
-                inicializarVariables();
-                var  j = jugadores[0];
-                crearTablero();
-            });
+/**
+ * Devuelve el código de un salto de línea semánticamente correcto
+ */
+function obtenerSaltoLinea()
+{
+    return "<br/>"
+}
+
+/**
+ * Devuelve el código para crear un elemento IMG.
+ * @param {String} id El identificador del nuevo elemento img
+ * @param {int} dimension El ancho y alto al que se debe redimensionar la imagen
+ * @param {String} rutaImagen La dirección de la imagen
+ * @param {String} classElement La clase del elemento img
+ */
+function obtenerElementoImg(id, dimension, rutaImagen, classElement)
+{
+    return "<img id=\""+id+"\" class=\""+classElement+"\"" +
+    " src=\""+rutaImagen+"\" height=\""+dimension+"\" width=\""+dimension+"\" />";
+}
+
+function obtenerElementoImgOculto(id, dimension, classElement)
+{
+    return "<img id=\""+id+"\" hidden=\"hidden\" class=\""+classElement+"\""+
+    " height=\""+dimension+"\" width=\""+dimension+"\" />";
+}
+
+function obtenerAperturaDivContenedor()
+{
+    return "<div class=\"contenedorImagen\">"
+}
+
+/**
+ * Devuelve el código para crear todos los elementos que representan una ficha.
+ * Los elementos en total son:
+ *      div contenedor
+ *      img para la ficha del tablero
+ *      img para la ficha del avatar de jugador (Oculto por defecto)
+ *      img para la ficha del tesoro (Oculto por defecto)
+ * @param {String} id El identificador del nuevo elemento img
+ * @param {int} dimension El ancho y alto al que se debe redimensionar la imagen
+ * @param {String} rutaImagen La dirección de la imagen
+ */
+function obtenerBloqueTablero(id, dimension, rutaImagen)
+{
+    return obtenerAperturaDivContenedor() + " " + 
+    obtenerElementoImg("Ficha" + id,dimension,rutaImagen,"fichaTablero") + " " + 
+    obtenerElementoImgOculto("avatar" + id,dimension,"avatarTablero") + " " + 
+    obtenerElementoImgOculto("tesoro" + id, dimension,"tesoroTablero") +  " </div>";
+}
+
+/**
+ * Se encarga de crear un tablero de forma dinámica.
+ * todo: Especificar como se obtienen los datos para la creación del tablero
+ */
+function crearTablero(tablero)
+{
+
+    let contenedorTablero = $("#contenedorTablero"); //Obtiene el div que almacenará al tablero
+
+
+    let size = 550 / Math.min(tablero.filas + 2,tablero.columnas + 2); //El 2 es para incluir las flechas en todas las direcciones del tablero
+    let idFlecha = 0; //Contador para identificar las flechas
+    let nombreFlecha = "Flecha";
+    let nombreFicha = "Ficha";
+
+    let fichas = ["0.png","3.png","5.png","6.png","7.png","9.png","10.png","11.png","12.png","13.png","14.png"];
+
+    let contadorFicha = 0;
+
+    contenedorTablero.append(obtenerElementoImg("",size, "res/img/fichas/vacia.png"));
+    //crea las flechas superiores
+    for(let columna = 0; columna < (tablero.columnas); ++columna)
+    {
+        if((columna % 2) == 0) //Coloca imagenes vacias en las posiciones pares
+            contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
+        else //Coloca las imagenes de las flechas verticales
+        {
+            contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha superior.png"));
+            ++idFlecha;
+        }
+    }
+
+    contenedorTablero.append(obtenerSaltoLinea());
+
+    for(let fila = 0; fila < tablero.filas; ++fila)
+    {
+
+        //Controla la creación de flechas al lado izquierdo del tablero
+        if(((fila+1) % 2 != 0) && (fila+1) != tablero.filas+2) //Coloca imagenes vacias en las posiciones pares
+            contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
+        else //Coloca las imagenes de las flechas izquierdas
+        {
+            contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha izquierda.png"));
+            ++idFlecha;
+        }
+
+
+        /////////////////////////////////Coloca las fichas de la fila actual
+        for(let columna = 0; columna < tablero.columnas; ++columna)
+        {
+
+            /*if(contadorFicha % 2 == 0)
+
+                contenedorTablero.append(obtenerBloqueTablero(fila + "" + columna , size, 
+                "res/img/fichas/fichaNormal.png"));  
+            else
+                contenedorTablero.append(obtenerBloqueTablero(fila + "" + columna , size, 
+                "res/img/fichas/vacia.png"));*/  
+            contenedorTablero.append(obtenerBloqueTablero(fila + "" + columna , size, 
+                "res/img/fichas/" + fichas[Math.floor(Math.random() * fichas.length )])); 
+            ++contadorFicha;
+        }
+
+
+        //Controla la creación de flechas al lado derecho del tablero
+        if(((fila+1) % 2 != 0) && (fila+1) != tablero.filas+2 ) //Coloca imagenes vacias en las posiciones pares
+            contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
+        else //Coloca las imagenes de las flechas verticales
+        {
+            contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha derecha.png"));
+            ++idFlecha;
+        }
+
+        contenedorTablero.append(obtenerSaltoLinea());
+    }
+
+    //crea las flechas Inferiores
+    contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
+    for(let columna = 0; columna < (tablero.columnas); ++columna)
+    {
+        if(columna % 2 == 0) //Coloca imagenes vacias en las posiciones pares
+            contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png") );
+        else //Coloca las imagenes de las flechas verticales
+        {
+            contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha inferior.png") );
+            ++idFlecha;
+        }
+    }
+
+
+    //Pone avatares y tesoros en posiciones random
+    //SOLO PARA PRUEBA. 
+
+    setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
+    "","res/img/tesoros/apple_red.png");
+    setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
+    "","res/img/tesoros/chest.png");
+    setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
+    "","res/img/tesoros/key.png");
+    setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
+    "","res/img/tesoros/sword_iron.png");
+    
+
+    setTesoroAvatar("avatar"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
+    "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
+    setTesoroAvatar("avatar"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
+    "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
+    setTesoroAvatar("avatar"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
+    "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
+    setTesoroAvatar("avatar"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
+    "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
+
+    
+}   
+
+/**
+ * Función ejecutada una vez que el documento está listo.
+ * Se encarga de inicializar las variables del juego  y de crear el tablero.
+ */
+$(document).ready(function()
+{
+    let partida = new Partida();
+    let tablero = new Tablero();
+
+    inicializarVariables(partida,tablero);
+    crearTablero(tablero);
+});
