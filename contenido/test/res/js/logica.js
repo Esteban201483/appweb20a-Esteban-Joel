@@ -152,7 +152,7 @@ function crearTablero(tablero)
 {
 
     let contenedorTablero = $("#contenedorTablero"); //Obtiene el div que almacenará al tablero
-
+    let innerHTML = "";
 
     let size = 550 / Math.min(tablero.filas + 2,tablero.columnas + 2); //El 2 es para incluir las flechas en todas las direcciones del tablero
     let idFlecha = 0; //Contador para identificar las flechas
@@ -163,30 +163,30 @@ function crearTablero(tablero)
 
     let contadorFicha = 0;
 
-    contenedorTablero.append(obtenerElementoImg("",size, "res/img/fichas/vacia.png"));
+    innerHTML += (obtenerElementoImg("",size, "res/img/fichas/vacia.png"));
     //crea las flechas superiores
     for(let columna = 0; columna < (tablero.columnas); ++columna)
     {
         if((columna % 2) == 0) //Coloca imagenes vacias en las posiciones pares
-            contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
+            innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
         else //Coloca las imagenes de las flechas verticales
         {
-            contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha superior.png"));
+            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha superior.png"));
             ++idFlecha;
         }
     }
 
-    contenedorTablero.append(obtenerSaltoLinea());
+    innerHTML += (obtenerSaltoLinea());
 
     for(let fila = 0; fila < tablero.filas; ++fila)
     {
 
         //Controla la creación de flechas al lado izquierdo del tablero
         if(((fila+1) % 2 != 0) && (fila+1) != tablero.filas+2) //Coloca imagenes vacias en las posiciones pares
-            contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
+            innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
         else //Coloca las imagenes de las flechas izquierdas
         {
-            contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha izquierda.png"));
+            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha izquierda.png"));
             ++idFlecha;
         }
 
@@ -197,12 +197,12 @@ function crearTablero(tablero)
 
             /*if(contadorFicha % 2 == 0)
 
-                contenedorTablero.append(obtenerBloqueTablero(fila + "" + columna , size, 
+                innerHTML += (obtenerBloqueTablero(fila + "" + columna , size, 
                 "res/img/fichas/fichaNormal.png"));  
             else
-                contenedorTablero.append(obtenerBloqueTablero(fila + "" + columna , size, 
+                innerHTML += (obtenerBloqueTablero(fila + "" + columna , size, 
                 "res/img/fichas/vacia.png"));*/  
-            contenedorTablero.append(obtenerBloqueTablero(fila + "" + columna , size, 
+            innerHTML += (obtenerBloqueTablero(fila + "" + columna , size, 
                 "res/img/fichas/" + fichas[Math.floor(Math.random() * fichas.length )])); 
             ++contadorFicha;
         }
@@ -210,33 +210,34 @@ function crearTablero(tablero)
 
         //Controla la creación de flechas al lado derecho del tablero
         if(((fila+1) % 2 != 0) && (fila+1) != tablero.filas+2 ) //Coloca imagenes vacias en las posiciones pares
-            contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
+            innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
         else //Coloca las imagenes de las flechas verticales
         {
-            contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha derecha.png"));
+            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha derecha.png"));
             ++idFlecha;
         }
 
-        contenedorTablero.append(obtenerSaltoLinea());
+        innerHTML += (obtenerSaltoLinea());
     }
 
     //crea las flechas Inferiores
-    contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
+    innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
     for(let columna = 0; columna < (tablero.columnas); ++columna)
     {
         if(columna % 2 == 0) //Coloca imagenes vacias en las posiciones pares
-            contenedorTablero.append(obtenerElementoImg("",size,"res/img/fichas/vacia.png") );
+            innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png") );
         else //Coloca las imagenes de las flechas verticales
         {
-            contenedorTablero.append(obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha inferior.png") );
+            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha inferior.png") );
             ++idFlecha;
         }
     }
 
+    contenedorTablero.html(innerHTML);
+
 
     //Pone avatares y tesoros en posiciones random
-    //SOLO PARA PRUEBA. 
-
+    //SOLO PARA PRUEBA.
     setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
     "","res/img/tesoros/apple_red.png");
     setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
