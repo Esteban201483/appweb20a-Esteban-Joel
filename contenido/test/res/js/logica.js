@@ -422,9 +422,21 @@ function redibujarFicha(fila,columna,nuevaFicha)
 function redibujarFichaSobrante(fichaSobrante)
 {
     const contenedorFichaSobrante = document.getElementById("fichaSobrante");
+    contenedorFichaSobrante.removeEventListener('click',rotarFichaSobrante);
     contenedorFichaSobrante.addEventListener('click',function(){rotarFichaSobrante(fichaSobrante,contenedorFichaSobrante)});
     contenedorFichaSobrante.src = "res/img/fichas/" + fichaSobrante.numeroActual + ".png";
 }
+
+
+function habilitarMovimiento(partida,tablero)
+{
+    //Todo: Desactivar todas las flechas una vez se haya mostrado las inserciones al profesor
+    const accionActual = $("#accionActual");
+    accionActual.text("Moviendose...");
+
+    
+}
+
 /**
  * Función disparada al presionar sobre una flecha. Permite realizar la inserción
  * según la flecha presionada
@@ -468,8 +480,28 @@ function flechaPresionada(partida,tablero, flecha)
             break;
     }
     redibujarFichaSobrante(tablero.getFichaSobrante());
-    tablero.debugTablero();
-    
+
+    //Una vez se ha presionado la flecha, se habilita el movimiento
+    habilitarMovimiento(partida,tablero);
+}
+
+function toggleClaseAnimacion(idElemento, nombreAnimacion)
+{
+	const contenedor = document.getElementById(idElemento);
+
+	if(!contenedor.classList.contains(nombreAnimacion))
+	{
+		contenedor.classList.add(nombreAnimacion);
+	}
+	else
+	{
+		contenedor.classList.remove(nombreAnimacion);
+	}
+}
+
+function toggleMovimientoVertical(idFlecha)
+{
+	toggleClaseAnimacion(idFlecha,"animacionFlechasVerticales");
 }
 
 function habilitarInsercion(partida,tablero)
@@ -485,10 +517,16 @@ function habilitarInsercion(partida,tablero)
         flechaHTML = document.getElementById("Flecha" + flechaActual.id);
         flechaHTML.addEventListener('click',function(){flechaPresionada(partida,tablero,flecha);});
         
-        //Todo: Agregar efecto over a la flecha con las animaciones de CSS
+        //Agrega efecto over a la flecha con las animaciones de CSS
+        if(flechaActual.orientacion == "vertical-superior")
+        {
+            toggleMovimientoVertical("Flecha" + flechaActual.id);
+        }
+
 
     }
 }
+
 
 function proximoTurno(partida,tablero)
 {

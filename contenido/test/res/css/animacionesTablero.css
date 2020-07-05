@@ -1,0 +1,20 @@
+.animacionFlechasVerticales
+{
+	animation-name: movimientoVertical;
+	animation-iteration-count: infinite;
+	animation-duration: 1s;
+	animation-direction: reverse;
+}
+
+@keyframes movimientoVertical
+{
+	0%
+	{
+		max-height : 5%;
+	}
+
+	100%
+	{
+		max-height : 8%;
+	}
+}
