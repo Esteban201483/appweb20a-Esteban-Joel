@@ -156,24 +156,7 @@ function setTesoroAvatar(imgId,imageSrc)
     
 }
 
-/**
- * Este método recibe las variables necesarias para el desarrollo del juego
- * 
- */
-function inicializarVariables(partida,tablero)
-{
-    tablero.filas = 7;
-    tablero.columnas = 7;
-    tablero.tiempoTurno = 120;
-    tablero.ayudas = true;
 
-
-    let jugadores = Array();
-    jugadores.push(new Jugador("Esteban",1,"",0,0));
-    jugadores.push(new Jugador("Joel",2,"",4,4));
-
-    partida.jugadores = jugadores;
-}
 
 
 /**
@@ -362,6 +345,27 @@ function rotarFichaSobrante(ficha, contenedor)
     contenedor.src = "res/img/fichas/" + ficha.numeroActual + ".png";
 
 }
+
+/**
+ * Este método recibe las variables necesarias para el desarrollo del juego
+ * 
+ */
+function inicializarVariables(partida,tablero)
+{
+    tablero.filas = 15;
+    tablero.columnas = 15;
+    tablero.tiempoTurno = 120;
+    tablero.ayudas = true;
+
+
+    let jugadores = Array();
+    jugadores.push(new Jugador("Esteban",1,"",0,0));
+    jugadores.push(new Jugador("Joel",2,"",4,4));
+
+    partida.jugadores = jugadores;
+}
+
+
 
 /**
  * Función ejecutada una vez que el documento está listo.
