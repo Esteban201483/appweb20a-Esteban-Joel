@@ -235,9 +235,12 @@ function crearTablero(tablero)
 {
 
     let contenedorTablero = $("#contenedorTablero"); //Obtiene el div que almacenará al tablero
-    let innerHTML = "";
-
-    let size = 550 / Math.min(tablero.filas + 2,tablero.columnas + 2); //El 2 es para incluir las flechas en todas las direcciones del tablero
+    contenedorTablero.height($("main").height());
+    contenedorTablero.width($("main").width());
+    let innerHTML = ""; 
+    let size = 100 / Math.max(tablero.filas + 2, tablero.columnas + 2) + "%";
+    //let size = 550 / Math.min(tablero.filas + 2,tablero.columnas + 2); //El 2 es para incluir las flechas en todas las direcciones del tablero
+    //let size = contenedorTablero.height() / Math.min(tablero.filas + 2,tablero.columnas + 2); //El 2 es para incluir las flechas en todas las direcciones del tablero
     let idFlecha = 0; //Contador para identificar las flechas
     let nombreFlecha = "Flecha";
     let nombreFicha = "Ficha";
@@ -246,15 +249,15 @@ function crearTablero(tablero)
 
     let contadorFicha = 0;
 
-    innerHTML += (obtenerElementoImg("",size, "res/img/fichas/vacia.png"));
+    innerHTML += (obtenerElementoImg("",size, "res/img/fichas/vacia.png","contenedorImagen"));
     //crea las flechas superiores
     for(let columna = 0; columna < (tablero.columnas); ++columna)
     {
         if((columna % 2) == 0) //Coloca imagenes vacias en las posiciones pares
-            innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
+            innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
         else //Coloca las imagenes de las flechas verticales
         {
-            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha superior.png"));
+            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha superior.png","contenedorImagen"));
             ++idFlecha;
         }
     }
@@ -266,10 +269,10 @@ function crearTablero(tablero)
 
         //Controla la creación de flechas al lado izquierdo del tablero
         if(((fila+1) % 2 != 0) && (fila+1) != tablero.filas+2) //Coloca imagenes vacias en las posiciones pares
-            innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
+            innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
         else //Coloca las imagenes de las flechas izquierdas
         {
-            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha izquierda.png"));
+            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha izquierda.png","contenedorImagen"));
             ++idFlecha;
         }
 
@@ -296,7 +299,7 @@ function crearTablero(tablero)
             innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
         else //Coloca las imagenes de las flechas verticales
         {
-            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha derecha.png"));
+            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha derecha.png","contenedorImagen"));
             ++idFlecha;
         }
 
@@ -304,14 +307,14 @@ function crearTablero(tablero)
     }
 
     //crea las flechas Inferiores
-    innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
+    innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
     for(let columna = 0; columna < (tablero.columnas); ++columna)
     {
         if(columna % 2 == 0) //Coloca imagenes vacias en las posiciones pares
-            innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png") );
+            innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen") );
         else //Coloca las imagenes de las flechas verticales
         {
-            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha inferior.png") );
+            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha inferior.png","contenedorImagen") );
             ++idFlecha;
         }
     }
@@ -321,6 +324,7 @@ function crearTablero(tablero)
 
     //Pone avatares y tesoros en posiciones random
     //SOLO PARA PRUEBA.
+    setTesoroAvatar("tesoro00","res/img/tesoros/chest.png");
     setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
     "","res/img/tesoros/apple_red.png");
     setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
@@ -340,10 +344,19 @@ function crearTablero(tablero)
     setTesoroAvatar("avatar"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
     "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
 
+
+
+    $(".contenedorImagen").height(size);
+    $(".contenedorImagen").width(size);
+    $(".tesoroTablero").height("75%");
+    $(".tesoroTablero").width("75%");
+    $(".avatarTablero").height("50%");
+    $(".avatarTablero").width("50%");
+
     
 }   
 
-function rotarFichaSobrante(ficha, contenedor)
+function rotarFichaSobrante(ficha, contenedor) 
 {
     ficha.rotarIzquierda();
     contenedor.src = "res/img/fichas/" + ficha.numeroActual + ".png";

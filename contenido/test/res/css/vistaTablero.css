@@ -1,4 +1,19 @@
 
+#contenedorTablero
+{
+    height : 100%;
+}
+
+body
+{
+    height: 100%;
+}
+
+main
+{
+    height: 100%;
+}
+
 .SelectedImage
 {
     border: 5px solid blue;
@@ -13,16 +28,16 @@
 {
     display: inline-block;
     position: relative;
-    /*width: 90px;
-    height: 90px;*/
+    width : 5%;
+    height : 5%;
 }
 
 .fichaTablero
 {
     position: relative;
     z-index: 1;
-    /*width: 90px;
-    height: 90px;*/
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
 }
@@ -47,7 +62,7 @@
     /*width: 60px;*/
     left:5px;
     top:5px;
-    height: 60px;
+    /*height: 60px;*/
 }
 
 .contenedorFlex
@@ -99,8 +114,10 @@ article
 .imagenFichaDatos
 {
     margin-bottom: 35px;
-    width: 75px;
-    height: 75px;
+    width: 100px;
+    height: 100px;
+    max-width: 100%;
+    height: auto;
     border-style: solid;
     border-radius: 10px;
 
