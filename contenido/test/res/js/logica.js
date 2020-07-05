@@ -57,6 +57,15 @@ class Partida
     }
 }
 
+class Posicion
+{
+    constructor(fila,columna)
+    {
+        this.fila = fila;
+        this.columna = columna;
+    }
+}
+
 /**
  * Define la clase tablero, la cual será la encargada de almacenar la representación lógica del tablero
  * y algunos de sus atributos
@@ -70,6 +79,7 @@ class Tablero
         this.tiempoTurno = tiempoTurno;
         this.ayudas = ayudas;
         this.fichaSobrante = null;
+        this.movimientosPermitidos = Array();
 
         //Crea un tablero lógico para el control del movimiento de los jugadores
         //Debe almacenar instancias de fichas
@@ -87,6 +97,125 @@ class Tablero
 
         this.listaFlechas = Array();
 
+    }
+
+    getMovimientosPermitidos()
+    {
+        return this.movimientosPermitidos;
+    }
+
+    /**
+     * Calcula todos los movimientos posibles desde una posición inicial
+     * Deja los datos cargados en el array movimientosPermitidos
+     * 
+     * Utiliza la busqueda exhaustiva para determinar cuales movimientos pueden realizarse.
+     * Para ello, utiliza un array para determinar las proximas posiciones en las que "hay camino"
+     * y un array para determinar las posiciones ya analizadas
+     * @param {*} filaInicial 
+     * @param {*} columnaInicial 
+     */
+    calcularMovimientosPermitidos(filaInicial, columnaInicial)
+    {
+        this.movimientosPermitidos = Array();
+        let proximasPosiciones = Array();
+        let diccionarioPosiciones = Array(this.filas);
+        let posicionActual = null;
+
+        for(let c = 0; c < this.columnas; ++c)
+            diccionarioPosiciones[c] = Array();
+
+        proximasPosiciones.push(new Posicion(filaInicial,columnaInicial));
+    
+
+        while(proximasPosiciones.length > 0)
+        {
+            posicionActual = proximasPosiciones.shift();
+            let posicionAnalizada = false;
+
+            //Verifica en el diccionario si la posición ya fue analizada
+            posicionAnalizada = diccionarioPosiciones[posicionActual.fila].includes(posicionActual.columna);
+            
+            if(!posicionAnalizada)
+            {
+                let filaAnalizada = posicionActual.fila;
+                let columnaAnalizada = posicionActual.columna;
+
+                diccionarioPosiciones[filaAnalizada].push(columnaAnalizada);
+
+                //Obtiene la representación binaria de la ficha de la posicon
+               let numero = this.getFicha(filaAnalizada,columnaAnalizada).numeroActual;
+               
+               //Utiliza operaciones binarias para determinar en cuales direcciones existe un camino
+               //Uso de operaciones binarias basadas en el tutorial de https://www.w3schools.com/js/js_bitwise.asp 
+               let caminoDerecho = (numero & 1) != 0;
+               let caminoIzquierdo = (numero & 2) != 0;
+               let caminoSuperior = (numero & 8) != 0;
+               let caminoInferior = (numero & 4) != 0;
+
+               /*console.log("Camino derecho: ", caminoDerecho);
+               console.log("Camino izquierdo: ", caminoIzquierdo);
+               console.log("Camino superior: ", caminoSuperior);
+               console.log("Camino inferior: ", caminoInferior);
+               console.log("Ficha: ", numero);*/
+
+               //Indica que hay un movimiento posible en esta ficha
+               this.movimientosPermitidos.push(Array(filaAnalizada,columnaAnalizada));
+
+               //Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
+               if(caminoSuperior && filaAnalizada > 0)
+                    proximasPosiciones.push(new Posicion(filaAnalizada - 1,columnaAnalizada));
+
+                //Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
+               if(caminoInferior && filaAnalizada < this.filas -1)
+                proximasPosiciones.push(new Posicion(filaAnalizada + 1,columnaAnalizada));columnaAnalizada
+
+                //Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
+                if(caminoIzquierdo && columnaAnalizada > 0)
+                    proximasPosiciones.push(new Posicion(filaAnalizada,columnaAnalizada - 1));
+
+                //Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
+                if(caminoDerecho && columnaAnalizada < this.columnas -1)
+                    proximasPosiciones.push(new Posicion(filaAnalizada,columnaAnalizada + 1));
+            }
+            else
+            {   
+
+            }
+            console.log("Iteración");
+
+
+        }
+        console.log("Fin jaja");
+        console.log(this.movimientosPermitidos);
+    }
+
+    /**
+     * Indica si se puede realizar o no un movimiento en una posición determinada
+     * @param {Number} fila 
+     * @param {Number} columna 
+     */
+    verificarMovimientosPermitidos(fila,columna)
+    {
+        let permitido = false;
+
+        for(let m = 0; m < this.movimientosPermitidos.length && !permitido; ++m)
+        {
+            let fichaPermitida = movimientosPermitidos[m];
+
+            permitido =( fichaPermitida[0] == fila && fichaPermitida[1] == columna) ;
+        }
+
+        return permitido;
+    }
+
+    agregarMovimientosPermitidos(fila,columna)
+    {
+        this.movimientosPermitidos.push(array(fila,columna));
+    }
+
+    reiniciarMovimientosPermitidos()
+    {
+        this.movimientosPermitidos = Array();
     }
 
     setFichaSobrante(ficha)
@@ -434,7 +563,16 @@ function habilitarMovimiento(partida,tablero)
     const accionActual = $("#accionActual");
     accionActual.text("Moviendose...");
 
+    //Obtiene el jugador con el turno actual
     
+    let jugador = partida.jugadores[partida.jugadorTurno];
+
+    tablero.reiniciarMovimientosPermitidos(); //Anula los movimientos permitidos anteriores
+    tablero.calcularMovimientosPermitidos(jugador.filaActual, jugador.columnaActual); //Calcula los movimientos permitidos de acuerdo con la ubicación del jugador
+
+    movimientosPermitidos = tablero.getMovimientosPermitidos();
+
+    //Recorre cada movimiento permitido 
 }
 
 /**
@@ -534,7 +672,7 @@ function proximoTurno(partida,tablero)
 
     if(!partida.finalizada)
     {
-        partida.jugadorTurno = partida.jugadores[partida.jugadorTurno];
+        //partida.jugadorTurno = partida.jugadores[partida.jugadorTurno];
         textoJugadorActual.text(jugadorActual.nombre);
 
         habilitarInsercion(partida,tablero);
