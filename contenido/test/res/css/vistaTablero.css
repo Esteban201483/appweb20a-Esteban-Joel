@@ -1,3 +1,14 @@
+.contenedorFiltroAmarillo
+{
+    position : absolute;
+    background-color: yellow;
+    opacity: 0%;
+    z-index: 2;
+    width : 100%;
+    height : 100%;
+    top: 0;
+    left: 0;
+}
 
 #contenedorTablero
 {

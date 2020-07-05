@@ -6,6 +6,31 @@ class Flecha
         this.orientacion = orientacion;
         this.columnaFilaAsociada = columnaFilaAsociada; //Un solo valor. La orientación determina si es fila o columna
     }
+
+    getId()
+    {
+        return this.id;
+    }
+
+    setId(id)
+    {
+        this.id = id;
+    }
+
+    getOrientacion()
+    {
+        return this.orientacion;
+    }
+
+    setOrientacion(orientacion)
+    {
+        return this.getOrientacion;
+    }
+
+    getColumnaFilaAsociada()
+    {
+        return this.columnaFilaAsociada;
+    }
 }
 
 
@@ -163,19 +188,38 @@ class Tablero
 
                //Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
                if(caminoSuperior && filaAnalizada > 0)
-                    proximasPosiciones.push(new Posicion(filaAnalizada - 1,columnaAnalizada));
+               {
+                    //Verifica que la ficha adyacente tenga camino con la ficha actual
+                    let fichaAdyacente = this.tableroLogico[filaAnalizada -1][columnaAnalizada];
+                    if((fichaAdyacente.numeroActual & 4) != 0) //existe camino inferior!
+                        proximasPosiciones.push(new Posicion(filaAnalizada - 1,columnaAnalizada));
+               }
 
                 //Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
                if(caminoInferior && filaAnalizada < this.filas -1)
-                proximasPosiciones.push(new Posicion(filaAnalizada + 1,columnaAnalizada));columnaAnalizada
+               {
+                let fichaAdyacente = this.tableroLogico[filaAnalizada + 1][columnaAnalizada];
+                if((fichaAdyacente.numeroActual & 8) != 0) //existe camino superior!
+                    proximasPosiciones.push(new Posicion(filaAnalizada + 1,columnaAnalizada));columnaAnalizada
+               }
 
                 //Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
                 if(caminoIzquierdo && columnaAnalizada > 0)
-                    proximasPosiciones.push(new Posicion(filaAnalizada,columnaAnalizada - 1));
+                {
+                    let fichaAdyacente = this.tableroLogico[filaAnalizada][columnaAnalizada -1];
+                    if((fichaAdyacente.numeroActual & 1) != 0) //existe camino derecho!
+                        proximasPosiciones.push(new Posicion(filaAnalizada,columnaAnalizada - 1));
+                }
 
                 //Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
                 if(caminoDerecho && columnaAnalizada < this.columnas -1)
-                    proximasPosiciones.push(new Posicion(filaAnalizada,columnaAnalizada + 1));
+                {
+                    let fichaAdyacente = this.tableroLogico[filaAnalizada][columnaAnalizada +1];
+                    if((fichaAdyacente.numeroActual & 2) != 0)//existe camino izquierdo!
+                        proximasPosiciones.push(new Posicion(filaAnalizada,columnaAnalizada + 1));
+                }
+
+                
             }
             else
             {   
@@ -376,6 +420,11 @@ function obtenerAperturaDivContenedor()
     return "<div class=\"contenedorImagen\">"
 }
 
+function obtenerDivFiltrador(id,dimension)
+{
+    return  "<div class=\"contenedorFiltroAmarillo\" id=\""+id+"\"></div>"
+}
+
 /**
  * Devuelve el código para crear todos los elementos que representan una ficha.
  * Los elementos en total son:
@@ -391,6 +440,7 @@ function obtenerBloqueTablero(id, dimension, rutaImagen)
 {
     return obtenerAperturaDivContenedor() + " " + 
     obtenerElementoImg("Ficha" + id,dimension,rutaImagen,"fichaTablero") + " " + 
+    obtenerDivFiltrador("Filtro" + id,dimension) + " " + 
     obtenerElementoImgOculto("avatar" + id,dimension,"avatarTablero") + " " + 
     obtenerElementoImgOculto("tesoro" + id, dimension,"tesoroTablero") +  " </div>";
 }
@@ -501,29 +551,6 @@ function crearTablero(tablero)
 
     contenedorTablero.html(innerHTML);
 
-
-    //Pone avatares y tesoros en posiciones random
-    //SOLO PARA PRUEBA.
-    /*setTesoroAvatar("tesoro00","res/img/tesoros/chest.png");
-    setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
-    "","res/img/tesoros/apple_red.png");
-    setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
-    "","res/img/tesoros/chest.png");
-    setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
-    "","res/img/tesoros/key.png");
-    setTesoroAvatar("tesoro"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
-    "","res/img/tesoros/sword_iron.png");
-    
-
-    setTesoroAvatar("avatar"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
-    "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
-    setTesoroAvatar("avatar"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
-    "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
-    setTesoroAvatar("avatar"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
-    "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");
-    setTesoroAvatar("avatar"+(Math.floor(Math.random()*(tablero.filas-1)))+ +(Math.floor(Math.random()*(tablero.columnas-1))) +
-    "","res/img/avatares/sinFondo/avatar"+(1 + Math.floor(Math.random()*7))+".png");*/
-
     $(".contenedorImagen").height(size);
     $(".contenedorImagen").width(size);
     $(".tesoroTablero").height("75%");
@@ -570,9 +597,21 @@ function habilitarMovimiento(partida,tablero)
     tablero.reiniciarMovimientosPermitidos(); //Anula los movimientos permitidos anteriores
     tablero.calcularMovimientosPermitidos(jugador.filaActual, jugador.columnaActual); //Calcula los movimientos permitidos de acuerdo con la ubicación del jugador
 
-    movimientosPermitidos = tablero.getMovimientosPermitidos();
+    let movimientosPermitidos = tablero.getMovimientosPermitidos();
+
+    //Elimina todos los filtros anteriores
+    $(".animacionCaminoResaltado").removeClass("animacionCaminoResaltado");
 
     //Recorre cada movimiento permitido 
+    for(let m = 0; m < movimientosPermitidos.length; ++m)
+    {
+        let camino = movimientosPermitidos[m];
+
+        $("#Filtro"+camino[0] + "000" + camino[1]).toggleClass("animacionCaminoResaltado");
+        console.log(m);
+    }
+
+    
 }
 
 /**
@@ -695,8 +734,8 @@ function proximoTurno(partida,tablero)
 function inicializarVariables()
 {
     
-    filas = 15;
-    columnas = 15;
+    filas = 13;
+    columnas = 13;
     tiempoTurno = 120;
     ayudas = true;
 
@@ -706,7 +745,7 @@ function inicializarVariables()
 
     //Crea los jugadores
     let jugadores = Array();
-    jugadores.push(new Jugador("Esteban",1,"avatar1",0,0));
+    jugadores.push(new Jugador("Esteban",1,"avatar1",7,8));
     jugadores.push(new Jugador("Joel",2,"avatar5",4,4));
     partida.jugadores = jugadores;
 

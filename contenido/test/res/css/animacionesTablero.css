@@ -1,9 +1,30 @@
+.animacionCaminoResaltado
+{
+	animation-name: filtroAmarillo;
+	animation-iteration-count: infinite;
+	animation-duration: 3s;
+	animation-direction: reverse;
+}
+
 .animacionFlechasVerticales
 {
 	animation-name: movimientoVertical;
 	animation-iteration-count: infinite;
 	animation-duration: 1s;
 	animation-direction: reverse;
+}
+
+@keyframes filtroAmarillo
+{
+	0%
+	{
+		opacity: 0%;
+	}
+
+	100%
+	{
+		opacity: 40%;
+	}
 }
 
 @keyframes movimientoVertical
