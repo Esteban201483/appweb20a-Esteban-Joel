@@ -1,36 +1,36 @@
 class Flecha
 {
-    constructor(id,orientacion,columnaFilaAsociada)
-    {
-        this.id = id;
-        this.orientacion = orientacion;
-        this.columnaFilaAsociada = columnaFilaAsociada; //Un solo valor. La orientación determina si es fila o columna
-    }
+	constructor(id,orientacion,columnaFilaAsociada)
+	{
+		this.id = id;
+		this.orientacion = orientacion;
+		this.columnaFilaAsociada = columnaFilaAsociada; //Un solo valor. La orientación determina si es fila o columna
+	}
 
-    getId()
-    {
-        return this.id;
-    }
+	getId()
+	{
+		return this.id;
+	}
 
-    setId(id)
-    {
-        this.id = id;
-    }
+	setId(id)
+	{
+		this.id = id;
+	}
 
-    getOrientacion()
-    {
-        return this.orientacion;
-    }
+	getOrientacion()
+	{
+		return this.orientacion;
+	}
 
-    setOrientacion(orientacion)
-    {
-        return this.getOrientacion;
-    }
+	setOrientacion(orientacion)
+	{
+		this.orientacion = orientacion;
+	}
 
-    getColumnaFilaAsociada()
-    {
-        return this.columnaFilaAsociada;
-    }
+	getColumnaFilaAsociada()
+	{
+		return this.columnaFilaAsociada;
+	}
 }
 
 
@@ -41,30 +41,79 @@ class Flecha
 class Jugador
 {
 
-    constructor(nombre,id,avatar,filaActual,columnaActual)
-    {
-        this.nombre = nombre; 
-        this.id = id;
-        this.avatar = avatar; //String con la dirección del avatar del jugador
-        this.filaActual = filaActual;
-        this.columnaActual = columnaActual;
-    }
+	constructor(nombre,id,avatar,filaActual,columnaActual)
+	{
+		this.nombre = nombre; 
+		this.id = id;
+		this.avatar = avatar; //String con la dirección del avatar del jugador
+		this.filaActual = filaActual;
+		this.columnaActual = columnaActual;
+	}
 
+	getNombre()
+	{
+		return this.nombre;
+	}
+
+	setNombre(nombre)
+	{
+		this.nombre = nombre;
+	}
+
+	getId()
+	{
+		return this.id;
+	}
+
+	setId(id)
+	{
+		this.id = id;
+	}
+
+	getAvatar()
+	{
+		return this.avatar;
+	}
+
+	setAvatar(avatar)
+	{
+		this.avatar = avatar;
+	}
+
+	getFilaActual()
+	{
+		return this.filaActual;
+	}
+
+	setFilaActual(fila)
+	{
+		this.filaActual = fila;
+	}
+
+	getColumnaActual()
+	{
+		return this.columnaActual;
+	}
+
+	setColumnaActual(columna)
+	{
+		this.columnaActual = columna;
+	}
 }
 
 
 class Tesoro
 {
-    constructor(id,imagen,kanji,traduccion,filaActual,columnaActual, idJugador)
-    {
-        this.id = id;
-        this.imagen = imagen; //Nombre de la imagen, sin extensión
-        this.kanji = kanji;
-        this.traduccion = traduccion;
-        this.filaActual = filaActual;
-        this.columnaActual = columnaActual;
-        this.idJugador = idJugador;
-    }
+	constructor(id,imagen,kanji,traduccion,filaActual,columnaActual, idJugador)
+	{
+		this.id = id;
+		this.imagen = imagen; //Nombre de la imagen, sin extensión
+		this.kanji = kanji;
+		this.traduccion = traduccion;
+		this.filaActual = filaActual;
+		this.columnaActual = columnaActual;
+		this.idJugador = idJugador;
+	}
 }
 
 /**
@@ -72,23 +121,43 @@ class Tesoro
  */
 class Partida
 {
-    constructor(listaJugadores)
-    {
-        this.listaJugadores = listaJugadores;
-        this.duracionTurno = 0;
-        this.jugadorTurno = 0; //Indice de la lista jugadores que indica cual es el jugador actual
-        this.finalizada = false;
-        this.contadorTurnos = 0;
-    }
+	constructor(listaJugadores)
+	{
+		this.listaJugadores = listaJugadores;
+		this.duracionTurno = 0;
+		this.jugadorTurno = 0; //Indice de la lista jugadores que indica cual es el jugador actual
+		this.finalizada = false;
+		this.contadorTurnos = 0;
+	}
 }
 
 class Posicion
 {
-    constructor(fila,columna)
-    {
-        this.fila = fila;
-        this.columna = columna;
-    }
+	constructor(fila,columna)
+	{
+		this.fila = fila;
+		this.columna = columna;
+	}
+
+	getFila()
+	{
+		return this.fila;
+	}
+
+	setFila(fila)
+	{
+		this.fila = fila;
+	}
+
+	getColumna()
+	{
+		return this.columna;
+	}
+
+	setColumna(columna)
+	{
+		this.columna = columna;
+	}
 }
 
 /**
@@ -97,201 +166,198 @@ class Posicion
  */
 class Tablero
 {
-    constructor(filas, columnas, tiempoTurno, ayudas)
-    {
-        this.filas = filas;
-        this.columnas = columnas;
-        this.tiempoTurno = tiempoTurno;
-        this.ayudas = ayudas;
-        this.fichaSobrante = null;
-        this.movimientosPermitidos = Array();
+	constructor(filas, columnas, tiempoTurno, ayudas)
+	{
+		this.filas = filas;
+		this.columnas = columnas;
+		this.tiempoTurno = tiempoTurno;
+		this.ayudas = ayudas;
+		this.fichaSobrante = null;
+		this.movimientosPermitidos = Array();
 
-        //Crea un tablero lógico para el control del movimiento de los jugadores
-        //Debe almacenar instancias de fichas
-        this.tableroLogico = Array(this.filas);
+		//Crea un tablero lógico para el control del movimiento de los jugadores
+		//Debe almacenar instancias de fichas
+		this.tableroLogico = Array(this.filas);
 
-        for(let i = 0; i < this.filas; ++i)
-        {
-            this.tableroLogico[i] = Array(this.columnas);
+		for(let i = 0; i < this.filas; ++i)
+		{
+			this.tableroLogico[i] = Array(this.columnas);
 
-            for(let j = 0; j < this.columnas; ++j)
-            {
-                this.tableroLogico[i][j] = -1;
-            }
-        }
+			for(let j = 0; j < this.columnas; ++j)
+			{
+				this.tableroLogico[i][j] = -1;
+			}
+		}
 
-        this.listaFlechas = Array();
+		this.listaFlechas = Array();
 
-    }
+	}
 
-    getMovimientosPermitidos()
-    {
-        return this.movimientosPermitidos;
-    }
+	getMovimientosPermitidos()
+	{
+		return this.movimientosPermitidos;
+	}
 
-    /**
-     * Calcula todos los movimientos posibles desde una posición inicial
-     * Deja los datos cargados en el array movimientosPermitidos
-     * 
-     * Utiliza la busqueda exhaustiva para determinar cuales movimientos pueden realizarse.
-     * Para ello, utiliza un array para determinar las proximas posiciones en las que "hay camino"
-     * y un array para determinar las posiciones ya analizadas
-     * @param {*} filaInicial 
-     * @param {*} columnaInicial 
-     */
-    calcularMovimientosPermitidos(filaInicial, columnaInicial)
-    {
-        this.movimientosPermitidos = Array();
-        let proximasPosiciones = Array();
-        let diccionarioPosiciones = Array(this.filas);
-        let posicionActual = null;
+	/**
+	 * Calcula todos los movimientos posibles desde una posición inicial
+	 * Deja los datos cargados en el array movimientosPermitidos
+	 * 
+	 * Utiliza la busqueda exhaustiva para determinar cuales movimientos pueden realizarse.
+	 * Para ello, utiliza un array para determinar las proximas posiciones en las que "hay camino"
+	 * y un array para determinar las posiciones ya analizadas
+	 * @param {*} filaInicial 
+	 * @param {*} columnaInicial 
+	 */
+	calcularMovimientosPermitidos(filaInicial, columnaInicial)
+	{
+		this.movimientosPermitidos = Array();
+		const proximasPosiciones = Array();
+		const diccionarioPosiciones = Array(this.filas);
+		let posicionActual = null;
 
-        for(let c = 0; c < this.columnas; ++c)
-            diccionarioPosiciones[c] = Array();
+		for(let c = 0; c < this.columnas; ++c)
+			diccionarioPosiciones[c] = Array();
 
-        proximasPosiciones.push(new Posicion(filaInicial,columnaInicial));
-    
+		proximasPosiciones.push(new Posicion(filaInicial,columnaInicial));
+	
 
-        while(proximasPosiciones.length > 0)
-        {
-            posicionActual = proximasPosiciones.shift();
-            let posicionAnalizada = false;
+		while(proximasPosiciones.length > 0)
+		{
+			posicionActual = proximasPosiciones.shift();
+			let posicionAnalizada = false;
 
-            //Verifica en el diccionario si la posición ya fue analizada
-            posicionAnalizada = diccionarioPosiciones[posicionActual.fila].includes(posicionActual.columna);
-            
-            if(!posicionAnalizada)
-            {
-                let filaAnalizada = posicionActual.fila;
-                let columnaAnalizada = posicionActual.columna;
+			//Verifica en el diccionario si la posición ya fue analizada
+			posicionAnalizada = diccionarioPosiciones[posicionActual.fila].includes(posicionActual.columna);
+			
+			if(!posicionAnalizada)
+			{
+				const filaAnalizada = posicionActual.fila;
+				const columnaAnalizada = posicionActual.columna;
 
-                diccionarioPosiciones[filaAnalizada].push(columnaAnalizada);
+				diccionarioPosiciones[filaAnalizada].push(columnaAnalizada);
 
-                //Obtiene la representación binaria de la ficha de la posicon
-               let numero = this.getFicha(filaAnalizada,columnaAnalizada).numeroActual;
-               
-               //Utiliza operaciones binarias para determinar en cuales direcciones existe un camino
-               //Uso de operaciones binarias basadas en el tutorial de https://www.w3schools.com/js/js_bitwise.asp 
-               let caminoDerecho = (numero & 1) != 0;
-               let caminoIzquierdo = (numero & 2) != 0;
-               let caminoSuperior = (numero & 8) != 0;
-               let caminoInferior = (numero & 4) != 0;
+				//Obtiene la representación binaria de la ficha de la posicon
+				const numero = this.getFicha(filaAnalizada,columnaAnalizada).numeroActual;
+			
+				//Utiliza operaciones binarias para determinar en cuales direcciones existe un camino
+				//Uso de operaciones binarias basadas en el tutorial de https://www.w3schools.com/js/js_bitwise.asp 
+				const caminoDerecho = (numero & 1) !== 0;
+				const caminoIzquierdo = (numero & 2) !== 0;
+				const caminoSuperior = (numero & 8) !== 0;
+				const caminoInferior = (numero & 4) !== 0;
 
-               /*console.log("Camino derecho: ", caminoDerecho);
-               console.log("Camino izquierdo: ", caminoIzquierdo);
-               console.log("Camino superior: ", caminoSuperior);
-               console.log("Camino inferior: ", caminoInferior);
-               console.log("Ficha: ", numero);*/
+				/*console.log("Camino derecho: ", caminoDerecho);
+				console.log("Camino izquierdo: ", caminoIzquierdo);
+				console.log("Camino superior: ", caminoSuperior);
+				console.log("Camino inferior: ", caminoInferior);
+				console.log("Ficha: ", numero);*/
 
-               //Indica que hay un movimiento posible en esta ficha
-               this.movimientosPermitidos.push(Array(filaAnalizada,columnaAnalizada));
+				//Indica que hay un movimiento posible en esta ficha
+				this.movimientosPermitidos.push(Array(filaAnalizada,columnaAnalizada));
 
-               //Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
-               if(caminoSuperior && filaAnalizada > 0)
-               {
-                    //Verifica que la ficha adyacente tenga camino con la ficha actual
-                    let fichaAdyacente = this.tableroLogico[filaAnalizada -1][columnaAnalizada];
-                    if((fichaAdyacente.numeroActual & 4) != 0) //existe camino inferior!
-                        proximasPosiciones.push(new Posicion(filaAnalizada - 1,columnaAnalizada));
-               }
+				//Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
+				if(caminoSuperior && filaAnalizada > 0)
+				{
+					//Verifica que la ficha adyacente tenga camino con la ficha actual
+					const fichaAdyacente = this.tableroLogico[filaAnalizada -1][columnaAnalizada];
+					if((fichaAdyacente.numeroActual & 4) !== 0) //existe camino inferior!
+						proximasPosiciones.push(new Posicion(filaAnalizada - 1,columnaAnalizada));
+				}
 
-                //Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
-               if(caminoInferior && filaAnalizada < this.filas -1)
-               {
-                let fichaAdyacente = this.tableroLogico[filaAnalizada + 1][columnaAnalizada];
-                if((fichaAdyacente.numeroActual & 8) != 0) //existe camino superior!
-                    proximasPosiciones.push(new Posicion(filaAnalizada + 1,columnaAnalizada));columnaAnalizada
-               }
+				//Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
+				if(caminoInferior && filaAnalizada < this.filas -1)
+				{
+					const fichaAdyacente = this.tableroLogico[filaAnalizada + 1][columnaAnalizada];
+					if((fichaAdyacente.numeroActual & 8) !== 0) //existe camino superior!
+						proximasPosiciones.push(new Posicion(filaAnalizada + 1,columnaAnalizada));
+				}
 
-                //Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
-                if(caminoIzquierdo && columnaAnalizada > 0)
-                {
-                    let fichaAdyacente = this.tableroLogico[filaAnalizada][columnaAnalizada -1];
-                    if((fichaAdyacente.numeroActual & 1) != 0) //existe camino derecho!
-                        proximasPosiciones.push(new Posicion(filaAnalizada,columnaAnalizada - 1));
-                }
+				//Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
+				if(caminoIzquierdo && columnaAnalizada > 0)
+				{
+					const fichaAdyacente = this.tableroLogico[filaAnalizada][columnaAnalizada -1];
+					if((fichaAdyacente.numeroActual & 1) !== 0) //existe camino derecho!
+						proximasPosiciones.push(new Posicion(filaAnalizada,columnaAnalizada - 1));
+				}
 
-                //Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
-                if(caminoDerecho && columnaAnalizada < this.columnas -1)
-                {
-                    let fichaAdyacente = this.tableroLogico[filaAnalizada][columnaAnalizada +1];
-                    if((fichaAdyacente.numeroActual & 2) != 0)//existe camino izquierdo!
-                        proximasPosiciones.push(new Posicion(filaAnalizada,columnaAnalizada + 1));
-                }
+				//Si existe camino y no se sale del borde, agrega las respectivas fichas adyacentes
+				if(caminoDerecho && columnaAnalizada < this.columnas -1)
+				{
+					const fichaAdyacente = this.tableroLogico[filaAnalizada][columnaAnalizada +1];
+					if((fichaAdyacente.numeroActual & 2) !== 0)//existe camino izquierdo!
+						proximasPosiciones.push(new Posicion(filaAnalizada,columnaAnalizada + 1));
+				}
 
-                
-            }
-            else
-            {   
+				
+			}
 
-            }
-            console.log("Iteración");
+			console.log("Iteración");
 
 
-        }
-        console.log("Fin jaja");
-        console.log(this.movimientosPermitidos);
-    }
+		}
+		console.log("Fin jaja");
+		console.log(this.movimientosPermitidos);
+	}
 
-    /**
-     * Indica si se puede realizar o no un movimiento en una posición determinada
-     * @param {Number} fila 
-     * @param {Number} columna 
-     */
-    verificarMovimientosPermitidos(fila,columna)
-    {
-        let permitido = false;
+	/**
+	 * Indica si se puede realizar o no un movimiento en una posición determinada
+	 * @param {Number} fila 
+	 * @param {Number} columna 
+	 */
+	verificarMovimientosPermitidos(fila,columna)
+	{
+		let permitido = false;
 
-        for(let m = 0; m < this.movimientosPermitidos.length && !permitido; ++m)
-        {
-            let fichaPermitida = movimientosPermitidos[m];
+		for(let m = 0; m < this.movimientosPermitidos.length && !permitido; ++m)
+		{
+			const fichaPermitida = this.movimientosPermitidos[m];
 
-            permitido =( fichaPermitida[0] == fila && fichaPermitida[1] == columna) ;
-        }
+			permitido =( fichaPermitida[0] === fila && fichaPermitida[1] === columna) ;
+		}
 
-        return permitido;
-    }
+		return permitido;
+	}
 
-    agregarMovimientosPermitidos(fila,columna)
-    {
-        this.movimientosPermitidos.push(array(fila,columna));
-    }
+	agregarMovimientosPermitidos(fila,columna)
+	{
+		this.movimientosPermitidos.push(Array(fila,columna));
+	}
 
-    reiniciarMovimientosPermitidos()
-    {
-        this.movimientosPermitidos = Array();
-    }
+	reiniciarMovimientosPermitidos()
+	{
+		this.movimientosPermitidos = Array();
+	}
 
-    setFichaSobrante(ficha)
-    {
-        this.fichaSobrante = ficha;
-    }
+	setFichaSobrante(ficha)
+	{
+		this.fichaSobrante = ficha;
+	}
 
-    getFichaSobrante()
-    {
-        return this.fichaSobrante;
-    }
+	getFichaSobrante()
+	{
+		return this.fichaSobrante;
+	}
 
-    agregarFlecha(flecha)
-    {
-        this.listaFlechas.push(flecha);
-    }
+	agregarFlecha(flecha)
+	{
+		this.listaFlechas.push(flecha);
+	}
 
-    setFicha(ficha,fila,columna)
-    {
-        this.tableroLogico[fila][columna] = ficha;
-    }
+	setFicha(ficha,fila,columna)
+	{
+		this.tableroLogico[fila][columna] = ficha;
+	}
 
-    getFicha(fila,columna)
-    {
-        return this.tableroLogico[fila][columna];
-    }
+	getFicha(fila,columna)
+	{
+		return this.tableroLogico[fila][columna];
+	}
 
-    debugTablero()
-    {
-        console.log(this.tableroLogico);
-        console.log(this.listaFlechas);
-    }
+	debugTablero()
+	{
+		console.log(this.tableroLogico);
+		console.log(this.listaFlechas);
+	}
 }
 
 /**
@@ -300,92 +366,92 @@ class Tablero
  */
 class Ficha
 {
-    constructor(numeroActual)
-    {
-        this.numeroActual = numeroActual;
+	constructor(numeroActual)
+	{
+		this.numeroActual = numeroActual;
 
-        //Declara los vectores para determinar como se deben rotar las fichas
-        this.rotacionBloqueo = [0];
-        this.rotacionCruz = [15];
-        this.rotacionT = [7,14,11,13];
-        this.rotacionRecta = [3,12];
-        this.rotacionL = [9,5,6,10];
+		//Declara los vectores para determinar como se deben rotar las fichas
+		this.rotacionBloqueo = [0];
+		this.rotacionCruz = [15];
+		this.rotacionT = [7,14,11,13];
+		this.rotacionRecta = [3,12];
+		this.rotacionL = [9,5,6,10];
 
 
-    }
+	}
 
-    encontrarRotacion(array, direccion)
-    {
-        return array[(array.indexOf( this.numeroActual) + direccion) %  array.length];
-    }
+	encontrarRotacion(array, direccion)
+	{
+		return array[(array.indexOf( this.numeroActual) + direccion) %  array.length];
+	}
 
-    rotar(direccion)
-    {
-        let tipo = this.getTipoFicha( this.numeroActual);
+	rotar(direccion)
+	{
+		const tipo = this.getTipoFicha( this.numeroActual);
 
-        switch(tipo)
-        {
-            case "BLOQUEO": case "": case "CRUZ":
-                break;
-            case "RECTA":
-                this.numeroActual =  this.encontrarRotacion(this.rotacionRecta,direccion);
-                break;
-            case "L":
-                this.numeroActual =  this.encontrarRotacion(this.rotacionL,direccion);
-                break;
-            case "T":
-                this.numeroActual =  this.encontrarRotacion(this.rotacionT,direccion);
-                break;
-        }
+		switch(tipo)
+		{
+		case "BLOQUEO": case "": case "CRUZ":
+			break;
+		case "RECTA":
+			this.numeroActual =  this.encontrarRotacion(this.rotacionRecta,direccion);
+			break;
+		case "L":
+			this.numeroActual =  this.encontrarRotacion(this.rotacionL,direccion);
+			break;
+		case "T":
+			this.numeroActual =  this.encontrarRotacion(this.rotacionT,direccion);
+			break;
+		}
 
-    }
+	}
 
-    rotarIzquierda()
-    {
-        this.rotar(+1)
-    }
+	rotarIzquierda()
+	{
+		this.rotar(+1);
+	}
 
-    rotarDerecha()
-    {
-        this.rotar(-1)
-    }
-    
+	rotarDerecha()
+	{
+		this.rotar(-1);
+	}
+	
 
-    getTipoFicha(numeroFicha)
-    {
-        let tipo = "";
+	getTipoFicha(numeroFicha)
+	{
+		let tipo = "";
 
-        switch(numeroFicha)
-        {
-            case 0:
-                tipo = "BLOQUEO";
-                break;
-            case 15:
-                tipo = "CRUZ";
-                break;
-            case 7: case 13: case 11: case 14:
-                tipo = "T";
-                break;
-            case 3: case 12:
-                tipo = "RECTA";
-                break;
-            case 9: case 5: case 6: case 10:
-                tipo = "L"
-                break;
-            default:
-                tipo = "";               
-        }
+		switch(numeroFicha)
+		{
+		case 0:
+			tipo = "BLOQUEO";
+			break;
+		case 15:
+			tipo = "CRUZ";
+			break;
+		case 7: case 13: case 11: case 14:
+			tipo = "T";
+			break;
+		case 3: case 12:
+			tipo = "RECTA";
+			break;
+		case 9: case 5: case 6: case 10:
+			tipo = "L";
+			break;
+		default:
+			tipo = "";               
+		}
 
-        return tipo;
-    }
+		return tipo;
+	}
 }
 
 
 function setTesoroAvatar(imgId,imageSrc)
 {
-    $("#" + imgId).attr("hidden",false);
-    $("#" + imgId).attr("src",imageSrc);
-    
+	$("#" + imgId).attr("hidden",false);
+	$("#" + imgId).attr("src",imageSrc);
+	
 }
 
 /**
@@ -393,7 +459,7 @@ function setTesoroAvatar(imgId,imageSrc)
  */
 function obtenerSaltoLinea()
 {
-    return "<br/>"
+	return "<br/>"; 
 }
 
 /**
@@ -405,24 +471,24 @@ function obtenerSaltoLinea()
  */
 function obtenerElementoImg(id, dimension, rutaImagen, classElement)
 {
-    return "<img id=\""+id+"\" class=\""+classElement+"\"" +
-    " src=\""+rutaImagen+"\" height=\""+dimension+"\" width=\""+dimension+"\" />";
+	return "<img id=\""+id+"\" class=\""+classElement+"\"" +
+	" src=\""+rutaImagen+"\" height=\""+dimension+"\" width=\""+dimension+"\" />";
 }
 
 function obtenerElementoImgOculto(id, dimension, classElement)
 {
-    return "<img id=\""+id+"\" hidden=\"hidden\" class=\""+classElement+"\""+
-    " height=\""+dimension+"\" width=\""+dimension+"\" />";
+	return "<img id=\""+id+"\" hidden=\"hidden\" class=\""+classElement+"\""+
+	" height=\""+dimension+"\" width=\""+dimension+"\" />";
 }
 
 function obtenerAperturaDivContenedor()
 {
-    return "<div class=\"contenedorImagen\">"
+	return "<div class=\"contenedorImagen\">";
 }
 
-function obtenerDivFiltrador(id,dimension)
+function obtenerDivFiltrador(id)
 {
-    return  "<div class=\"contenedorFiltroAmarillo\" id=\""+id+"\"></div>"
+	return  "<div class=\"contenedorFiltroAmarillo\" id=\""+id+"\"></div>";
 }
 
 /**
@@ -438,11 +504,11 @@ function obtenerDivFiltrador(id,dimension)
  */
 function obtenerBloqueTablero(id, dimension, rutaImagen)
 {
-    return obtenerAperturaDivContenedor() + " " + 
-    obtenerElementoImg("Ficha" + id,dimension,rutaImagen,"fichaTablero") + " " + 
-    obtenerDivFiltrador("Filtro" + id,dimension) + " " + 
-    obtenerElementoImgOculto("avatar" + id,dimension,"avatarTablero") + " " + 
-    obtenerElementoImgOculto("tesoro" + id, dimension,"tesoroTablero") +  " </div>";
+	return obtenerAperturaDivContenedor() + " " + 
+	obtenerElementoImg("Ficha" + id,dimension,rutaImagen,"fichaTablero") + " " + 
+	obtenerDivFiltrador("Filtro" + id) + " " + 
+	obtenerElementoImgOculto("avatar" + id,dimension,"avatarTablero") + " " + 
+	obtenerElementoImgOculto("tesoro" + id, dimension,"tesoroTablero") +  " </div>";
 }
 
 /**
@@ -451,167 +517,163 @@ function obtenerBloqueTablero(id, dimension, rutaImagen)
  */
 function crearTablero(tablero)
 {
-    
-    let contenedorTablero = $("#contenedorTablero"); //Obtiene el div que almacenará al tablero
-    contenedorTablero.height($("main").height());
-    contenedorTablero.width($("main").width());
-    let innerHTML = ""; 
-    let size = 100 / Math.max(tablero.filas + 2, tablero.columnas + 2) + "%";
+	
+	const contenedorTablero = $("#contenedorTablero"); //Obtiene el div que almacenará al tablero
+	contenedorTablero.height($("main").height());
+	contenedorTablero.width($("main").width());
+	let innerHTML = ""; 
+	const size = 100 / Math.max(tablero.filas + 2, tablero.columnas + 2) + "%";
 
-    //let size = 550 / Math.min(tablero.filas + 2,tablero.columnas + 2); //El 2 es para incluir las flechas en todas las direcciones del tablero
-    //let size = contenedorTablero.height() / Math.min(tablero.filas + 2,tablero.columnas + 2); //El 2 es para incluir las flechas en todas las direcciones del tablero
-    let idFlecha = 0; //Contador para identificar las flechas
-    let nombreFlecha = "Flecha";
-    let nombreFicha = "Ficha";
+	//let size = 550 / Math.min(tablero.filas + 2,tablero.columnas + 2); //El 2 es para incluir las flechas en todas las direcciones del tablero
+	//let size = contenedorTablero.height() / Math.min(tablero.filas + 2,tablero.columnas + 2); //El 2 es para incluir las flechas en todas las direcciones del tablero
+	let idFlecha = 0; //Contador para identificar las flechas
+	const nombreFlecha = "Flecha";
 
-    const fichas = [0,3,5,6,7,9,10,11,12,13,14];
+	const fichas = [0,3,5,6,7,9,10,11,12,13,14];
 
-    let contadorFicha = 0;
+	innerHTML += (obtenerElementoImg("",size, "res/img/fichas/vacia.png","contenedorImagen"));
+	//crea las flechas superiores
+	for(let columna = 0; columna < (tablero.columnas); ++columna)
+	{
+		if((columna % 2) === 0) //Coloca imagenes vacias en las posiciones pares
+			innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
+		else //Coloca las imagenes de las flechas verticales
+		{
+			//Indica al tablero de forma lógica que se va a crear una nueva flecha
+			tablero.agregarFlecha(new Flecha(idFlecha,"vertical-superior",columna));
 
-    innerHTML += (obtenerElementoImg("",size, "res/img/fichas/vacia.png","contenedorImagen"));
-    //crea las flechas superiores
-    for(let columna = 0; columna < (tablero.columnas); ++columna)
-    {
-        if((columna % 2) == 0) //Coloca imagenes vacias en las posiciones pares
-            innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
-        else //Coloca las imagenes de las flechas verticales
-        {
-            //Indica al tablero de forma lógica que se va a crear una nueva flecha
-            tablero.agregarFlecha(new Flecha(idFlecha,"vertical-superior",columna));
+			innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha superior.png","contenedorImagen"));
+			++idFlecha;
+		}
+	}
 
-            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha superior.png","contenedorImagen"));
-            ++idFlecha;
-        }
-    }
+	innerHTML += (obtenerSaltoLinea());
 
-    innerHTML += (obtenerSaltoLinea());
+	for(let fila = 0; fila < tablero.filas; ++fila)
+	{
 
-    for(let fila = 0; fila < tablero.filas; ++fila)
-    {
+		//Controla la creación de flechas al lado izquierdo del tablero
+		if(((fila+1) % 2 !== 0) && (fila+1) !== tablero.filas+2) //Coloca imagenes vacias en las posiciones pares
+			innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
+		else //Coloca las imagenes de las flechas izquierdas
+		{
+			//Indica al tablero de forma lógica que se va a crear una nueva flecha
+			tablero.agregarFlecha(new Flecha(idFlecha,"lateral-izquierda",fila));
 
-        //Controla la creación de flechas al lado izquierdo del tablero
-        if(((fila+1) % 2 != 0) && (fila+1) != tablero.filas+2) //Coloca imagenes vacias en las posiciones pares
-            innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
-        else //Coloca las imagenes de las flechas izquierdas
-        {
-            //Indica al tablero de forma lógica que se va a crear una nueva flecha
-            tablero.agregarFlecha(new Flecha(idFlecha,"lateral-izquierda",fila));
-
-            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha izquierda.png","contenedorImagen"));
-            ++idFlecha;
-        }
+			innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha izquierda.png","contenedorImagen"));
+			++idFlecha;
+		}
 
 
-        /////////////////////////////////Coloca las fichas de la fila actual
-        for(let columna = 0; columna < tablero.columnas; ++columna)
-        {
-            let fichaNueva = Math.floor(Math.random() * fichas.length );
+		/////////////////////////////////Coloca las fichas de la fila actual
+		for(let columna = 0; columna < tablero.columnas; ++columna)
+		{
+			const fichaNueva = Math.floor(Math.random() * fichas.length );
 
-            //Indica en el tablero de forma lógica la nueva ficha
-            tablero.setFicha(new Ficha(fichas[fichaNueva]),fila,columna);
+			//Indica en el tablero de forma lógica la nueva ficha
+			tablero.setFicha(new Ficha(fichas[fichaNueva]),fila,columna);
 
-            //Indica en el tablero de forma física la nueva ficha
-            innerHTML += (obtenerBloqueTablero(fila + "000" + columna , size, 
-                "res/img/fichas/" + fichas[fichaNueva] + ".png")); 
-            ++contadorFicha;
-        }
+			//Indica en el tablero de forma física la nueva ficha
+			innerHTML += (obtenerBloqueTablero(fila + "000" + columna , size, 
+				"res/img/fichas/" + fichas[fichaNueva] + ".png")); 
+		}
 
 
-        //Controla la creación de flechas al lado derecho del tablero
-        if(((fila+1) % 2 != 0) && (fila+1) != tablero.filas+2 ) //Coloca imagenes vacias en las posiciones pares
-        {
-            innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
-        }
-        else //Coloca las imagenes de las flechas verticales
-        {
-            //Indica al tablero de forma lógica que se va a crear una nueva flecha
-            tablero.agregarFlecha(new Flecha(idFlecha,"lateral-derecha",fila));
-            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha derecha.png","contenedorImagen"));
-            ++idFlecha;
-        }
+		//Controla la creación de flechas al lado derecho del tablero
+		if(((fila+1) % 2 !== 0) && (fila+1) !== tablero.filas+2 ) //Coloca imagenes vacias en las posiciones pares
+		{
+			innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
+		}
+		else //Coloca las imagenes de las flechas verticales
+		{
+			//Indica al tablero de forma lógica que se va a crear una nueva flecha
+			tablero.agregarFlecha(new Flecha(idFlecha,"lateral-derecha",fila));
+			innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha derecha.png","contenedorImagen"));
+			++idFlecha;
+		}
 
-        innerHTML += (obtenerSaltoLinea());
-    }
+		innerHTML += (obtenerSaltoLinea());
+	}
 
-    //crea las flechas Inferiores
-    innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
-    for(let columna = 0; columna < (tablero.columnas); ++columna)
-    {
-        if(columna % 2 == 0) //Coloca imagenes vacias en las posiciones pares
-            innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen") );
-        else //Coloca las imagenes de las flechas verticales
-        {
-            //Indica al tablero de forma lógica que se va a crear una nueva flecha
-            tablero.agregarFlecha(new Flecha(idFlecha,"vertical-inferior",columna));
+	//crea las flechas Inferiores
+	innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
+	for(let columna = 0; columna < (tablero.columnas); ++columna)
+	{
+		if(columna % 2 === 0) //Coloca imagenes vacias en las posiciones pares
+			innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen") );
+		else //Coloca las imagenes de las flechas verticales
+		{
+			//Indica al tablero de forma lógica que se va a crear una nueva flecha
+			tablero.agregarFlecha(new Flecha(idFlecha,"vertical-inferior",columna));
 
-            innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha inferior.png","contenedorImagen") );
-            ++idFlecha;
-        }
-    }
+			innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha inferior.png","contenedorImagen") );
+			++idFlecha;
+		}
+	}
 
-    contenedorTablero.html(innerHTML);
+	contenedorTablero.html(innerHTML);
 
-    $(".contenedorImagen").height(size);
-    $(".contenedorImagen").width(size);
-    $(".tesoroTablero").height("75%");
-    $(".tesoroTablero").width("75%");
-    $(".avatarTablero").height("50%");
-    $(".avatarTablero").width("50%");
+	$(".contenedorImagen").height(size);
+	$(".contenedorImagen").width(size);
+	$(".tesoroTablero").height("75%");
+	$(".tesoroTablero").width("75%");
+	$(".avatarTablero").height("50%");
+	$(".avatarTablero").width("50%");
 
-    
+	
 }   
 
 function rotarFichaSobrante(ficha, contenedor) 
 {
-    ficha.rotarIzquierda();
-    contenedor.src = "res/img/fichas/" + ficha.numeroActual + ".png";
+	ficha.rotarIzquierda();
+	contenedor.src = "res/img/fichas/" + ficha.numeroActual + ".png";
 
 }
 
 function redibujarFicha(fila,columna,nuevaFicha)
 {
-    const imgFicha = $("#Ficha" + fila + "000" + columna);
-    imgFicha.attr('src',"res/img/fichas/" + nuevaFicha + ".png");
+	const imgFicha = $("#Ficha" + fila + "000" + columna);
+	imgFicha.attr("src","res/img/fichas/" + nuevaFicha + ".png");
 }
 
 
 function redibujarFichaSobrante(fichaSobrante)
 {
-    const contenedorFichaSobrante = document.getElementById("fichaSobrante");
-    contenedorFichaSobrante.removeEventListener('click',rotarFichaSobrante);
-    contenedorFichaSobrante.addEventListener('click',function(){rotarFichaSobrante(fichaSobrante,contenedorFichaSobrante)});
-    contenedorFichaSobrante.src = "res/img/fichas/" + fichaSobrante.numeroActual + ".png";
+	const contenedorFichaSobrante = document.getElementById("fichaSobrante");
+	contenedorFichaSobrante.removeEventListener("click",rotarFichaSobrante);
+	contenedorFichaSobrante.addEventListener("click",function(){rotarFichaSobrante(fichaSobrante,contenedorFichaSobrante);});
+	contenedorFichaSobrante.src = "res/img/fichas/" + fichaSobrante.numeroActual + ".png";
 }
 
 
 function habilitarMovimiento(partida,tablero)
 {
-    //Todo: Desactivar todas las flechas una vez se haya mostrado las inserciones al profesor
-    const accionActual = $("#accionActual");
-    accionActual.text("Moviendose...");
+	//Todo: Desactivar todas las flechas una vez se haya mostrado las inserciones al profesor
+	const accionActual = $("#accionActual");
+	accionActual.text("Moviendose...");
 
-    //Obtiene el jugador con el turno actual
-    
-    let jugador = partida.jugadores[partida.jugadorTurno];
+	//Obtiene el jugador con el turno actual
+	
+	const jugador = partida.jugadores[partida.jugadorTurno];
 
-    tablero.reiniciarMovimientosPermitidos(); //Anula los movimientos permitidos anteriores
-    tablero.calcularMovimientosPermitidos(jugador.filaActual, jugador.columnaActual); //Calcula los movimientos permitidos de acuerdo con la ubicación del jugador
+	tablero.reiniciarMovimientosPermitidos(); //Anula los movimientos permitidos anteriores
+	tablero.calcularMovimientosPermitidos(jugador.filaActual, jugador.columnaActual); //Calcula los movimientos permitidos de acuerdo con la ubicación del jugador
 
-    let movimientosPermitidos = tablero.getMovimientosPermitidos();
+	const movimientosPermitidos = tablero.getMovimientosPermitidos();
 
-    //Elimina todos los filtros anteriores
-    $(".animacionCaminoResaltado").removeClass("animacionCaminoResaltado");
+	//Elimina todos los filtros anteriores
+	$(".animacionCaminoResaltado").removeClass("animacionCaminoResaltado");
 
-    //Recorre cada movimiento permitido 
-    for(let m = 0; m < movimientosPermitidos.length; ++m)
-    {
-        let camino = movimientosPermitidos[m];
+	//Recorre cada movimiento permitido 
+	for(let m = 0; m < movimientosPermitidos.length; ++m)
+	{
+		const camino = movimientosPermitidos[m];
 
-        $("#Filtro"+camino[0] + "000" + camino[1]).toggleClass("animacionCaminoResaltado");
-        console.log(m);
-    }
+		$("#Filtro"+camino[0] + "000" + camino[1]).addClass("animacionCaminoResaltado");
+		console.log(m);
+	}
 
-    
+	
 }
 
 /**
@@ -623,43 +685,43 @@ function habilitarMovimiento(partida,tablero)
  */
 function flechaPresionada(partida,tablero, flecha)
 {
-    //Obtiene la instancia de la flecha presionada
-    const flechaPresionada = tablero.listaFlechas[flecha];
-    let fichaRemplazada = null;
-    let aux = null;
-    let fichaPerdida = null;
+	//Obtiene la instancia de la flecha presionada
+	const flechaPresionada = tablero.listaFlechas[flecha];
+	let fichaRemplazada = null;
+	let aux = null;
+	let fichaPerdida = null;
 
-    
+	
+	const columna = flechaPresionada.columnaFilaAsociada;
+	//Realiza la inserción según la posición de la flecha
+	switch(flechaPresionada.orientacion)
+	{
+	case "vertical-superior":
+		
+		fichaPerdida = tablero.getFicha(tablero.filas -1, columna); //La que se pierde del tablero
+		fichaRemplazada = tablero.getFicha(0,columna);
 
-    //Realiza la inserción según la posición de la flecha
-    switch(flechaPresionada.orientacion)
-    {
-        case "vertical-superior":
-            let columna = flechaPresionada.columnaFilaAsociada;
-            fichaPerdida = tablero.getFicha(tablero.filas -1, columna); //La que se pierde del tablero
-            fichaRemplazada = tablero.getFicha(0,columna);
+		for(let fila = 1; fila < tablero.filas; ++fila)
+		{
+			aux = tablero.getFicha(fila,columna);
+			tablero.setFicha(fichaRemplazada,fila,columna);
+			fichaRemplazada = aux;
+			//Indica al tablero que debe redibujar la ficha
+			redibujarFicha(fila,columna,tablero.getFicha(fila,columna).numeroActual);
+		}
 
-            for(let fila = 1; fila < tablero.filas; ++fila)
-            {
-                aux = tablero.getFicha(fila,columna);
-                tablero.setFicha(fichaRemplazada,fila,columna);
-                fichaRemplazada = aux;
-                //Indica al tablero que debe redibujar la ficha
-                redibujarFicha(fila,columna,tablero.getFicha(fila,columna).numeroActual);
-            }
+		//Intercambia la ficha rotada por la primer ficha
+		fichaRemplazada = tablero.getFichaSobrante();
+		tablero.setFichaSobrante(fichaPerdida);
+		tablero.setFicha(fichaRemplazada,0,columna);
+		redibujarFicha(0,columna,tablero.getFicha(0,columna).numeroActual);
+		
+		break;
+	}
+	redibujarFichaSobrante(tablero.getFichaSobrante());
 
-            //Intercambia la ficha rotada por la primer ficha
-            fichaRemplazada = tablero.getFichaSobrante();
-            tablero.setFichaSobrante(fichaPerdida);
-            tablero.setFicha(fichaRemplazada,0,columna);
-            redibujarFicha(0,columna,tablero.getFicha(0,columna).numeroActual);
-            
-            break;
-    }
-    redibujarFichaSobrante(tablero.getFichaSobrante());
-
-    //Una vez se ha presionado la flecha, se habilita el movimiento
-    habilitarMovimiento(partida,tablero);
+	//Una vez se ha presionado la flecha, se habilita el movimiento
+	habilitarMovimiento(partida,tablero);
 }
 
 function toggleClaseAnimacion(idElemento, nombreAnimacion)
@@ -683,48 +745,48 @@ function toggleMovimientoVertical(idFlecha)
 
 function habilitarInsercion(partida,tablero)
 {
-    //Setea un listener en todas las flechas
-    let flechaActual = null;
-    let flechaHTML = null;
-    for(let flecha = 0; flecha < tablero.listaFlechas.length; ++flecha)
-    {
-        flechaActual= tablero.listaFlechas[flecha]; //Obtiene la instancia de la flecha
+	//Setea un listener en todas las flechas
+	let flechaActual = null;
+	let flechaHTML = null;
+	for(let flecha = 0; flecha < tablero.listaFlechas.length; ++flecha)
+	{
+		flechaActual= tablero.listaFlechas[flecha]; //Obtiene la instancia de la flecha
 
-        //Agrega el listener según el id de la flecha
-        flechaHTML = document.getElementById("Flecha" + flechaActual.id);
-        flechaHTML.addEventListener('click',function(){flechaPresionada(partida,tablero,flecha);});
-        
-        //Agrega efecto over a la flecha con las animaciones de CSS
-        if(flechaActual.orientacion == "vertical-superior")
-        {
-            toggleMovimientoVertical("Flecha" + flechaActual.id);
-        }
+		//Agrega el listener según el id de la flecha
+		flechaHTML = document.getElementById("Flecha" + flechaActual.id);
+		flechaHTML.addEventListener("click",function(){flechaPresionada(partida,tablero,flecha);});
+		
+		//Agrega efecto over a la flecha con las animaciones de CSS
+		if(flechaActual.orientacion === "vertical-superior")
+		{
+			toggleMovimientoVertical("Flecha" + flechaActual.id);
+		}
 
 
-    }
+	}
 }
 
 
 function proximoTurno(partida,tablero)
 {
-    const textoJugadorActual = $("#jugadorActual");
+	const textoJugadorActual = $("#jugadorActual");
 
-    if(!partida.finalizada)
-    {
-        //partida.jugadorTurno = partida.jugadores[partida.jugadorTurno];
-        textoJugadorActual.text(jugadorActual.nombre);
+	if(!partida.finalizada)
+	{
+		//partida.jugadorTurno = partida.jugadores[partida.jugadorTurno];
+		textoJugadorActual.text(partida.jugadores[partida.jugadorTurno].nombre);
 
-        habilitarInsercion(partida,tablero);
-        tablero.debugTablero();
+		habilitarInsercion(partida,tablero);
+		tablero.debugTablero();
 
-        //Fin del turno
-        //partida.jugadorTurno = (partida.jugadorTurno + 1) % partida.jugadores.length; //TODO: ver que pasa con los jugadores descalificados
-        //partida.contadorTurnos++;
-    }
-    else
-    {
-        //Despliega un mensaje indicando quien fue el ganador, y algunas estadísticas adicionales
-    }
+		//Fin del turno
+		//partida.jugadorTurno = (partida.jugadorTurno + 1) % partida.jugadores.length; //TODO: ver que pasa con los jugadores descalificados
+		//partida.contadorTurnos++;
+	}
+	else
+	{
+		//Despliega un mensaje indicando quien fue el ganador, y algunas estadísticas adicionales
+	}
 }
 
 /**
@@ -733,61 +795,61 @@ function proximoTurno(partida,tablero)
  */
 function inicializarVariables()
 {
-    
-    filas = 13;
-    columnas = 13;
-    tiempoTurno = 120;
-    ayudas = true;
+	
+	const filas = 13;
+	const columnas = 13;
+	const tiempoTurno = 120;
+	const ayudas = true;
 
-    let partida = new Partida();
-    let tablero = new Tablero(filas,columnas,tiempoTurno,ayudas);
+	const partida = new Partida();
+	const tablero = new Tablero(filas,columnas,tiempoTurno,ayudas);
 
 
-    //Crea los jugadores
-    let jugadores = Array();
-    jugadores.push(new Jugador("Esteban",1,"avatar1",7,8));
-    jugadores.push(new Jugador("Joel",2,"avatar5",4,4));
-    partida.jugadores = jugadores;
+	//Crea los jugadores
+	const jugadores = Array();
+	jugadores.push(new Jugador("Esteban",1,"avatar1",7,8));
+	jugadores.push(new Jugador("Joel",2,"avatar5",4,4));
+	partida.jugadores = jugadores;
 
-    //Crea los tesoros
-    //Por el momento solo 1 por jugador
-    //TODO: buscar forma de cargar todos los tesoros existentes en las carpetas de recursos
+	//Crea los tesoros
+	//Por el momento solo 1 por jugador
+	//TODO: buscar forma de cargar todos los tesoros existentes en las carpetas de recursos
 
-    let tesoros = Array();
-    tesoros.push(new Tesoro(1,"crown","crown","Corona",14,6,1)); //Asocia el tesoro a Esteban
-    tesoros.push(new Tesoro(2,"chest","chest","Cofre del tesoro",7,6,2)); //Asocia el tesoro a Joel
-    partida.tesoros = tesoros;
+	const tesoros = Array();
+	tesoros.push(new Tesoro(1,"crown","crown","Corona",14,6,1)); //Asocia el tesoro a Esteban
+	tesoros.push(new Tesoro(2,"chest","chest","Cofre del tesoro",7,6,2)); //Asocia el tesoro a Joel
+	partida.tesoros = tesoros;
 
-    crearTablero(tablero);
+	crearTablero(tablero);
 
-    //Posiciona todos los jugadores en el tablero
-    for(let jugador = 0; jugador < partida.jugadores.length; ++jugador)
-    {
-        jugadorActual = partida.jugadores[jugador];
+	//Posiciona todos los jugadores en el tablero
+	for(let jugador = 0; jugador < partida.jugadores.length; ++jugador)
+	{
+		const jugadorActual = partida.jugadores[jugador];
 
-        //Coloca el jugador
-        setTesoroAvatar("avatar" + jugadorActual.filaActual + "000" + jugadorActual.columnaActual, 
-        "res/img/avatares/sinFondo/" + jugadorActual.avatar + ".png");
-    }
+		//Coloca el jugador
+		setTesoroAvatar("avatar" + jugadorActual.filaActual + "000" + jugadorActual.columnaActual, 
+			"res/img/avatares/sinFondo/" + jugadorActual.avatar + ".png");
+	}
 
-    //Posiciona todos los tesoros en el tablero
-    for(let tesoro = 0; tesoro < partida.tesoros.length; ++tesoro)
-    {
-        tesoroActual = partida.tesoros[tesoro];
+	//Posiciona todos los tesoros en el tablero
+	for(let tesoro = 0; tesoro < partida.tesoros.length; ++tesoro)
+	{
+		const tesoroActual = partida.tesoros[tesoro];
 
-        setTesoroAvatar("tesoro" + tesoroActual.filaActual + "000" +  tesoroActual.columnaActual, 
-        "res/img/tesoros/" + tesoroActual.imagen + ".png");
-    }
+		setTesoroAvatar("tesoro" + tesoroActual.filaActual + "000" +  tesoroActual.columnaActual, 
+			"res/img/tesoros/" + tesoroActual.imagen + ".png");
+	}
 
-    let fichaSobrante = new Ficha(9);
-    tablero.setFichaSobrante(fichaSobrante);
+	const fichaSobrante = new Ficha(9);
+	tablero.setFichaSobrante(fichaSobrante);
 
-    const contenedorFichaSobrante = document.getElementById("fichaSobrante");
-    contenedorFichaSobrante.addEventListener('click',function(){rotarFichaSobrante(fichaSobrante,contenedorFichaSobrante)});
-    contenedorFichaSobrante.src = "res/img/fichas/" + fichaSobrante.numeroActual + ".png";
+	const contenedorFichaSobrante = document.getElementById("fichaSobrante");
+	contenedorFichaSobrante.addEventListener("click",function(){rotarFichaSobrante(fichaSobrante,contenedorFichaSobrante);});
+	contenedorFichaSobrante.src = "res/img/fichas/" + fichaSobrante.numeroActual + ".png";
 
-    //Inicia la partida
-    proximoTurno(partida,tablero);
+	//Inicia la partida
+	proximoTurno(partida,tablero);
 }
 
 
@@ -799,7 +861,7 @@ function inicializarVariables()
 $(document).ready(function()
 {
 
-    inicializarVariables();
+	inicializarVariables();
 
 
 });
