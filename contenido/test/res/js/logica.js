@@ -1,3 +1,4 @@
+//10.3
 class Flecha
 {
 	constructor(id,orientacion,columnaFilaAsociada)
@@ -36,7 +37,9 @@ class Flecha
 
 /**
  * Define la clase jugador, la cual será la encargada de almacenar todos los datos relacionados
- * a los jugadores de la partida
+ * a los jugadores de la partida.
+ * 
+ * Además, se encarga de crear y mantener actualizados los datos de los jugadores
  */ 
 class Jugador
 {
@@ -48,6 +51,27 @@ class Jugador
 		this.avatar = avatar; //String con la dirección del avatar del jugador
 		this.filaActual = filaActual;
 		this.columnaActual = columnaActual;
+	}
+
+	/**
+	 * Agarra el contenedor de jugadores e ingresa los datos del juegador
+	 */
+	generarVistaJugador()
+	{
+		const contenedorJugador = $("#datosJugadores");
+
+		contenedorJugador.html(contenedorJugador.html() + " " + 
+			"<div id=\"contenedorJugador"+this.id+"\" class=\"contenedorJugador\">" +
+			"<img id=\"avatarJugador"+this.id+"\" class=\"avatarJugadorFondo\" src=\"res/img/avatares/conFondo/"+this.avatar+".png\"></img>" +
+			"<p id=\"parrafoJugador"+this.id+"\" class=\"parrafoNombre\">"+this.nombre+"</p>" +
+			"<p id=\"parrafoTesoros1\" class=\"parrafoTesoro\">Tesoros Encontrados: 0 </p>" +
+			"</div>");
+	}
+
+	representarTurno()
+	{
+		$(".jugadorActivo").removeClass("jugadorActivo");
+		$("#contenedorJugador" +this.id).addClass("jugadorActivo");
 	}
 
 	getNombre()
@@ -121,13 +145,41 @@ class Tesoro
  */
 class Partida
 {
-	constructor(listaJugadores)
+	constructor(jugadores)
 	{
-		this.listaJugadores = listaJugadores;
+		this.jugadores = jugadores;
 		this.duracionTurno = 0;
 		this.jugadorTurno = 0; //Indice de la lista jugadores que indica cual es el jugador actual
 		this.finalizada = false;
 		this.contadorTurnos = 0;
+		this.fase = 0; //0 => insercion, 1 => movimiento
+	}
+
+	estaEnInsercion()
+	{
+		return (this.fase === 0);
+	}
+
+	estaEnMovimiento()
+	{
+		return (this.fase === 1);
+	}
+
+	proximaEtapa()
+	{
+		this.fase = (this.fase + 1) % 2; //Solo existen 2 etapas
+	}
+
+	construirJugadores()
+	{
+		for(let jugador = 0; jugador < this.jugadores.length; ++jugador)
+			this.jugadores[jugador].generarVistaJugador();
+	
+	}
+
+	representarTurnoJugadorActual()
+	{
+		this.jugadores[this.jugadorTurno].representarTurno();
 	}
 }
 
@@ -646,9 +698,32 @@ function redibujarFichaSobrante(fichaSobrante)
 }
 
 
+function deshabilitarInsercion(partida,tablero)
+{
+	//Elimina el listener y las animaciones de todas las flechas
+	let flechaActual = null;
+	let flechaHTML = null;
+	for(let flecha = 0; flecha < tablero.listaFlechas.length; ++flecha)
+	{
+		flechaActual= tablero.listaFlechas[flecha]; //Obtiene la instancia de la flecha
+
+		//Agrega el listener según el id de la flecha
+		flechaHTML = document.getElementById("Flecha" + flechaActual.id);
+		flechaHTML.removeEventListener("click",{});
+		
+		//Agrega efecto over a la flecha con las animaciones de CSS
+		if(flechaActual.orientacion === "vertical-superior")
+		{
+			toggleMovimientoVertical("Flecha" + flechaActual.id);
+		}
+
+
+	}
+}
+
 function habilitarMovimiento(partida,tablero)
 {
-	//Todo: Desactivar todas las flechas una vez se haya mostrado las inserciones al profesor
+	deshabilitarInsercion(partida,tablero);
 	const accionActual = $("#accionActual");
 	accionActual.text("Moviendose...");
 
@@ -769,15 +844,13 @@ function habilitarInsercion(partida,tablero)
 
 function proximoTurno(partida,tablero)
 {
-	const textoJugadorActual = $("#jugadorActual");
 
 	if(!partida.finalizada)
 	{
 		//partida.jugadorTurno = partida.jugadores[partida.jugadorTurno];
-		textoJugadorActual.text(partida.jugadores[partida.jugadorTurno].nombre);
+		partida.representarTurnoJugadorActual();
 
 		habilitarInsercion(partida,tablero);
-		tablero.debugTablero();
 
 		//Fin del turno
 		//partida.jugadorTurno = (partida.jugadorTurno + 1) % partida.jugadores.length; //TODO: ver que pasa con los jugadores descalificados
@@ -847,6 +920,7 @@ function inicializarVariables()
 	const contenedorFichaSobrante = document.getElementById("fichaSobrante");
 	contenedorFichaSobrante.addEventListener("click",function(){rotarFichaSobrante(fichaSobrante,contenedorFichaSobrante);});
 	contenedorFichaSobrante.src = "res/img/fichas/" + fichaSobrante.numeroActual + ".png";
+	partida.construirJugadores();
 
 	//Inicia la partida
 	proximoTurno(partida,tablero);
