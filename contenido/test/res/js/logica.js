@@ -53,6 +53,18 @@ class Jugador
 		this.columnaActual = columnaActual;
 	}
 
+	moverse(nuevaFila, nuevaColumna)
+	{
+		$("#avatar" + this.filaActual + "000" + this.columnaActual).attr("hidden",true); //Elimina el viejo avatar
+
+		//Coloca el nuevo avatar
+		$("#avatar" + nuevaFila + "000" + nuevaColumna).attr("hidden",false);
+		$("#avatar" + nuevaFila + "000" + nuevaColumna).attr("src","res/img/avatares/sinFondo/" + this.avatar + ".png");
+
+		this.filaActual = nuevaFila;
+		this.columnaActual = nuevaColumna;
+	}
+
 	/**
 	 * Agarra el contenedor de jugadores e ingresa los datos del juegador
 	 */
@@ -70,8 +82,14 @@ class Jugador
 
 	representarTurno()
 	{
+		//Elimina las clases y animaciones del jugador activo
 		$(".jugadorActivo").removeClass("jugadorActivo");
-		$("#contenedorJugador" +this.id).addClass("jugadorActivo");
+		$(".animacionParpadeo").removeClass("animacionParpadeo");
+
+		const nuevoContenedor = $("#contenedorJugador" +this.id);
+
+		nuevoContenedor.addClass("jugadorActivo");
+		nuevoContenedor.addClass("animacionParpadeo");
 	}
 
 	getNombre()
@@ -149,10 +167,20 @@ class Partida
 	{
 		this.jugadores = jugadores;
 		this.duracionTurno = 0;
-		this.jugadorTurno = 0; //Indice de la lista jugadores que indica cual es el jugador actual
+		this.jugadorTurno = -1; //Indice de la lista jugadores que indica cual es el jugador actual
 		this.finalizada = false;
 		this.contadorTurnos = 0;
 		this.fase = 0; //0 => insercion, 1 => movimiento
+	}
+
+	moverJugadorActual(fila,columna)
+	{
+		this.jugadores[this.jugadorTurno].moverse(fila,columna);
+	}
+
+	asignarProximoJugador()
+	{
+		this.jugadorTurno = (this.jugadorTurno + 1) % this.jugadores.length;
 	}
 
 	estaEnInsercion()
@@ -165,9 +193,14 @@ class Partida
 		return (this.fase === 1);
 	}
 
-	proximaEtapa()
+	estaEnEspera()
 	{
-		this.fase = (this.fase + 1) % 2; //Solo existen 2 etapas
+		return (this.fase === 2);
+	}
+
+	proximaFase()
+	{
+		this.fase = (this.fase + 1) % 3; //Solo existen 3 etapas
 	}
 
 	construirJugadores()
@@ -533,9 +566,9 @@ function obtenerElementoImgOculto(id, dimension, classElement)
 	" height=\""+dimension+"\" width=\""+dimension+"\" />";
 }
 
-function obtenerAperturaDivContenedor()
+function obtenerAperturaDivContenedor(id)
 {
-	return "<div class=\"contenedorImagen\">";
+	return "<div id=\"bloque"+id+"\" class=\"contenedorImagen\">";
 }
 
 function obtenerDivFiltrador(id)
@@ -556,7 +589,7 @@ function obtenerDivFiltrador(id)
  */
 function obtenerBloqueTablero(id, dimension, rutaImagen)
 {
-	return obtenerAperturaDivContenedor() + " " + 
+	return obtenerAperturaDivContenedor(id) + " " + 
 	obtenerElementoImg("Ficha" + id,dimension,rutaImagen,"fichaTablero") + " " + 
 	obtenerDivFiltrador("Filtro" + id) + " " + 
 	obtenerElementoImgOculto("avatar" + id,dimension,"avatarTablero") + " " + 
@@ -716,14 +749,52 @@ function deshabilitarInsercion(partida,tablero)
 		{
 			toggleMovimientoVertical("Flecha" + flechaActual.id);
 		}
-
-
 	}
+	partida.proximaFase();
+}
+
+function deshabilitarMovimiento()
+{
+	$(".animacionCaminoResaltado").removeClass("animacionCaminoResaltado");
+}
+
+
+function moverJugador(partida,tablero,fila,columna)
+{
+	if(partida.estaEnMovimiento() && tablero.verificarMovimientosPermitidos(fila,columna))
+	{
+
+		deshabilitarMovimiento();
+		partida.proximaFase();partida.proximaFase();
+		partida.moverJugadorActual(fila,columna);
+		proximoTurno(partida,tablero);
+	}
+}
+
+/**
+ * Activa todos los eventos encargados de capturar el movimiento del jugador
+ * @param {Partida} partida 
+ * @param {Tablero} tablero 
+ */
+function activarListenersFichas(partida,tablero)
+{
+	//Setea un listener en todas las fichas
+
+	let fichaHTML = null;
+	for(let fila = 0; fila < tablero.filas; ++fila)
+	{
+		for(let columna = 0; columna < tablero.columnas; ++columna)
+		{
+			//Agrega el listener según el id de la ficha
+			fichaHTML = document.getElementById("bloque" + fila + "000" + columna);
+			fichaHTML.addEventListener("click",function(){moverJugador(partida,tablero,fila,columna);});
+		}
+	}	
 }
 
 function habilitarMovimiento(partida,tablero)
 {
-	deshabilitarInsercion(partida,tablero);
+
 	const accionActual = $("#accionActual");
 	accionActual.text("Moviendose...");
 
@@ -745,10 +816,8 @@ function habilitarMovimiento(partida,tablero)
 		const camino = movimientosPermitidos[m];
 
 		$("#Filtro"+camino[0] + "000" + camino[1]).addClass("animacionCaminoResaltado");
-		console.log(m);
 	}
 
-	
 }
 
 /**
@@ -760,43 +829,47 @@ function habilitarMovimiento(partida,tablero)
  */
 function flechaPresionada(partida,tablero, flecha)
 {
-	//Obtiene la instancia de la flecha presionada
-	const flechaPresionada = tablero.listaFlechas[flecha];
-	let fichaRemplazada = null;
-	let aux = null;
-	let fichaPerdida = null;
-
-	
-	const columna = flechaPresionada.columnaFilaAsociada;
-	//Realiza la inserción según la posición de la flecha
-	switch(flechaPresionada.orientacion)
+	if(partida.estaEnInsercion())
 	{
-	case "vertical-superior":
-		
-		fichaPerdida = tablero.getFicha(tablero.filas -1, columna); //La que se pierde del tablero
-		fichaRemplazada = tablero.getFicha(0,columna);
+		//Obtiene la instancia de la flecha presionada
+		const flechaPresionada = tablero.listaFlechas[flecha];
+		let fichaRemplazada = null;
+		let aux = null;
+		let fichaPerdida = null;
 
-		for(let fila = 1; fila < tablero.filas; ++fila)
+		
+		const columna = flechaPresionada.columnaFilaAsociada;
+		//Realiza la inserción según la posición de la flecha
+		switch(flechaPresionada.orientacion)
 		{
-			aux = tablero.getFicha(fila,columna);
-			tablero.setFicha(fichaRemplazada,fila,columna);
-			fichaRemplazada = aux;
-			//Indica al tablero que debe redibujar la ficha
-			redibujarFicha(fila,columna,tablero.getFicha(fila,columna).numeroActual);
+		case "vertical-superior":
+			
+			fichaPerdida = tablero.getFicha(tablero.filas -1, columna); //La que se pierde del tablero
+			fichaRemplazada = tablero.getFicha(0,columna);
+
+			for(let fila = 1; fila < tablero.filas; ++fila)
+			{
+				aux = tablero.getFicha(fila,columna);
+				tablero.setFicha(fichaRemplazada,fila,columna);
+				fichaRemplazada = aux;
+				//Indica al tablero que debe redibujar la ficha
+				redibujarFicha(fila,columna,tablero.getFicha(fila,columna).numeroActual);
+			}
+
+			//Intercambia la ficha rotada por la primer ficha
+			fichaRemplazada = tablero.getFichaSobrante();
+			tablero.setFichaSobrante(fichaPerdida);
+			tablero.setFicha(fichaRemplazada,0,columna);
+			redibujarFicha(0,columna,tablero.getFicha(0,columna).numeroActual);
+			
+			break;
 		}
+		redibujarFichaSobrante(tablero.getFichaSobrante());
 
-		//Intercambia la ficha rotada por la primer ficha
-		fichaRemplazada = tablero.getFichaSobrante();
-		tablero.setFichaSobrante(fichaPerdida);
-		tablero.setFicha(fichaRemplazada,0,columna);
-		redibujarFicha(0,columna,tablero.getFicha(0,columna).numeroActual);
-		
-		break;
+		//Una vez se ha presionado la flecha, se habilita el movimiento
+		deshabilitarInsercion(partida,tablero);
+		habilitarMovimiento(partida,tablero);
 	}
-	redibujarFichaSobrante(tablero.getFichaSobrante());
-
-	//Una vez se ha presionado la flecha, se habilita el movimiento
-	habilitarMovimiento(partida,tablero);
 }
 
 function toggleClaseAnimacion(idElemento, nombreAnimacion)
@@ -818,7 +891,7 @@ function toggleMovimientoVertical(idFlecha)
 	toggleClaseAnimacion(idFlecha,"animacionFlechasVerticales");
 }
 
-function habilitarInsercion(partida,tablero)
+function activarEventosFlechas(partida,tablero)
 {
 	//Setea un listener en todas las flechas
 	let flechaActual = null;
@@ -830,13 +903,23 @@ function habilitarInsercion(partida,tablero)
 		//Agrega el listener según el id de la flecha
 		flechaHTML = document.getElementById("Flecha" + flechaActual.id);
 		flechaHTML.addEventListener("click",function(){flechaPresionada(partida,tablero,flecha);});
+	}
+}
+
+function habilitarInsercion(partida,tablero)
+{
+	//Setea un listener en todas las flechas
+	let flechaActual = null;
+	for(let flecha = 0; flecha < tablero.listaFlechas.length; ++flecha)
+	{
 		
+	
+		flechaActual = tablero.listaFlechas[flecha];
 		//Agrega efecto over a la flecha con las animaciones de CSS
 		if(flechaActual.orientacion === "vertical-superior")
 		{
 			toggleMovimientoVertical("Flecha" + flechaActual.id);
 		}
-
 
 	}
 }
@@ -847,11 +930,10 @@ function proximoTurno(partida,tablero)
 
 	if(!partida.finalizada)
 	{
-		//partida.jugadorTurno = partida.jugadores[partida.jugadorTurno];
+		partida.asignarProximoJugador();
 		partida.representarTurnoJugadorActual();
 
 		habilitarInsercion(partida,tablero);
-
 		//Fin del turno
 		//partida.jugadorTurno = (partida.jugadorTurno + 1) % partida.jugadores.length; //TODO: ver que pasa con los jugadores descalificados
 		//partida.contadorTurnos++;
@@ -921,6 +1003,9 @@ function inicializarVariables()
 	contenedorFichaSobrante.addEventListener("click",function(){rotarFichaSobrante(fichaSobrante,contenedorFichaSobrante);});
 	contenedorFichaSobrante.src = "res/img/fichas/" + fichaSobrante.numeroActual + ".png";
 	partida.construirJugadores();
+
+	activarEventosFlechas(partida,tablero);
+	activarListenersFichas(partida,tablero);
 
 	//Inicia la partida
 	proximoTurno(partida,tablero);
