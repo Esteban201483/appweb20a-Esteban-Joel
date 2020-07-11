@@ -51,6 +51,43 @@ class Jugador
 		this.avatar = avatar; //String con la dirección del avatar del jugador
 		this.filaActual = filaActual;
 		this.columnaActual = columnaActual;
+
+		this.cantidadTesorosEncontrados = 0;
+		this.tesorosEncontrados = [];
+		this.tesoroAsignado = null;
+	}
+
+	verificarTesoroEncontrado(fila,columna)
+	{
+		const encontrado = (this.tesoroAsignado.filaActual === fila && this.tesoroAsignado.columnaActual === columna);
+
+		if(encontrado)
+			this.tesoroAsignado.ocultese();
+
+		return encontrado;
+	}
+
+	actualizarDatosTesoro()
+	{
+		//Indica que ya encontró el tesoro
+		$("#tesoro" + this.id + "encontrado" + this.cantidadTesorosEncontrados).attr("src","res/img/tesoros/" + this.tesoroAsignado.imagen + ".png");
+		++this.cantidadTesorosEncontrados;
+	}
+
+
+	/**
+	 * Asigna un tesoro al jugador
+	 * @param {Tesoro} tesoroAsignado 
+	 */
+	asignarTesoro(tesoroAsignado)
+	{
+		this.tesoroAsignado = tesoroAsignado;
+	}
+
+
+	actualizarEstado(nuevoEstado)
+	{
+		$("#parrafoEstado" + this.id).text(nuevoEstado);
 	}
 
 	moverse(nuevaFila, nuevaColumna)
@@ -76,7 +113,14 @@ class Jugador
 			"<div id=\"contenedorJugador"+this.id+"\" class=\"contenedorJugador\">" +
 			"<img id=\"avatarJugador"+this.id+"\" class=\"avatarJugadorFondo\" src=\"res/img/avatares/conFondo/"+this.avatar+".png\"></img>" +
 			"<p id=\"parrafoJugador"+this.id+"\" class=\"parrafoNombre\">"+this.nombre+"</p>" +
-			"<p id=\"parrafoTesoros1\" class=\"parrafoTesoro\">Tesoros Encontrados: 0 </p>" +
+			"<div id=\"seccionTesoros"+this.id+"\" class=\"seccionTesoro\"> Tesoros: "+ 
+			"<img id=\"tesoro"+this.id+"encontrado0\" class=\"tesoroEncontrado\" src=\"res/img/tesoros/tesoroVacio.png\">"+
+			"<img id=\"tesoro"+this.id+"encontrado1\" class=\"tesoroEncontrado\" src=\"res/img/tesoros/tesoroVacio.png\">"+ 
+			"<img id=\"tesoro"+this.id+"encontrado2\" class=\"tesoroEncontrado\" src=\"res/img/tesoros/tesoroVacio.png\">"+ 
+			"<img id=\"tesoro"+this.id+"encontrado3\" class=\"tesoroEncontrado\" src=\"res/img/tesoros/tesoroVacio.png\">"+ 
+			"<img id=\"tesoro"+this.id+"encontrado4\" class=\"tesoroEncontrado\" src=\"res/img/tesoros/tesoroVacio.png\">"+  
+			"</div>" +
+			"<p id=\"parrafoEstado"+this.id+"\" class=\"parrafoTesoro\">Insertando Ficha </p>" +
 			"</div>");
 	}
 
@@ -155,6 +199,30 @@ class Tesoro
 		this.filaActual = filaActual;
 		this.columnaActual = columnaActual;
 		this.idJugador = idJugador;
+		this.encontrado = false;
+	}
+
+	/**
+	 * Indica al tesoro que ya no debe encontrarse en el tablero
+	 */
+	ocultese()
+	{
+		$("#tesoro" + this.filaActual + "000" + this.columnaActual).attr("hidden",true);
+		this.encontrado = true;
+	}
+
+	/**
+	 * Indica si un tesoro puede ser asignado al jugador específicado
+	 * @param {Number} idJugador 
+	 */
+	esAsignable(idJugador)
+	{ 
+		return ((this.idJugador === idJugador) && !this.encontrado);
+	}
+
+	setEncontrado(encontrado)
+	{
+		this.encontrado = encontrado;
 	}
 }
 
@@ -171,7 +239,100 @@ class Partida
 		this.finalizada = false;
 		this.contadorTurnos = 0;
 		this.fase = 0; //0 => insercion, 1 => movimiento
+		this.tesoros = [];
+
+		this.fases = ["Insertando Ficha", "Realizando Movimiento", "Esperando"];
 	}
+
+	/**
+	 * Desactiva cualquier acción y despliega la información del ganador de la partida
+	 */
+	finalizar()
+	{
+		this.fase = -1;
+
+		alert("Felicidades, el jugador " + this.jugadores[this. jugadorTurno].nombre + " ha ganado la partida");
+
+		//Recorre todas las secciones de los jugadores e indica quien ganó
+		for(let jugador = 0; jugador < this.jugadores.length; ++jugador)
+		{
+			const jugadorActual = this.jugadores[jugador];
+
+			if(jugador !== this.jugadorTurno)
+			{
+				jugadorActual.actualizarEstado(".");
+			}
+			else
+			{
+				jugadorActual.actualizarEstado("Ganador");
+			}
+		}
+	}
+
+	/**
+	 * Verifica si el jugador actual encontró su tesoro asignado
+	 */
+	tesoroEncontrado(fila,columna)
+	{
+		const encontrado = this.jugadores[this.jugadorTurno].verificarTesoroEncontrado(fila,columna);
+
+		if(encontrado)
+		{
+			this.jugadores[this.jugadorTurno].actualizarDatosTesoro();
+			if(!this.asignarProximoTesoro()) //Le asigna otro tesoro al jugador
+			{
+				//Si no pudo asignar otro tesoro, quiere decir que la partida ha terminado
+				this.finalizada = true;
+			}
+		}
+
+		return encontrado;
+	}
+
+	/**
+	 * Le asigna un tesoro al próximo Jugador
+	 */
+	asignarProximoTesoro()
+	{
+		const jugadorAnalizado = this.jugadores[this.jugadorTurno];
+		let tesoroAsignado = false;
+
+		for(let tesoro = 0; tesoro < this.tesoros.length && !tesoroAsignado; ++tesoro)
+		{
+			const tesoroAnalizado = this.tesoros[tesoro];
+
+			if(tesoroAnalizado.esAsignable(jugadorAnalizado.id))
+			{
+				tesoroAsignado = true;
+				jugadorAnalizado.asignarTesoro(tesoroAnalizado);
+			}
+		}
+
+		return tesoroAsignado;
+	}
+
+	/**
+	 * Asigna un tesoro a cada jugador
+	 */
+	asignarTesorosIniciales()
+	{
+		for(let jugador = 0; jugador < this.jugadores.length; ++jugador)
+		{
+			let tesoroAsignado = false;
+			const jugadorAnalizado = this.jugadores[jugador];
+			for(let tesoro = 0; tesoro < this.tesoros.length && !tesoroAsignado; ++tesoro)
+			{
+				const tesoroAnalizado = this.tesoros[tesoro];
+
+				if(tesoroAnalizado.esAsignable(jugadorAnalizado.id))
+				{
+					tesoroAsignado = true;
+					jugadorAnalizado.asignarTesoro(tesoroAnalizado);
+				}
+			}
+		}
+	}
+
 
 	moverJugadorActual(fila,columna)
 	{
@@ -180,6 +341,8 @@ class Partida
 
 	asignarProximoJugador()
 	{
+		if(this.jugadorTurno !== -1)
+			this.jugadores[this.jugadorTurno].actualizarEstado(this.fases[2]);
 		this.jugadorTurno = (this.jugadorTurno + 1) % this.jugadores.length;
 	}
 
@@ -198,9 +361,28 @@ class Partida
 		return (this.fase === 2);
 	}
 
+	actualizarInformacionEstados()
+	{
+		//Actualiza la información de todas las secciones de jugadores
+		for(let jugador = 0; jugador < this.jugadores.length; ++jugador)
+		{
+			const jugadorActual = this.jugadores[jugador];
+
+			if(jugador !== this.jugadorTurno)
+			{
+				jugadorActual.actualizarEstado(this.fases[2]);
+			}
+			else
+			{
+				jugadorActual.actualizarEstado(this.fases[this.fase]);
+			}
+		}
+
+	}
+
 	proximaFase()
 	{
-		this.fase = (this.fase + 1) % 3; //Solo existen 3 etapas
+		this.fase = (this.fase + 1) % 3; //Solo existen 3 etapas	
 	}
 
 	construirJugadores()
@@ -276,6 +458,14 @@ class Tablero
 
 		this.listaFlechas = Array();
 
+	}
+
+	modificarTipo(fila,columna,nuevaFicha)
+	{
+		this.tableroLogico[fila][columna].numeroActual = nuevaFicha;
+
+		//Actualiza la imagen de la ficha
+		$("#Ficha" + fila + "000" + columna).attr("src","res/img/fichas/" + this.tableroLogico[fila][columna].numeroActual + ".png");
 	}
 
 	getMovimientosPermitidos()
@@ -614,7 +804,7 @@ function crearTablero(tablero)
 	let idFlecha = 0; //Contador para identificar las flechas
 	const nombreFlecha = "Flecha";
 
-	const fichas = [0,3,5,6,7,9,10,11,12,13,14];
+	const fichas = [0,3,5,6,7,9,10,11,12,13,14,15];
 
 	innerHTML += (obtenerElementoImg("",size, "res/img/fichas/vacia.png","contenedorImagen"));
 	//crea las flechas superiores
@@ -751,6 +941,7 @@ function deshabilitarInsercion(partida,tablero)
 		}
 	}
 	partida.proximaFase();
+	
 }
 
 function deshabilitarMovimiento()
@@ -767,6 +958,12 @@ function moverJugador(partida,tablero,fila,columna)
 		deshabilitarMovimiento();
 		partida.proximaFase();partida.proximaFase();
 		partida.moverJugadorActual(fila,columna);
+
+		if(partida.tesoroEncontrado(fila,columna))
+		{
+			partida.asignarProximoTesoro();
+		}
+
 		proximoTurno(partida,tablero);
 	}
 }
@@ -794,7 +991,7 @@ function activarListenersFichas(partida,tablero)
 
 function habilitarMovimiento(partida,tablero)
 {
-
+	partida.actualizarInformacionEstados();
 	const accionActual = $("#accionActual");
 	accionActual.text("Moviendose...");
 
@@ -908,6 +1105,7 @@ function activarEventosFlechas(partida,tablero)
 
 function habilitarInsercion(partida,tablero)
 {
+	partida.actualizarInformacionEstados();
 	//Setea un listener en todas las flechas
 	let flechaActual = null;
 	for(let flecha = 0; flecha < tablero.listaFlechas.length; ++flecha)
@@ -932,6 +1130,7 @@ function proximoTurno(partida,tablero)
 	{
 		partida.asignarProximoJugador();
 		partida.representarTurnoJugadorActual();
+		partida.actualizarInformacionEstados();
 
 		habilitarInsercion(partida,tablero);
 		//Fin del turno
@@ -941,6 +1140,7 @@ function proximoTurno(partida,tablero)
 	else
 	{
 		//Despliega un mensaje indicando quien fue el ganador, y algunas estadísticas adicionales
+		partida.finalizar();
 	}
 }
 
@@ -970,12 +1170,24 @@ function inicializarVariables()
 	//Por el momento solo 1 por jugador
 	//TODO: buscar forma de cargar todos los tesoros existentes en las carpetas de recursos
 
+
 	const tesoros = Array();
-	tesoros.push(new Tesoro(1,"crown","crown","Corona",14,6,1)); //Asocia el tesoro a Esteban
-	tesoros.push(new Tesoro(2,"chest","chest","Cofre del tesoro",7,6,2)); //Asocia el tesoro a Joel
+	tesoros.push(new Tesoro(1,"crown","crown","Corona",8,8,1)); //Asocia el tesoro a Esteban
+	tesoros.push(new Tesoro(2,"chest","chest","Cofre del tesoro",9,8,1)); 
+	tesoros.push(new Tesoro(3,"sword_iron","sword_iron","Cofre del tesoro",4,5,2)); //Asocia el tesoro a Joel
+	tesoros.push(new Tesoro(4,"potion_red_small","potion_red_small","Cofre del tesoro",5,4,2));
 	partida.tesoros = tesoros;
 
 	crearTablero(tablero);
+
+	//Crea caminos de cruz alrededor del jugador y los tesoros para debugear
+	tablero.modificarTipo(7,8,15);
+	tablero.modificarTipo(9,8,15);
+	tablero.modificarTipo(8,8,15);
+
+	tablero.modificarTipo(4,4,15);
+	tablero.modificarTipo(4,5,15);
+	tablero.modificarTipo(5,4,15);
 
 	//Posiciona todos los jugadores en el tablero
 	for(let jugador = 0; jugador < partida.jugadores.length; ++jugador)
@@ -1003,6 +1215,7 @@ function inicializarVariables()
 	contenedorFichaSobrante.addEventListener("click",function(){rotarFichaSobrante(fichaSobrante,contenedorFichaSobrante);});
 	contenedorFichaSobrante.src = "res/img/fichas/" + fichaSobrante.numeroActual + ".png";
 	partida.construirJugadores();
+	partida.asignarTesorosIniciales();
 
 	activarEventosFlechas(partida,tablero);
 	activarListenersFichas(partida,tablero);
