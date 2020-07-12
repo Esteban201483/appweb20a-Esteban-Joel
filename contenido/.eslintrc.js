@@ -3,7 +3,7 @@ module.exports = {
 		"browser": true,
 		"es2020": true,
     "node": true,
-    "jquery": true
+	"jquery": true
 	},
 	// Check the default rules, see https://eslint.org/docs/rules/
 	"extends": "eslint:recommended",
