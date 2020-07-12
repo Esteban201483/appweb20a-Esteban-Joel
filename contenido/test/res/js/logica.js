@@ -1,15 +1,8 @@
-import FabricaHtml from "./clases/FabricaHtml.js";
 import Ficha 	   from "./clases/Ficha.js";
-import Flecha 	   from "./clases/Flecha.js";
 import Jugador     from "./clases/Jugador.js";
 import Partida     from "./clases/Partida.js";
 import Tablero     from "./clases/Tablero.js";
 import Tesoro      from "./clases/Tesoro.js";
-
-
-
-
-
 
 
 function setTesoroAvatar(imgId,imageSrc)
@@ -19,174 +12,9 @@ function setTesoroAvatar(imgId,imageSrc)
 	
 }
 
-/**
- * Devuelve el código de un salto de línea semánticamente correcto
- */
-function obtenerSaltoLinea()
-{
-	return "<br/>"; 
-}
-
-/**
- * Devuelve el código para crear un elemento IMG.
- * @param {String} id El identificador del nuevo elemento img
- * @param {int} dimension El ancho y alto al que se debe redimensionar la imagen
- * @param {String} rutaImagen La dirección de la imagen
- * @param {String} classElement La clase del elemento img
- */
-function obtenerElementoImg(id, dimension, rutaImagen, classElement)
-{
-	return "<img id=\""+id+"\" class=\""+classElement+"\"" +
-	" src=\""+rutaImagen+"\" height=\""+dimension+"\" width=\""+dimension+"\" />";
-}
-
-function obtenerElementoImgOculto(id, dimension, classElement)
-{
-	return "<img id=\""+id+"\" hidden=\"hidden\" class=\""+classElement+"\""+
-	" height=\""+dimension+"\" width=\""+dimension+"\" />";
-}
-
-function obtenerAperturaDivContenedor(id)
-{
-	return "<div id=\"bloque"+id+"\" class=\"contenedorImagen\">";
-}
-
-function obtenerDivFiltrador(id)
-{
-	return  "<div class=\"contenedorFiltroAmarillo\" id=\""+id+"\"></div>";
-}
-
-/**
- * Devuelve el código para crear todos los elementos que representan una ficha.
- * Los elementos en total son:
- *      div contenedor
- *      img para la ficha del tablero
- *      img para la ficha del avatar de jugador (Oculto por defecto)
- *      img para la ficha del tesoro (Oculto por defecto)
- * @param {String} id El identificador del nuevo elemento img
- * @param {int} dimension El ancho y alto al que se debe redimensionar la imagen
- * @param {String} rutaImagen La dirección de la imagen
- */
-function obtenerBloqueTablero(id, dimension, rutaImagen)
-{
-	return obtenerAperturaDivContenedor(id) + " " + 
-	obtenerElementoImg("Ficha" + id,dimension,rutaImagen,"fichaTablero") + " " + 
-	obtenerDivFiltrador("Filtro" + id) + " " + 
-	obtenerElementoImgOculto("avatar" + id,dimension,"avatarTablero") + " " + 
-	obtenerElementoImgOculto("tesoro" + id, dimension,"tesoroTablero") +  " </div>";
-}
-
-/**
- * Se encarga de crear un tablero de forma dinámica.
- * todo: Especificar como se obtienen los datos para la creación del tablero
- */
-function crearTablero(tablero)
-{
-	
-	const contenedorTablero = $("#contenedorTablero"); //Obtiene el div que almacenará al tablero
-	contenedorTablero.height($("main").height());
-	contenedorTablero.width($("main").width());
-	let innerHTML = ""; 
-	const size = 100 / Math.max(tablero.filas + 2, tablero.columnas + 2) + "%";
-
-	//let size = 550 / Math.min(tablero.filas + 2,tablero.columnas + 2); //El 2 es para incluir las flechas en todas las direcciones del tablero
-	//let size = contenedorTablero.height() / Math.min(tablero.filas + 2,tablero.columnas + 2); //El 2 es para incluir las flechas en todas las direcciones del tablero
-	let idFlecha = 0; //Contador para identificar las flechas
-	const nombreFlecha = "Flecha";
-
-	const fichas = [0,3,5,6,7,9,10,11,12,13,14,15];
-
-	innerHTML += (obtenerElementoImg("",size, "res/img/fichas/vacia.png","contenedorImagen"));
-	//crea las flechas superiores
-	for(let columna = 0; columna < (tablero.columnas); ++columna)
-	{
-		if((columna % 2) === 0) //Coloca imagenes vacias en las posiciones pares
-			innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
-		else //Coloca las imagenes de las flechas verticales
-		{
-			//Indica al tablero de forma lógica que se va a crear una nueva flecha
-			tablero.agregarFlecha(new Flecha(idFlecha,"vertical-superior",columna));
-
-			innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha superior.png","contenedorImagen"));
-			++idFlecha;
-		}
-	}
-
-	innerHTML += (obtenerSaltoLinea());
-
-	for(let fila = 0; fila < tablero.filas; ++fila)
-	{
-
-		//Controla la creación de flechas al lado izquierdo del tablero
-		if(((fila+1) % 2 !== 0) && (fila+1) !== tablero.filas+2) //Coloca imagenes vacias en las posiciones pares
-			innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
-		else //Coloca las imagenes de las flechas izquierdas
-		{
-			//Indica al tablero de forma lógica que se va a crear una nueva flecha
-			tablero.agregarFlecha(new Flecha(idFlecha,"lateral-izquierda",fila));
-
-			innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha izquierda.png","contenedorImagen"));
-			++idFlecha;
-		}
 
 
-		/////////////////////////////////Coloca las fichas de la fila actual
-		for(let columna = 0; columna < tablero.columnas; ++columna)
-		{
-			const fichaNueva = Math.floor(Math.random() * fichas.length );
 
-			//Indica en el tablero de forma lógica la nueva ficha
-			tablero.setFicha(new Ficha(fichas[fichaNueva]),fila,columna);
-
-			//Indica en el tablero de forma física la nueva ficha
-			innerHTML += (obtenerBloqueTablero(fila + "000" + columna , size, 
-				"res/img/fichas/" + fichas[fichaNueva] + ".png")); 
-		}
-
-
-		//Controla la creación de flechas al lado derecho del tablero
-		if(((fila+1) % 2 !== 0) && (fila+1) !== tablero.filas+2 ) //Coloca imagenes vacias en las posiciones pares
-		{
-			innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
-		}
-		else //Coloca las imagenes de las flechas verticales
-		{
-			//Indica al tablero de forma lógica que se va a crear una nueva flecha
-			tablero.agregarFlecha(new Flecha(idFlecha,"lateral-derecha",fila));
-			innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha derecha.png","contenedorImagen"));
-			++idFlecha;
-		}
-
-		innerHTML += (obtenerSaltoLinea());
-	}
-
-	//crea las flechas Inferiores
-	innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
-	for(let columna = 0; columna < (tablero.columnas); ++columna)
-	{
-		if(columna % 2 === 0) //Coloca imagenes vacias en las posiciones pares
-			innerHTML += (obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen") );
-		else //Coloca las imagenes de las flechas verticales
-		{
-			//Indica al tablero de forma lógica que se va a crear una nueva flecha
-			tablero.agregarFlecha(new Flecha(idFlecha,"vertical-inferior",columna));
-
-			innerHTML += (obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha inferior.png","contenedorImagen") );
-			++idFlecha;
-		}
-	}
-
-	contenedorTablero.html(innerHTML);
-
-	$(".contenedorImagen").height(size);
-	$(".contenedorImagen").width(size);
-	$(".tesoroTablero").height("75%");
-	$(".tesoroTablero").width("75%");
-	$(".avatarTablero").height("50%");
-	$(".avatarTablero").width("50%");
-
-	
-}   
 
 function rotarFichaSobrante(ficha, contenedor) 
 {
@@ -468,7 +296,7 @@ function inicializarVariables()
 	tesoros.push(new Tesoro(4,"potion_red_small","potion_red_small","Cofre del tesoro",5,4,2));
 	partida.tesoros = tesoros;
 
-	crearTablero(tablero);
+	tablero.crearTablero();
 
 	//Crea caminos de cruz alrededor del jugador y los tesoros para debugear
 	tablero.modificarTipo(7,8,15);
@@ -522,9 +350,6 @@ function inicializarVariables()
  */
 $(document).ready(function()
 {
-
-	const fabrica = new FabricaHtml();
-	fabrica.obtenerDebug();
 
 	inicializarVariables();
 

@@ -1,9 +1,12 @@
+import FabricaHtml 	   from "./FabricaHtml.js";
+import Ficha 	   from "./Ficha.js";
+import Flecha 	   from "./Flecha.js";
+import Posicion    from "./Posicion.js";
+
 /**
  * Define la clase tablero, la cual será la encargada de almacenar la representación lógica del tablero
  * y algunos de sus atributos
  */
-
-import Posicion    from "./Posicion.js";
 export default class Tablero
 {
 	constructor(filas, columnas, tiempoTurno, ayudas)
@@ -146,6 +149,120 @@ export default class Tablero
 		console.log("Fin jaja");
 		console.log(this.movimientosPermitidos);
 	}
+
+	/**
+	 * Se encarga de crear un tablero de forma dinámica.
+	 * todo: Especificar como se obtienen los datos para la creación del tablero
+	 */
+	crearTablero()
+	{
+		const fabrica = new FabricaHtml();
+		
+		const contenedorTablero = $("#contenedorTablero"); //Obtiene el div que almacenará al tablero
+		contenedorTablero.height($("main").height());
+		contenedorTablero.width($("main").width());
+		let innerHTML = ""; 
+		const size = 100 / Math.max(this.filas + 2, this.columnas + 2) + "%";
+
+		//let size = 550 / Math.min(tablero.filas + 2,tablero.columnas + 2); //El 2 es para incluir las flechas en todas las direcciones del tablero
+		//let size = contenedorTablero.height() / Math.min(tablero.filas + 2,tablero.columnas + 2); //El 2 es para incluir las flechas en todas las direcciones del tablero
+		let idFlecha = 0; //Contador para identificar las flechas
+		const nombreFlecha = "Flecha";
+
+		const fichas = [0,3,5,6,7,9,10,11,12,13,14,15];
+
+		innerHTML += (fabrica.obtenerElementoImg("",size, "res/img/fichas/vacia.png","contenedorImagen"));
+		//crea las flechas superiores
+		for(let columna = 0; columna < (this.columnas); ++columna)
+		{
+			if((columna % 2) === 0) //Coloca imagenes vacias en las posiciones pares
+				innerHTML += (fabrica.obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
+			else //Coloca las imagenes de las flechas verticales
+			{
+				//Indica al tablero de forma lógica que se va a crear una nueva flecha
+				this.agregarFlecha(new Flecha(idFlecha,"vertical-superior",columna));
+
+				innerHTML += (fabrica.obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha superior.png","contenedorImagen"));
+				++idFlecha;
+			}
+		}
+
+		innerHTML += (fabrica.obtenerSaltoLinea());
+
+		for(let fila = 0; fila < this.filas; ++fila)
+		{
+
+			//Controla la creación de flechas al lado izquierdo del tablero
+			if(((fila+1) % 2 !== 0) && (fila+1) !== this.filas+2) //Coloca imagenes vacias en las posiciones pares
+				innerHTML += (fabrica.obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
+			else //Coloca las imagenes de las flechas izquierdas
+			{
+				//Indica al tablero de forma lógica que se va a crear una nueva flecha
+				this.agregarFlecha(new Flecha(idFlecha,"lateral-izquierda",fila));
+
+				innerHTML += (fabrica.obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha izquierda.png","contenedorImagen"));
+				++idFlecha;
+			}
+
+
+			/////////////////////////////////Coloca las fichas de la fila actual
+			for(let columna = 0; columna < this.columnas; ++columna)
+			{
+				const fichaNueva = Math.floor(Math.random() * fichas.length );
+
+				//Indica en el tablero de forma lógica la nueva ficha
+				this.setFicha(new Ficha(fichas[fichaNueva]),fila,columna);
+
+				//Indica en el tablero de forma física la nueva ficha
+				innerHTML += (fabrica.obtenerBloqueTablero(fila + "000" + columna , size, 
+					"res/img/fichas/" + fichas[fichaNueva] + ".png")); 
+			}
+
+
+			//Controla la creación de flechas al lado derecho del tablero
+			if(((fila+1) % 2 !== 0) && (fila+1) !== this.filas+2 ) //Coloca imagenes vacias en las posiciones pares
+			{
+				innerHTML += (fabrica.obtenerElementoImg("",size,"res/img/fichas/vacia.png"));
+			}
+			else //Coloca las imagenes de las flechas verticales
+			{
+				//Indica al tablero de forma lógica que se va a crear una nueva flecha
+				this.agregarFlecha(new Flecha(idFlecha,"lateral-derecha",fila));
+				innerHTML += (fabrica.obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha derecha.png","contenedorImagen"));
+				++idFlecha;
+			}
+
+			innerHTML += (fabrica.obtenerSaltoLinea());
+		}
+
+		//crea las flechas Inferiores
+		innerHTML += (fabrica.obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
+		for(let columna = 0; columna < (this.columnas); ++columna)
+		{
+			if(columna % 2 === 0) //Coloca imagenes vacias en las posiciones pares
+				innerHTML += (fabrica.obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen") );
+			else //Coloca las imagenes de las flechas verticales
+			{
+				//Indica al tablero de forma lógica que se va a crear una nueva flecha
+				this.agregarFlecha(new Flecha(idFlecha,"vertical-inferior",columna));
+
+				innerHTML += (fabrica.obtenerElementoImg(nombreFlecha+idFlecha,size,"res/img/flechas/flecha inferior.png","contenedorImagen") );
+				++idFlecha;
+			}
+		}
+
+		contenedorTablero.html(innerHTML);
+
+		$(".contenedorImagen").height(size);
+		$(".contenedorImagen").width(size);
+		$(".tesoroTablero").height("75%");
+		$(".tesoroTablero").width("75%");
+		$(".avatarTablero").height("50%");
+		$(".avatarTablero").width("50%");
+	}
+	
+	
+
 
 	/**
 	 * Indica si se puede realizar o no un movimiento en una posición determinada
