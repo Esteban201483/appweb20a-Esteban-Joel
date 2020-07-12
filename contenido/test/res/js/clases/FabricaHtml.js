@@ -1,13 +1,13 @@
-class FabricaHTMl
+export default class FabricaHTMl
 {
-    constructor()
-    {
+	constructor()
+	{
 
-    }
+	}
 
-    obtenerDebug()
-    {
-        return("Fabrica Creada e Importada Correctamente");
-    }
+	obtenerDebug()
+	{
+		alert("Fabrica Creada e Importada Correctamente");
+	}
 }
 
