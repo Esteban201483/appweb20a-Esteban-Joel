@@ -1,8 +1,17 @@
+/**
+ * Modulo Principal. Es el encargado de controlar el proceso del juego
+ */
+
+
 import Ficha 	   from "./clases/Ficha.js";
 import Jugador     from "./clases/Jugador.js";
+import Mensajero   from "./clases/Mensajero.js";
 import Partida     from "./clases/Partida.js";
 import Tablero     from "./clases/Tablero.js";
 import Tesoro      from "./clases/Tesoro.js";
+
+
+
 
 
 function setTesoroAvatar(imgId,imageSrc)
@@ -11,9 +20,6 @@ function setTesoroAvatar(imgId,imageSrc)
 	$("#" + imgId).attr("src",imageSrc);
 	
 }
-
-
-
 
 
 function rotarFichaSobrante(ficha, contenedor) 
@@ -337,6 +343,10 @@ function inicializarVariables()
 
 	activarEventosFlechas(partida,tablero);
 	activarListenersFichas(partida,tablero);
+
+	//Conecta con el websocket
+	const mensajero = new Mensajero("2ce54c2DF");
+	mensajero.iniciarConexion();
 
 	//Inicia la partida
 	proximoTurno(partida,tablero);

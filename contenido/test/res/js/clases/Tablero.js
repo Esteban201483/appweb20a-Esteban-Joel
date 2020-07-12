@@ -1,7 +1,7 @@
 import FabricaHtml 	   from "./FabricaHtml.js";
-import Ficha 	   from "./Ficha.js";
-import Flecha 	   from "./Flecha.js";
-import Posicion    from "./Posicion.js";
+import Ficha 	   	   from "./Ficha.js";
+import Flecha 	       from "./Flecha.js";
+import Posicion        from "./Posicion.js";
 
 /**
  * Define la clase tablero, la cual será la encargada de almacenar la representación lógica del tablero
