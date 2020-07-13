@@ -1,3 +1,5 @@
+
+const Sesion = require("./Sesion.js");
 const filesystem = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -20,8 +22,10 @@ const directorioPaginas = "/test/"; //TODO: Reestructurar proyecto
 const puerto = 80;
 
 let idJugadores = [];
-let tablero = "Digamos que esto es un tablero jaja salu2";
-let jugadoresEsperados = 1;
+let jugadoresEsperados = 2;
+
+const sesion = new Sesion("testing"); //Por ahora, existe una única sesión
+
 
 /**
  * Envia un mensaje a todos los clientes cuyo id se encuentre en la lista de ids
@@ -43,17 +47,38 @@ function broadcastPartida(evento,mensaje, listaId)
 	}
 }
 
+/**
+ * Avisa a todos los jugadores de la sesión que acaba de empezar
+ * @param {Sesion} nuevaSesion 
+ */
+function iniciarPartida(nuevaSesion)
+{
+
+	//Construye la información para que cada cliente construya el tablero
+	nuevaSesion.construirInformacionInicial();
+
+	//Indica a los demas jugadores que la partida ya empezó
+	console.log("La partida ha empezado.");
+	console.log("Jugadores Activos: " + nuevaSesion.jugadores.length);
+
+	io.to(nuevaSesion.getId()).emit("Inicio",nuevaSesion.getInformacionInicial());
+}
+
 
 //Configura el websocketio
 io.on("connection",function(socket) {
 	console.log("Un usuario se ha conectado al websocket");
 
-	socket.on("Listo", function(msg) //El mensaje debe ser un id generado automáticamente
+	socket.on("Listo", function(msg) 
 	{
-		idJugadores.push(socket.id);
+		socket.join(sesion.getId());
+		sesion.agregarJugador(socket.id);
+
+		console.log(sesion.getCantidadJugadores());
 	
-		if(idJugadores.length === jugadoresEsperados) //En este caso, espera que hayan 2 jugadores
-			broadcastPartida("Inicio",tablero,idJugadores);
+		if(sesion.getCantidadJugadores() === jugadoresEsperados) //En este caso, espera que hayan  jugadores
+			//broadcastPartida("Inicio",tablero,idJugadores);
+			iniciarPartida(sesion);
 
 	});
 
@@ -61,13 +86,13 @@ io.on("connection",function(socket) {
 	socket.on("Laberinto",function(msg){
 		console.log(msg);
 	});
-
-	
-
-
-
 });
 
+io.on("disconnect",function(socket){
+
+	//Todo. Solucionar porque no se detecta la desconección. Tal vez haya que agregar un timer de n segundos en algun lugar
+	console.log("El socket " + socket.id + " se ha desconectado");
+});
 
 
 ////////////////////////////////////////////////////////////////////////////////////////

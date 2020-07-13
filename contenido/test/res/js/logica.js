@@ -363,6 +363,19 @@ $(document).ready(function()
 
 	inicializarVariables();
 
+	this.socket = io("http://localhost").connect();
+
+		
+	this.socket.on("connect", function(data){
+		console.log("MI id Socket: " + this.id); //Agarra el id del socket
+
+	});
+
+	this.socket.on("Inicio", function(data){
+		console.log((data));
+		console.log(JSON.parse(data));
+	});
+
 
 });
 
