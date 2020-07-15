@@ -272,7 +272,7 @@ function proximoTurno(partida,tablero)
  * Este método recibe las variables necesarias para el desarrollo del juego
  * 
  */
-function inicializarVariables()
+function inicializarVariables(estructura, socket)
 {
 	
 	const filas = 13;
@@ -282,7 +282,6 @@ function inicializarVariables()
 
 	const partida = new Partida();
 	const tablero = new Tablero(filas,columnas,tiempoTurno,ayudas);
-
 
 	//Crea los jugadores
 	const jugadores = Array();
@@ -302,7 +301,7 @@ function inicializarVariables()
 	tesoros.push(new Tesoro(4,"potion_red_small","potion_red_small","Cofre del tesoro",5,4,2));
 	partida.tesoros = tesoros;
 
-	tablero.crearTablero();
+	tablero.crearTablero(estructura["Tiles"]);
 
 	//Crea caminos de cruz alrededor del jugador y los tesoros para debugear
 	tablero.modificarTipo(7,8,15);
@@ -361,22 +360,28 @@ function inicializarVariables()
 $(document).ready(function()
 {
 
-	inicializarVariables();
-
-	this.socket = io("http://localhost").connect();
+	
+	//sync disconnect on unload para que el socket se desconecte cuando se cierra la pestaña del navegador.
+	//Basado en la respuesta del usuario Carlos Atención, en la pregunta de StackOverFlow:
+	//https://stackoverflow.com/questions/9077719/how-can-i-handle-close-event-in-socket-io
+	const socket = io().connect( "http://localhost", {
+		"sync disconnect on unload": true });
 
 		
-	this.socket.on("connect", function(data){
+	socket.on("connect", function(data){
 		console.log("MI id Socket: " + this.id); //Agarra el id del socket
+		socket.emit("Listo",""); 
 
 	});
 
-	this.socket.on("Inicio", function(data){
-		console.log((data));
-		console.log(JSON.parse(data));
+	socket.on("Inicio", function(data){
+		const estructura = JSON.parse(data);
+		console.log(estructura);
+		inicializarVariables(estructura, socket);
+		
 	});
 
-
+	
 });
 
 

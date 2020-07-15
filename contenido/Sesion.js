@@ -10,8 +10,8 @@ module.exports = class Sesion
 		this.id = id;
 
 
-		this.filas = 15;
-		this.columnas = 15; 
+		this.filas = 111;
+		this.columnas = 11; 
 		this.jugadores = [""]; //Indice 0: id, 1: Nombre, 2: Avatar 3:Fila Inicial 4:Columna inicial 5:SocketId
 		this.tesoros = []; //Indice 0: id, 1: Imagen, 2: Kanji 3:Traduccion 4:Fila Inicial 5:Columna inicial
 
@@ -54,14 +54,19 @@ module.exports = class Sesion
 				//Agrega una ficha de forma aleatoria
 				this.informacionInicial += "{\n";	
 
-				this.informacionInicial += "\t\"numero\": " + Math.floor(Math.random() * fichas.length);
+				this.informacionInicial += "\t\"numero\": " + fichas[Math.floor(Math.random() * fichas.length)];
 
-				if(columna !== this.columnas -1 || fila !== this.filas-1)
-					this.informacionInicial += "\n},\n";
-				else
-					this.informacionInicial += "\n}\n";
+
+				this.informacionInicial += "\n},\n";
+		
+					
 			}
 		}
+
+		//Crea la ficha sobrante
+		this.informacionInicial += "{\n";
+		this.informacionInicial += "\t\"numero\": " + fichas[Math.floor(Math.random() * fichas.length)];
+		this.informacionInicial += "\n}\n";
 
 		this.informacionInicial += "\n]\n"; // Cierra las fichas
 		this.informacionInicial += "}\n"; //Cierra todo el JSON

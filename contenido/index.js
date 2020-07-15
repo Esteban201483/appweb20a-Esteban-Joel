@@ -65,7 +65,7 @@ function iniciarPartida(nuevaSesion)
 }
 
 
-//Configura el websocketio
+//Configura el websocket
 io.on("connection",function(socket) {
 	console.log("Un usuario se ha conectado al websocket");
 
@@ -74,7 +74,7 @@ io.on("connection",function(socket) {
 		socket.join(sesion.getId());
 		sesion.agregarJugador(socket.id);
 
-		console.log(sesion.getCantidadJugadores());
+		console.log("cantidad jugadores: " + sesion.getCantidadJugadores());
 	
 		if(sesion.getCantidadJugadores() === jugadoresEsperados) //En este caso, espera que hayan  jugadores
 			//broadcastPartida("Inicio",tablero,idJugadores);

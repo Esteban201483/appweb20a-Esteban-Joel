@@ -153,10 +153,15 @@ export default class Tablero
 	/**
 	 * Se encarga de crear un tablero de forma dinámica.
 	 * todo: Especificar como se obtienen los datos para la creación del tablero
+	 * @param {Array} arrayFichas
+	 * 
+	 * return Un objeto con la ficha sobrante
 	 */
-	crearTablero()
+	crearTablero(arrayFichas)
 	{
+		console.log("ArrayFichas: " + arrayFichas);
 		const fabrica = new FabricaHtml();
+		let contadorFichas = 0;
 		
 		const contenedorTablero = $("#contenedorTablero"); //Obtiene el div que almacenará al tablero
 		contenedorTablero.height($("main").height());
@@ -169,7 +174,6 @@ export default class Tablero
 		let idFlecha = 0; //Contador para identificar las flechas
 		const nombreFlecha = "Flecha";
 
-		const fichas = [0,3,5,6,7,9,10,11,12,13,14,15];
 
 		innerHTML += (fabrica.obtenerElementoImg("",size, "res/img/fichas/vacia.png","contenedorImagen"));
 		//crea las flechas superiores
@@ -208,14 +212,16 @@ export default class Tablero
 			/////////////////////////////////Coloca las fichas de la fila actual
 			for(let columna = 0; columna < this.columnas; ++columna)
 			{
-				const fichaNueva = Math.floor(Math.random() * fichas.length );
+
+				const fichaNueva = arrayFichas[contadorFichas]["numero"];
+				contadorFichas++;
 
 				//Indica en el tablero de forma lógica la nueva ficha
-				this.setFicha(new Ficha(fichas[fichaNueva]),fila,columna);
+				this.setFicha(new Ficha(fichaNueva),fila,columna);
 
 				//Indica en el tablero de forma física la nueva ficha
 				innerHTML += (fabrica.obtenerBloqueTablero(fila + "000" + columna , size, 
-					"res/img/fichas/" + fichas[fichaNueva] + ".png")); 
+					"res/img/fichas/" + fichaNueva + ".png")); 
 			}
 
 
@@ -259,6 +265,8 @@ export default class Tablero
 		$(".tesoroTablero").width("75%");
 		$(".avatarTablero").height("50%");
 		$(".avatarTablero").width("50%");
+
+		return arrayFichas[contadorFichas]; //Devuelve la ficha sobrante
 	}
 	
 	
