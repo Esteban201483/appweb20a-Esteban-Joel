@@ -37,7 +37,7 @@ module.exports = class Sesion
 				indiceJugador = jugador;
 		}
 
-		const nuevoIdTesoro = this.jugadores[indiceJugador][6] *  this.jugadores.length + this.jugadores[indiceJugador][0];
+		const nuevoIdTesoro = this.jugadores[indiceJugador][6] +  this.jugadores.length * this.jugadores[indiceJugador][0];
 		this.jugadores[indiceJugador][6] += 1;
 
 		console.log("Enviando un " + nuevoIdTesoro);
