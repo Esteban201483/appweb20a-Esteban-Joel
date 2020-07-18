@@ -82,8 +82,9 @@ function deshabilitarMovimiento()
 }
 
 
-function moverJugador(partida,tablero,fila,columna)
+function moverJugador(partida,tablero,fila,columna, socket)
 {
+
 	if(partida.estaEnMovimiento() && tablero.verificarMovimientosPermitidos(fila,columna))
 	{
 
@@ -94,11 +95,11 @@ function moverJugador(partida,tablero,fila,columna)
 
 		if(partida.tesoroEncontrado(fila,columna))
 		{
-			console.log("Esto es grave!!");
 			//partida.asignarProximoTesoro();
 		}
 
-		proximoTurno(partida,tablero);
+		partida.asignarProximoJugador();
+		proximoTurno(partida,tablero,socket);
 	}
 }
 
@@ -236,6 +237,7 @@ function avisarFlecha(partida,tablero,flecha,socket)
 
 function activarEventosFlechas(partida,tablero,socket)
 {
+
 	//Setea un listener en todas las flechas
 	let flechaActual = null;
 	//let flechaHTML = null;
@@ -248,6 +250,7 @@ function activarEventosFlechas(partida,tablero,socket)
 		//flechaHTML.addEventListener("click",function(){/*flechaPresionada(partida,tablero,flecha);*/ avisarFlecha(partida,tablero,flecha,socket);});
 		$("#Flecha" + flechaActual.id).click(function() {avisarFlecha(partida,tablero,flecha,socket);});
 	}
+
 }
 
 function habilitarInsercion(partida,tablero, socket)
@@ -267,6 +270,8 @@ function habilitarInsercion(partida,tablero, socket)
 		}
 
 	}
+	activarEventosFlechas(partida,tablero, socket);
+	activarEventosFlechas(partida,tablero, socket);
 }
 
 
@@ -280,7 +285,7 @@ function proximoTurno(partida,tablero, socket)
 		partida.actualizarInformacionEstados();
 		if(partida.esMiTurno())
 		{
-
+			alert("Es mi turno");
 			habilitarInsercion(partida,tablero, socket);
 		}
 		else
@@ -393,6 +398,7 @@ function inicializarVariables(estructura, socket)
 	socket.on("Asignar",function(data){
 		console.log("Soy el jugador con el id: " + data);
 		partida.miId = Number(data);
+		proximoTurno(partida,tablero,socket);
 	});
 
 	socket.on("asignarTesoro",function(data){
@@ -401,7 +407,7 @@ function inicializarVariables(estructura, socket)
 	});
 
 
-	proximoTurno(partida,tablero,socket);
+	
 }
 
 

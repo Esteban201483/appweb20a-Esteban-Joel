@@ -39,7 +39,7 @@ export default class Partida
 
 	esMiTurno()
 	{
-		//alert("id: " + this.jugadores[this.jugadorTurno].id );
+		console.log("Turno de: " + this.jugadorTurno + ", mi id: " + this.miId);
 		return this.jugadorTurno === this.miId;
 	}
 

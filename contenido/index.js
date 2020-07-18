@@ -106,11 +106,11 @@ io.on("connection",function(socket) {
 	socket.on("insercion",function(msg){
 		console.log("Se ha realizado una inserción en la flecha: " + msg);
 
-		socket.emit("insercionBroadcast",msg); //Envía por broadcast la inserción de la flecha
+		io.to(sesion.getId()).emit("insercionBroadcast",msg); //Envía por broadcast la inserción de la flecha
 	});
 
 	socket.on("movimiento",function(msg){
-		socket.emit("movimientoBroadcast",msg); //Envía por broadcast la inserción de la flecha
+		io.to(sesion.getId()).emit("movimientoBroadcast",msg); //Envía por broadcast la inserción de la flecha
 	});
 
 	socket.on("solicitarTesoro",function(msg){
@@ -120,7 +120,7 @@ io.on("connection",function(socket) {
 		socket.emit("asignarTesoro","" + sesion.obtenerProximoTesoro(socket.id));
 	});
 
-	 
+ 
 
 }); 
 

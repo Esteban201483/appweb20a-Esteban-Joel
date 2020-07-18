@@ -23,12 +23,18 @@ export default class Jugador
 
 	verificarTesoroEncontrado(fila,columna)
 	{
-		const encontrado = (this.tesoroAsignado.filaActual === fila && this.tesoroAsignado.columnaActual === columna);
+		if(this.tesoroAsignado !== null)
+		{
+			const encontrado = (this.tesoroAsignado.filaActual === fila && this.tesoroAsignado.columnaActual === columna);
 
-		if(encontrado)
-			this.tesoroAsignado.ocultese();
+			if(encontrado)
+				this.tesoroAsignado.ocultese();
 
-		return encontrado;
+			return encontrado;
+		}
+		else
+			return false;
+		
 	}
 
 	actualizarDatosTesoro()
