@@ -20,6 +20,7 @@ export default class Jugador
 		this.tesoroAsignado = null;
 	}
 
+
 	verificarTesoroEncontrado(fila,columna)
 	{
 		const encontrado = (this.tesoroAsignado.filaActual === fila && this.tesoroAsignado.columnaActual === columna);
@@ -39,12 +40,18 @@ export default class Jugador
 
 
 	/**
-	 * Asigna un tesoro al jugador
+	 * Asigna un tesoro al jugador.  Este método solo se llama al jugador que tiene el tesoro asignado.
+	 * Los demás jugadores no reciben el llamado a este método
 	 * @param {Tesoro} tesoroAsignado 
 	 */
 	asignarTesoro(tesoroAsignado)
 	{
+		console.log("Mi tesoro :3 " + tesoroAsignado);
 		this.tesoroAsignado = tesoroAsignado;
+
+		//Modifica la información del tesoro buscado
+		$("#labelTraduccion").text(tesoroAsignado.traduccion);
+		$("#kanjiTesoro").attr("src","res/img/kanjis/" + tesoroAsignado.kanji + ".png");
 	}
 
 

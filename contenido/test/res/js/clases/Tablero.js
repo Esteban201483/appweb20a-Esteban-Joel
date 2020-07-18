@@ -58,6 +58,11 @@ export default class Tablero
 		$("#Ficha" + fila + "000" + columna).attr("src","res/img/fichas/" + this.tableroLogico[fila][columna].numeroActual + ".png");
 	}
 
+	limpiarMovimientosPermitidos()
+	{
+		this.movimientosPermitidos = [];
+	}
+
 	getMovimientosPermitidos()
 	{
 		return this.movimientosPermitidos;

@@ -7,7 +7,7 @@ export default class Partida
 	{
 		this.jugadores = jugadores;
 		this.duracionTurno = 0;
-		this.jugadorTurno = -1; //Indice de la lista jugadores que indica cual es el jugador actual
+		this.jugadorTurno = 0; //Indice de la lista jugadores que indica cual es el jugador actual
 		this.finalizada = false;
 		this.contadorTurnos = 0;
 		this.fase = 0; //0 => insercion, 1 => movimiento
@@ -15,6 +15,26 @@ export default class Partida
 		this.miId = 0; //Indica cuál es mi ID. Este id es el que me diferencia de los demás jugadores
 
 		this.fases = ["Insertando Ficha", "Realizando Movimiento", "Esperando"];
+	}
+
+	/**
+	 * Cambia mi tesoro asignado
+	 * @param {} idTesoro 
+	 */
+	cambiarMiTesoroAsignado(idTesoro)
+	{
+		let tesoro = null;
+		//Busca la instancia del tesoro que coincida con el id
+		for(let indiceTesoro = 0; indiceTesoro < this.tesoros.length && tesoro === null; ++indiceTesoro)
+		{
+			if(Number(this.tesoros[indiceTesoro].id) === Number(idTesoro))
+				tesoro = this.tesoros[indiceTesoro];
+		}
+
+
+		//Actualiza el tesoro del jugador
+		this.jugadores[this.miId].asignarTesoro(tesoro);
+
 	}
 
 	esMiTurno()
@@ -95,7 +115,7 @@ export default class Partida
 	 */
 	asignarTesorosIniciales()
 	{
-		for(let jugador = 0; jugador < this.jugadores.length; ++jugador)
+		/*for(let jugador = 0; jugador < this.jugadores.length; ++jugador)
 		{
 			let tesoroAsignado = false;
 			const jugadorAnalizado = this.jugadores[jugador];
@@ -109,7 +129,7 @@ export default class Partida
 					jugadorAnalizado.asignarTesoro(tesoroAnalizado);
 				}
 			}
-		}
+		}*/
 	}
 
 

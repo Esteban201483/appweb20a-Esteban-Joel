@@ -12,12 +12,38 @@ module.exports = class Sesion
 
 		this.filas = 111;
 		this.columnas = 11; 
-		this.jugadores = []; //Indice 0: id, 1: Nombre, 2: Avatar 3:Fila Inicial 4:Columna inicial 5:SocketId
+		this.jugadores = []; //Indice 0: id, 1: Nombre, 2: Avatar 3:Fila Inicial 4:Columna inicial 5:SocketId 6:contadorTesoros
 		this.tesoros = []; //Indice 0: id, 1: Imagen, 2: Kanji 3:Traduccion 4:Fila Inicial 5:Columna inicial
 
 		this.informacionInicial = "";
 
 	}
+
+	/**
+	 * Recibe una solicitud de un usuario para obtener su proximo tesoro.
+	 * El campo 6 del array de jugadores contiene el contador de tesoros. Para saber cual tesoro le pertenece, simplemente se hace un:
+	 * id + contadorTesoros * total de jugadores
+	 * 
+	 * Además, se incrementa el contador de dicho jugador en 1
+	 * @param {Number} socketId 
+	 */
+	obtenerProximoTesoro(socketId)
+	{
+		let indiceJugador = -1;
+
+		for(let jugador = 0; jugador < this.jugadores.length && indiceJugador === -1; ++jugador)
+		{
+			if(this.jugadores[jugador][5] === socketId)
+				indiceJugador = jugador;
+		}
+
+		const nuevoIdTesoro = this.jugadores[indiceJugador][6] *  this.jugadores.length + this.jugadores[indiceJugador][0];
+		this.jugadores[indiceJugador][6] += 1;
+
+		console.log("Enviando un " + nuevoIdTesoro);
+
+		return nuevoIdTesoro;
+	}	
 
 	/**
 	 * Representa los datos iniciales de la partida. Dicha información se debe enviar a cada uno de los clientes, el cual se encarga de construir la partida
@@ -44,8 +70,8 @@ module.exports = class Sesion
 
 		//Agrega los datos de los jugadores
 		//TODO: Usar los nombres capturados en los formularios
-		this.jugadores[0] = ([0,"Esteban","avatar1",5,6,this.jugadores[0][5]]);
-		//this.jugadores[1] = ([1,"Joel","avatar5",2,2,this.jugadores[1][5]]);
+		this.jugadores[0] = ([0,"Esteban","avatar1",5,6,this.jugadores[0][5],0]);
+		this.jugadores[1] = ([1,"Joel","avatar5",2,2,this.jugadores[1][5],0]);
 
 		//Agrega los datos de los tesoros
 		//TODO: generarlos automátciamente
@@ -55,7 +81,7 @@ module.exports = class Sesion
 		for(let indiceJugador = 0; indiceJugador < this.jugadores.length; ++indiceJugador)
 		{
 			const jugador = this.jugadores[indiceJugador];
-			console.log(jugador);
+			console.log("Jugador: " + indiceJugador + " = " + jugador);
 			this.informacionInicial += "{\n";	
 
 
@@ -121,7 +147,7 @@ module.exports = class Sesion
 
 	agregarJugador(/*id,nombre,avatar,fila,columna,*/socketId)
 	{
-		this.jugadores.push([1,"","",0,0,socketId]);
+		this.jugadores.push([this.jugadores.length,"","",0,0,socketId,-1]);
 	}
 
 	obtenerJugador(indice)
@@ -132,7 +158,6 @@ module.exports = class Sesion
 
 	getCantidadJugadores()
 	{
-		console.log("Jugadores en la sesion: " + this.jugadores.length);
 		return this.jugadores.length;
 	}
 

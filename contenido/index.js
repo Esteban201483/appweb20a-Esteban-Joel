@@ -22,7 +22,7 @@ const directorioPaginas = "/test/"; //TODO: Reestructurar proyecto
 const puerto = 80;
 
 let idJugadores = [];
-let jugadoresEsperados = 1;
+let jugadoresEsperados = 2;
 
 const sesion = new Sesion("testing"); //Por ahora, existe una única sesión
 
@@ -67,7 +67,7 @@ function iniciarPartida(nuevaSesion)
 	for(let i = 0; i < nuevaSesion.getCantidadJugadores(); ++i)
 	{
 		//A cada jugador le envía su id de jugador, el cual determinara su orden de turno
-		io.to(nuevaSesion.jugadores[i][5]).emit("Asignar",nuevaSesion.jugadores[i][0]);
+		io.to(nuevaSesion.jugadores[i][5]).emit("Asignar","" + nuevaSesion.jugadores[i][0]);
 		console.log("Socket id: " + nuevaSesion.jugadores[i][0] + " es el jugador: " + nuevaSesion.jugadores[i][5] );
 	}
 }
@@ -75,14 +75,12 @@ function iniciarPartida(nuevaSesion)
 
 //Configura el websocket
 io.on("connection",function(socket) {
-	console.log("Un usuario se ha conectado al websocket");
+	console.log("El socket "+socket.id+" se ha conectado a la partida");
 
 	socket.on("Listo", function(msg) 
 	{
 		socket.join(sesion.getId());
 		sesion.agregarJugador(socket.id);
-
-		console.log("cantidad jugadores: " + sesion.getCantidadJugadores());
 	
 		if(sesion.getCantidadJugadores() === jugadoresEsperados) //En este caso, espera que hayan  jugadores
 			//broadcastPartida("Inicio",tablero,idJugadores);
@@ -115,9 +113,16 @@ io.on("connection",function(socket) {
 		socket.emit("movimientoBroadcast",msg); //Envía por broadcast la inserción de la flecha
 	});
 
-	
+	socket.on("solicitarTesoro",function(msg){
+		//La sesión encuentra el id del próximo tesoro y se lo envia al jugador
+		//console.log(socket.id + " me pidio un tesoro :v. Le envíe: " + sesion.obtenerProximoTesoro(socket.id));
+		//console.log("socket: " + socket.id + " ha pedido un tesoro");
+		socket.emit("asignarTesoro","" + sesion.obtenerProximoTesoro(socket.id));
+	});
 
-});
+	 
+
+}); 
 
 
 
@@ -195,7 +200,7 @@ app.post("/unirsePartida",function(request,response)
 //Despliega la página del Tablero
 app.get("/tablero", function(request,response){
 	filesystem.readFile("test/tablero.xhtml", function(error, data){
-		console.log(data);
+		//console.log(data);
 		response.write(data);
 		response.end();
 	});
