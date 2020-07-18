@@ -36,6 +36,20 @@ export default class Tablero
 
 	}
 
+	getFlechaById(id)
+	{
+		let flecha = null;
+		id = Number(id);
+
+		for(let i = 0; i < this.listaFlechas.length && flecha === null; ++ i)
+		{
+			if(this.listaFlechas[i].getId() === id)
+				flecha = this.listaFlechas[i];
+		}
+
+		return flecha;
+	}
+
 	modificarTipo(fila,columna,nuevaFicha)
 	{
 		this.tableroLogico[fila][columna].numeroActual = nuevaFicha;

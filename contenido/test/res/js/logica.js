@@ -97,7 +97,7 @@ function moverJugador(partida,tablero,fila,columna)
  * @param {Partida} partida 
  * @param {Tablero} tablero 
  */
-function activarListenersFichas(partida,tablero)
+function activarListenersFichas(partida,tablero,socket)
 {
 	//Setea un listener en todas las fichas
 
@@ -148,12 +148,11 @@ function habilitarMovimiento(partida,tablero)
  * @param {Tablero} tablero Instancia del tablero
  * @param {Number} flecha  posición del array de flechas de la flecha presionada
  */
-function flechaPresionada(partida,tablero, flecha)
+function flechaPresionada(partida,tablero, flechaPresionada)
 {
 	if(partida.estaEnInsercion())
 	{
 		//Obtiene la instancia de la flecha presionada
-		const flechaPresionada = tablero.listaFlechas[flecha];
 		let fichaRemplazada = null;
 		let aux = null;
 		let fichaPerdida = null;
@@ -212,7 +211,15 @@ function toggleMovimientoVertical(idFlecha)
 	toggleClaseAnimacion(idFlecha,"animacionFlechasVerticales");
 }
 
-function activarEventosFlechas(partida,tablero)
+function avisarFlecha(partida,tablero,flecha,socket)
+{
+	console.log("Avisando flecha " +flecha+ ",  con el socket: " + socket.id);
+	//El socket le avisa al servidor que realizó la inserción, enviandole el id de la fecha con la cual realizó la inserción
+	socket.emit("insercion","" + flecha);
+
+}
+
+function activarEventosFlechas(partida,tablero,socket)
 {
 	//Setea un listener en todas las flechas
 	let flechaActual = null;
@@ -223,11 +230,11 @@ function activarEventosFlechas(partida,tablero)
 
 		//Agrega el listener según el id de la flecha
 		flechaHTML = document.getElementById("Flecha" + flechaActual.id);
-		flechaHTML.addEventListener("click",function(){flechaPresionada(partida,tablero,flecha);});
+		flechaHTML.addEventListener("click",function(){/*flechaPresionada(partida,tablero,flecha);*/ avisarFlecha(partida,tablero,flecha,socket);});
 	}
 }
 
-function habilitarInsercion(partida,tablero)
+function habilitarInsercion(partida,tablero, socket)
 {
 	partida.actualizarInformacionEstados();
 	//Setea un listener en todas las flechas
@@ -247,7 +254,7 @@ function habilitarInsercion(partida,tablero)
 }
 
 
-function proximoTurno(partida,tablero)
+function proximoTurno(partida,tablero, socket)
 {
 
 	if(!partida.finalizada)
@@ -256,7 +263,7 @@ function proximoTurno(partida,tablero)
 		partida.representarTurnoJugadorActual();
 		partida.actualizarInformacionEstados();
 
-		habilitarInsercion(partida,tablero);
+		habilitarInsercion(partida,tablero, socket);
 		//Fin del turno
 		//partida.jugadorTurno = (partida.jugadorTurno + 1) % partida.jugadores.length; //TODO: ver que pasa con los jugadores descalificados
 		//partida.contadorTurnos++;
@@ -340,15 +347,18 @@ function inicializarVariables(estructura, socket)
 	partida.construirJugadores();
 	partida.asignarTesorosIniciales();
 
-	activarEventosFlechas(partida,tablero);
-	activarListenersFichas(partida,tablero);
+	activarEventosFlechas(partida,tablero, socket);
+	activarListenersFichas(partida,tablero, socket);
 
-	//Conecta con el websocket
-	const mensajero = new Mensajero("2ce54c2DF");
-	mensajero.iniciarConexion();
+	socket.on("insercionBroadcast",function(data)
+	{
+		console.log("Flecha detectada: " + data);
+		flechaPresionada(partida,tablero,tablero.getFlechaById(data));
+	});
+
 
 	//Inicia la partida
-	proximoTurno(partida,tablero);
+	proximoTurno(partida,tablero,socket);
 }
 
 
@@ -385,6 +395,8 @@ $(document).ready(function()
 	socket.on("Asignar",function(data){
 		console.log("Soy el jugador con el id: " + data);
 	});
+
+
 	
 });
 

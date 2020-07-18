@@ -103,6 +103,14 @@ io.on("connection",function(socket) {
 		console.log("F por " + socket);
 	});
 
+
+	//Controla los eventos del juego
+	socket.on("insercion",function(msg){
+		console.log("Se ha realizado una inserción en la flecha: " + msg);
+
+		socket.emit("insercionBroadcast",msg); //Envía por broadcast la inserción de la flecha
+	});
+
 });
 
 
