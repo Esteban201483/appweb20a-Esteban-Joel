@@ -176,6 +176,7 @@ export default class Tablero
 		console.log("ArrayFichas: " + arrayFichas);
 		const fabrica = new FabricaHtml();
 		let contadorFichas = 0;
+
 		
 		const contenedorTablero = $("#contenedorTablero"); //Obtiene el div que almacenará al tablero
 		contenedorTablero.height($("main").height());

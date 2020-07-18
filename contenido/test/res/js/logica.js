@@ -402,7 +402,6 @@ function inicializarVariables(estructura, socket)
 $(document).ready(function()
 {
 
-	
 	//sync disconnect on unload para que el socket se desconecte cuando se cierra la pestaña del navegador.
 	//Basado en la respuesta del usuario Carlos Atención, en la pregunta de StackOverFlow:
 	//https://stackoverflow.com/questions/9077719/how-can-i-handle-close-event-in-socket-io
@@ -417,6 +416,11 @@ $(document).ready(function()
 	});
 
 	socket.on("Inicio", function(data){
+
+
+		//Limpia la tabla de jugadores
+		$("#datosJugadores").html("");
+
 		console.log(data);
 		const estructura = JSON.parse(data);
 		console.log(estructura);
