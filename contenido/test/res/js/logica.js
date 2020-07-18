@@ -92,6 +92,12 @@ function moverJugador(partida,tablero,fila,columna)
 	}
 }
 
+function avisarMoverJugador(partida,tablero,fila,columna,socket)
+{
+	alert("Avisando jaja");
+	socket.emit("movimiento","{\"fila\" : "+fila+" , \"columna\" : "+columna+"}");
+}
+
 /**
  * Activa todos los eventos encargados de capturar el movimiento del jugador
  * @param {Partida} partida 
@@ -108,7 +114,7 @@ function activarListenersFichas(partida,tablero,socket)
 		{
 			//Agrega el listener según el id de la ficha
 			fichaHTML = document.getElementById("bloque" + fila + "000" + columna);
-			fichaHTML.addEventListener("click",function(){moverJugador(partida,tablero,fila,columna);});
+			fichaHTML.addEventListener("click",function(){avisarMoverJugador(partida,tablero,fila,columna, socket);});
 		}
 	}	
 }
@@ -356,6 +362,11 @@ function inicializarVariables(estructura, socket)
 		flechaPresionada(partida,tablero,tablero.getFlechaById(data));
 	});
 
+	socket.on("movimientoBroadcast",function(data){
+		const pos = JSON.parse(data);
+
+		moverJugador(partida,tablero,pos["fila"],pos["columna"], socket);
+	});
 
 	//Inicia la partida
 	proximoTurno(partida,tablero,socket);

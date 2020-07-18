@@ -111,6 +111,12 @@ io.on("connection",function(socket) {
 		socket.emit("insercionBroadcast",msg); //Envía por broadcast la inserción de la flecha
 	});
 
+	socket.on("movimiento",function(msg){
+		socket.emit("movimientoBroadcast",msg); //Envía por broadcast la inserción de la flecha
+	});
+
+	
+
 });
 
 
