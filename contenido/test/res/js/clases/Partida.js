@@ -12,8 +12,15 @@ export default class Partida
 		this.contadorTurnos = 0;
 		this.fase = 0; //0 => insercion, 1 => movimiento
 		this.tesoros = [];
+		this.miId = 0; //Indica cuál es mi ID. Este id es el que me diferencia de los demás jugadores
 
 		this.fases = ["Insertando Ficha", "Realizando Movimiento", "Esperando"];
+	}
+
+	esMiTurno()
+	{
+		//alert("id: " + this.jugadores[this.jugadorTurno].id );
+		return this.jugadorTurno === this.miId;
 	}
 
 	/**

@@ -44,26 +44,34 @@ function redibujarFichaSobrante(fichaSobrante)
 	contenedorFichaSobrante.src = "res/img/fichas/" + fichaSobrante.numeroActual + ".png";
 }
 
-
-function deshabilitarInsercion(partida,tablero)
+function desactivarFlechas(partida,tablero,socket)
 {
 	//Elimina el listener y las animaciones de todas las flechas
 	let flechaActual = null;
 	let flechaHTML = null;
+	alert("Desactivando flechas");
 	for(let flecha = 0; flecha < tablero.listaFlechas.length; ++flecha)
 	{
 		flechaActual= tablero.listaFlechas[flecha]; //Obtiene la instancia de la flecha
 
 		//Agrega el listener según el id de la flecha
-		flechaHTML = document.getElementById("Flecha" + flechaActual.id);
-		flechaHTML.removeEventListener("click",{});
+		//flechaHTML = document.getElementById("Flecha" + flechaActual.id);
+		//flechaHTML.removeEventListener("click",avisarFlecha);
 		
+		$("#Flecha" + flechaActual.id).off("click");
+
 		//Agrega efecto over a la flecha con las animaciones de CSS
 		if(flechaActual.orientacion === "vertical-superior")
 		{
-			toggleMovimientoVertical("Flecha" + flechaActual.id);
+			$("#Flecha" + flechaActual.id).removeClass("animacionFlechasVerticales");
 		}
 	}
+}
+
+
+function deshabilitarInsercion(partida,tablero, socket)
+{
+	desactivarFlechas(partida,tablero,socket);
 	partida.proximaFase();
 	
 }
@@ -94,7 +102,6 @@ function moverJugador(partida,tablero,fila,columna)
 
 function avisarMoverJugador(partida,tablero,fila,columna,socket)
 {
-	alert("Avisando jaja");
 	socket.emit("movimiento","{\"fila\" : "+fila+" , \"columna\" : "+columna+"}");
 }
 
@@ -193,7 +200,7 @@ function flechaPresionada(partida,tablero, flechaPresionada)
 		redibujarFichaSobrante(tablero.getFichaSobrante());
 
 		//Una vez se ha presionado la flecha, se habilita el movimiento
-		deshabilitarInsercion(partida,tablero);
+		deshabilitarInsercion(partida,tablero,0);
 		habilitarMovimiento(partida,tablero);
 	}
 }
@@ -229,14 +236,15 @@ function activarEventosFlechas(partida,tablero,socket)
 {
 	//Setea un listener en todas las flechas
 	let flechaActual = null;
-	let flechaHTML = null;
+	//let flechaHTML = null;
 	for(let flecha = 0; flecha < tablero.listaFlechas.length; ++flecha)
 	{
 		flechaActual= tablero.listaFlechas[flecha]; //Obtiene la instancia de la flecha
 
 		//Agrega el listener según el id de la flecha
-		flechaHTML = document.getElementById("Flecha" + flechaActual.id);
-		flechaHTML.addEventListener("click",function(){/*flechaPresionada(partida,tablero,flecha);*/ avisarFlecha(partida,tablero,flecha,socket);});
+		//flechaHTML = document.getElementById("Flecha" + flechaActual.id);
+		//flechaHTML.addEventListener("click",function(){/*flechaPresionada(partida,tablero,flecha);*/ avisarFlecha(partida,tablero,flecha,socket);});
+		$("#Flecha" + flechaActual.id).click(function() {avisarFlecha(partida,tablero,flecha,socket);});
 	}
 }
 
@@ -268,8 +276,16 @@ function proximoTurno(partida,tablero, socket)
 		partida.asignarProximoJugador();
 		partida.representarTurnoJugadorActual();
 		partida.actualizarInformacionEstados();
+		if(partida.esMiTurno())
+		{
 
-		habilitarInsercion(partida,tablero, socket);
+			habilitarInsercion(partida,tablero, socket);
+		}
+		else
+		{
+			desactivarFlechas(partida,tablero,socket);
+		}
+
 		//Fin del turno
 		//partida.jugadorTurno = (partida.jugadorTurno + 1) % partida.jugadores.length; //TODO: ver que pasa con los jugadores descalificados
 		//partida.contadorTurnos++;
@@ -368,6 +384,11 @@ function inicializarVariables(estructura, socket)
 		moverJugador(partida,tablero,pos["fila"],pos["columna"], socket);
 	});
 
+	socket.on("Asignar",function(data){
+		console.log("Soy el jugador con el id: " + data);
+		partida.miId = data;
+	});
+
 	//Inicia la partida
 	proximoTurno(partida,tablero,socket);
 }
@@ -403,9 +424,7 @@ $(document).ready(function()
 		
 	});
 
-	socket.on("Asignar",function(data){
-		console.log("Soy el jugador con el id: " + data);
-	});
+
 
 
 	
