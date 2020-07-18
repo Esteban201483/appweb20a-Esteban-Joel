@@ -127,6 +127,9 @@
 	margin-bottom: 40px;
 }
 
+/* Código del loader extraido de 
+https://www.w3schools.com/howto/howto_css_loader.asp */
+
 .loader 
 {
 	border: 8px solid #f3f3f3;
