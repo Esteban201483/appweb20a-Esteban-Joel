@@ -117,7 +117,32 @@ io.on("connection",function(socket) {
 		//La sesión encuentra el id del próximo tesoro y se lo envia al jugador
 		//console.log(socket.id + " me pidio un tesoro :v. Le envíe: " + sesion.obtenerProximoTesoro(socket.id));
 		//console.log("socket: " + socket.id + " ha pedido un tesoro");
-		socket.emit("asignarTesoro","" + sesion.obtenerProximoTesoro(socket.id));
+
+		const nuevoTesoroId = sesion.obtenerProximoTesoro(socket.id);
+
+		console.log("nuevoTesoroID: " + nuevoTesoroId + ", tesorosLength: " + sesion.tesorosPosibles.length);
+
+		if(nuevoTesoroId === -2)
+		{
+			//Significa que un jugador gano
+			io.to(sesion.getId()).emit("fin","");
+		}
+		else
+		{
+			
+			socket.emit("asignarTesoro","" + nuevoTesoroId);
+
+		}
+	});
+
+
+	socket.on("finTurno",function(msg){
+		console.log("Ha terminado un turno;");
+		io.to(sesion.getId()).emit("finTurnoBroadcast","");
+	});
+
+	socket.on("comerTesoro",function(msg){
+		io.to(sesion.getId()).emit("comerTesoroBroadcast",msg);
 	});
 
  

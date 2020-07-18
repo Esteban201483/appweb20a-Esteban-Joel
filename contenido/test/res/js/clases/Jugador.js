@@ -20,27 +20,34 @@ export default class Jugador
 		this.tesoroAsignado = null;
 	}
 
-
-	verificarTesoroEncontrado(fila,columna)
+	comerTesoro(fila,columna, tesoro)
 	{
-		if(this.tesoroAsignado !== null)
+		if(tesoro !== null)
 		{
-			const encontrado = (this.tesoroAsignado.filaActual === fila && this.tesoroAsignado.columnaActual === columna);
+			const encontrado = (tesoro.filaActual === fila && tesoro.columnaActual === columna);
 
 			if(encontrado)
-				this.tesoroAsignado.ocultese();
+				tesoro.ocultese();
 
 			return encontrado;
 		}
 		else
 			return false;
-		
 	}
 
-	actualizarDatosTesoro()
+
+	verificarTesoroEncontrado(fila,columna)
+	{
+		if(this.tesoroAsignado !== null)
+			return  (this.tesoroAsignado.filaActual === fila && this.tesoroAsignado.columnaActual === columna);
+		else
+			return false;
+	}
+
+	actualizarDatosTesoro(tesoro)
 	{
 		//Indica que ya encontró el tesoro
-		$("#tesoro" + this.id + "encontrado" + this.cantidadTesorosEncontrados).attr("src","res/img/tesoros/" + this.tesoroAsignado.imagen + ".png");
+		$("#tesoro" + this.id + "encontrado" + this.cantidadTesorosEncontrados).attr("src","res/img/tesoros/" + tesoro.imagen + ".png");
 		++this.cantidadTesorosEncontrados;
 	}
 

@@ -95,11 +95,18 @@ function moverJugador(partida,tablero,fila,columna, socket)
 
 		if(partida.tesoroEncontrado(fila,columna))
 		{
-			//partida.asignarProximoTesoro();
+			//Envía el ID del tesoro que se comió
+			socket.emit("comerTesoro",partida.jugadores[partida.miId].tesoroAsignado.id);
+
+			//Pide un nuevo tesoro por socket
+			socket.emit("solicitarTesoro","Por favor!");
 		}
 
-		partida.asignarProximoJugador();
-		proximoTurno(partida,tablero,socket);
+		if(partida.esMiTurno())
+			socket.emit("finTurno","");
+
+		/*partida.asignarProximoJugador();
+		proximoTurno(partida,tablero,socket);*/
 	}
 }
 
@@ -404,6 +411,20 @@ function inicializarVariables(estructura, socket)
 	socket.on("asignarTesoro",function(data){
 		console.log("Me asignaron un tesoro: " + data);
 		partida.cambiarMiTesoroAsignado(data);
+	});
+
+	socket.on("comerTesoroBroadcast",function(data){
+		partida.comerTesoro(partida.jugadores[partida.jugadorTurno].filaActual,partida.jugadores[partida.jugadorTurno].columnaActual, data);
+	});
+	
+	socket.on("finTurnoBroadcast",function(data){
+		partida.asignarProximoJugador();
+		proximoTurno(partida,tablero,socket);
+	});
+
+	socket.on("fin",function(data){
+		//alert("Partida Finalizada");
+		partida.finalizar();
 	});
 
 

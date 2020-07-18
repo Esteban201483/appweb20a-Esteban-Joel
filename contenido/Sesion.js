@@ -13,8 +13,8 @@ module.exports = class Sesion
 		this.filas = 111;
 		this.columnas = 11; 
 		this.jugadores = []; //Indice 0: id, 1: Nombre, 2: Avatar 3:Fila Inicial 4:Columna inicial 5:SocketId 6:contadorTesoros
-		this.tesoros = []; //Indice 0: id, 1: Imagen, 2: Kanji 3:Traduccion 4:Fila Inicial 5:Columna inicial
-
+		this.tesorosPosibles = []; //Indice 0: id, 1: Imagen, 2: Kanji 3:Traduccion 4:Fila Inicial 5:Columna inicial
+		this.tesorosPorJugador = 2;
 		this.informacionInicial = "";
 
 	}
@@ -37,8 +37,16 @@ module.exports = class Sesion
 				indiceJugador = jugador;
 		}
 
-		const nuevoIdTesoro = this.jugadores[indiceJugador][6] +  this.jugadores.length * this.jugadores[indiceJugador][0];
-		this.jugadores[indiceJugador][6] += 1;
+		let nuevoIdTesoro = -1;
+
+		if(this.jugadores[indiceJugador][6] >= this.tesorosPorJugador)
+			nuevoIdTesoro = -2;
+		else
+		{
+			nuevoIdTesoro = this.jugadores[indiceJugador][6] +  this.jugadores.length * this.jugadores[indiceJugador][0];
+			this.jugadores[indiceJugador][6] += 1;
+		}
+		
 
 		console.log("Enviando un " + nuevoIdTesoro);
 
@@ -53,13 +61,11 @@ module.exports = class Sesion
 	{
 		const fichas = [0,3,5,6,7,9,10,11,12,13,14,15];
 
-		const tesorosPosibles = [];
-		tesorosPosibles.push([0,"apple_red","apple_red","Manzana"]);
-		tesorosPosibles.push([1,"chest","chest","Cofre"]);
-		tesorosPosibles.push([2,"sword_iron","sword_iron","Espada"]);
-		tesorosPosibles.push([3,"potion_red_small","potion_red_small","Poción"]);
+		this.tesorosPosibles.push([0,"apple_red","apple_red","Manzana"]);
+		this.tesorosPosibles.push([1,"chest","chest","Cofre"]);
+		this.tesorosPosibles.push([2,"sword_iron","sword_iron","Espada"]);
+		this.tesorosPosibles.push([3,"potion_red_small","potion_red_small","Poción"]);
 
-		const tesorosPorJugador = 2; //TODO: Cambiar a 5
 
 		this.informacionInicial = "{\n";
 
@@ -142,7 +148,7 @@ module.exports = class Sesion
 
 	agregarTesoro(id,imagen,kanji,traduccion,fila,columna)
 	{
-		this.tesoros.push([id,imagen,kanji,traduccion,fila,columna]);
+		//this.tesoros.push([id,imagen,kanji,traduccion,fila,columna]);
 	}
 
 	agregarJugador(/*id,nombre,avatar,fila,columna,*/socketId)

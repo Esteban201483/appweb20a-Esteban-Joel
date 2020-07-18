@@ -68,6 +68,13 @@ export default class Partida
 		}
 	}
 
+	comerTesoro(fila,columna, tesoroId)
+	{
+		this.jugadores[this.jugadorTurno].comerTesoro(fila,columna, this.tesoros[tesoroId]);
+		this.jugadores[this.jugadorTurno].actualizarDatosTesoro(this.tesoros[tesoroId]);
+
+	}
+
 	/**
 	 * Verifica si el jugador actual encontró su tesoro asignado
 	 */
@@ -75,15 +82,6 @@ export default class Partida
 	{
 		const encontrado = this.jugadores[this.jugadorTurno].verificarTesoroEncontrado(fila,columna);
 
-		if(encontrado)
-		{
-			this.jugadores[this.jugadorTurno].actualizarDatosTesoro();
-			if(!this.asignarProximoTesoro()) //Le asigna otro tesoro al jugador
-			{
-				//Si no pudo asignar otro tesoro, quiere decir que la partida ha terminado
-				this.finalizada = true;
-			}
-		}
 
 		return encontrado;
 	}
