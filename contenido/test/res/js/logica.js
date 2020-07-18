@@ -375,12 +375,16 @@ $(document).ready(function()
 	});
 
 	socket.on("Inicio", function(data){
+		console.log(data);
 		const estructura = JSON.parse(data);
 		console.log(estructura);
 		inicializarVariables(estructura, socket);
 		
 	});
 
+	socket.on("Asignar",function(data){
+		console.log("Soy el jugador con el id: " + data);
+	});
 	
 });
 

@@ -12,7 +12,7 @@ module.exports = class Sesion
 
 		this.filas = 111;
 		this.columnas = 11; 
-		this.jugadores = [""]; //Indice 0: id, 1: Nombre, 2: Avatar 3:Fila Inicial 4:Columna inicial 5:SocketId
+		this.jugadores = []; //Indice 0: id, 1: Nombre, 2: Avatar 3:Fila Inicial 4:Columna inicial 5:SocketId
 		this.tesoros = []; //Indice 0: id, 1: Imagen, 2: Kanji 3:Traduccion 4:Fila Inicial 5:Columna inicial
 
 		this.informacionInicial = "";
@@ -42,6 +42,40 @@ module.exports = class Sesion
 		this.informacionInicial += "\"filas\": " + this.filas + ",";
 		this.informacionInicial += "\"columnas\": " + this.columnas + ",";
 
+		//Agrega los datos de los jugadores
+		//TODO: Usar los nombres capturados en los formularios
+		this.jugadores[0] = ([0,"Esteban","avatar1",5,6,this.jugadores[0][5]]);
+		//this.jugadores[1] = ([1,"Joel","avatar5",2,2,this.jugadores[1][5]]);
+
+		//Agrega los datos de los tesoros
+		//TODO: generarlos automátciamente
+
+		this.informacionInicial += "\"Jugadores\":\n[\n";
+
+		for(let indiceJugador = 0; indiceJugador < this.jugadores.length; ++indiceJugador)
+		{
+			const jugador = this.jugadores[indiceJugador];
+			console.log(jugador);
+			this.informacionInicial += "{\n";	
+
+
+			this.informacionInicial += "\"id\": " + jugador[0] + ", " +
+				"\"nombre\": \"" + jugador[1] + "\", " +
+				"\"avatar\": \"" + jugador[2] + "\", " +
+				"\"fila\": " + jugador[3] + ", " +
+				"\"columna\": " + jugador[4] + " "
+			;
+
+			if(indiceJugador !== this.jugadores.length - 1)
+				this.informacionInicial += "\n},\n";
+			else
+				this.informacionInicial += "\n}\n";
+		}
+
+		this.informacionInicial += "\n],\n"; // Cierra el array de jugadores
+
+		//Agrega los datos de los tesoros
+
 
 		//Agrega las fichas
 		this.informacionInicial += "\"Tiles\": \n[\n";
@@ -53,7 +87,7 @@ module.exports = class Sesion
 			{
 				//Agrega una ficha de forma aleatoria
 				this.informacionInicial += "{\n";	
-
+ 
 				this.informacionInicial += "\t\"numero\": " + fichas[Math.floor(Math.random() * fichas.length)];
 
 
@@ -85,9 +119,9 @@ module.exports = class Sesion
 		this.tesoros.push([id,imagen,kanji,traduccion,fila,columna]);
 	}
 
-	agregarJugador(id,nombre,avatar,fila,columna,socketId)
+	agregarJugador(/*id,nombre,avatar,fila,columna,*/socketId)
 	{
-		this.jugadores.push([id,nombre,avatar,fila,columna,socketId]);
+		this.jugadores.push([1,"","",0,0,socketId]);
 	}
 
 	obtenerJugador(indice)
@@ -98,6 +132,7 @@ module.exports = class Sesion
 
 	getCantidadJugadores()
 	{
+		console.log("Jugadores en la sesion: " + this.jugadores.length);
 		return this.jugadores.length;
 	}
 

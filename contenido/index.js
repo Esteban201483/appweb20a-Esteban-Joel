@@ -22,7 +22,7 @@ const directorioPaginas = "/test/"; //TODO: Reestructurar proyecto
 const puerto = 80;
 
 let idJugadores = [];
-let jugadoresEsperados = 2;
+let jugadoresEsperados = 1;
 
 const sesion = new Sesion("testing"); //Por ahora, existe una única sesión
 
@@ -62,6 +62,14 @@ function iniciarPartida(nuevaSesion)
 	console.log("Jugadores Activos: " + nuevaSesion.jugadores.length);
 
 	io.to(nuevaSesion.getId()).emit("Inicio",nuevaSesion.getInformacionInicial());
+
+	//A cada jugador le indica su número de jugador
+	for(let i = 0; i < nuevaSesion.getCantidadJugadores(); ++i)
+	{
+		//A cada jugador le envía su id de jugador, el cual determinara su orden de turno
+		io.to(nuevaSesion.jugadores[i][5]).emit("Asignar",nuevaSesion.jugadores[i][0]);
+		console.log("Socket id: " + nuevaSesion.jugadores[i][0] + " es el jugador: " + nuevaSesion.jugadores[i][5] );
+	}
 }
 
 
@@ -86,13 +94,18 @@ io.on("connection",function(socket) {
 	socket.on("Laberinto",function(msg){
 		console.log(msg);
 	});
+
+	socket.on("disconnect",function(socket){
+
+		//TODO: El servidor emite un evento para avisarle a todos los jugadores que el jugador se ha desconectado.
+		//Para ello, en la sesión, cada jugador llega en el último elemento de su arreglo el id del socket
+
+		console.log("F por " + socket);
+	});
+
 });
 
-io.on("disconnect",function(socket){
 
-	//Todo. Solucionar porque no se detecta la desconección. Tal vez haya que agregar un timer de n segundos en algun lugar
-	console.log("El socket " + socket.id + " se ha desconectado");
-});
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
