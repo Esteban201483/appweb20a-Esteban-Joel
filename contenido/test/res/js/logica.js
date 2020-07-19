@@ -22,10 +22,15 @@ function setTesoroAvatar(imgId,imageSrc)
 }
 
 
-function rotarFichaSobrante(ficha, contenedor) 
+function rotarFichaSobrante(numeroFicha, contenedor, partida) 
 {
-	ficha.rotarIzquierda();
-	contenedor.src = "res/img/fichas/" + ficha.numeroActual + ".png";
+	alert("Rotando: " + numeroFicha);
+	const nuevaFicha = new Ficha(numeroFicha);
+
+	nuevaFicha.rotarIzquierda();
+	contenedor.src = "res/img/fichas/" + nuevaFicha.numeroActual + ".png";
+	
+	partida.fichaSobrante = nuevaFicha;
 
 }
 
@@ -36,16 +41,27 @@ function redibujarFicha(fila,columna,nuevaFicha)
 }
 
 
-function redibujarFichaSobrante(fichaSobrante)
+function redibujarFichaSobrante(fichaSobrante, partida)
 {
+	partida.fichaSobrante = fichaSobrante;
 	const contenedorFichaSobrante = document.getElementById("fichaSobrante");
 	contenedorFichaSobrante.removeEventListener("click",rotarFichaSobrante);
-	contenedorFichaSobrante.addEventListener("click",function(){rotarFichaSobrante(fichaSobrante,contenedorFichaSobrante);});
+	contenedorFichaSobrante.addEventListener("click",function(){avisarRotarFichaSobrante(fichaSobrante,contenedorFichaSobrante,partida);});
 	contenedorFichaSobrante.src = "res/img/fichas/" + fichaSobrante.numeroActual + ".png";
+}
+
+
+function desactivarRotacionFicha(partida,tablero,socket)
+{
+
 }
 
 function desactivarFlechas(partida,tablero,socket)
 {
+
+	//Si las flechas se desactivan, también desactiva la rotación de la ficha
+	desactivarRotacionFicha(partida,tablero,socket);
+
 	//Elimina el listener y las animaciones de todas las flechas
 	let flechaActual = null;
 	let flechaHTML = null;
@@ -112,7 +128,8 @@ function moverJugador(partida,tablero,fila,columna, socket)
 
 function avisarMoverJugador(partida,tablero,fila,columna,socket)
 {
-	socket.emit("movimiento","{\"fila\" : "+fila+" , \"columna\" : "+columna+"}");
+	if(partida.esMiTurno())
+		socket.emit("movimiento","{\"fila\" : "+fila+" , \"columna\" : "+columna+"}");
 }
 
 /**
@@ -200,14 +217,14 @@ function flechaPresionada(partida,tablero, flechaPresionada)
 			}
 
 			//Intercambia la ficha rotada por la primer ficha
-			fichaRemplazada = tablero.getFichaSobrante();
-			tablero.setFichaSobrante(fichaPerdida);
+			fichaRemplazada = partida.fichaSobrante;
+			partida.fichaSobrante = fichaPerdida;
 			tablero.setFicha(fichaRemplazada,0,columna);
 			redibujarFicha(0,columna,tablero.getFicha(0,columna).numeroActual);
 			
 			break;
 		}
-		redibujarFichaSobrante(tablero.getFichaSobrante());
+		redibujarFichaSobrante(tablero.getFichaSobrante(),partida);
 
 		//Una vez se ha presionado la flecha, se habilita el movimiento
 		deshabilitarInsercion(partida,tablero,0);
@@ -311,6 +328,12 @@ function proximoTurno(partida,tablero, socket)
 	}
 }
 
+function avisarRotarFichaSobrante(fichaSobrante,contenedorFichaSobrante, partida, socket)
+{
+	if(partida.esMiTurno())
+		socket.emit("rotarFicha",partida.fichaSobrante.numeroActual);
+}
+
 /**
  * Este método recibe las variables necesarias para el desarrollo del juego
  * 
@@ -381,8 +404,10 @@ function inicializarVariables(estructura, socket)
 	tablero.setFichaSobrante(fichaSobrante);
 
 	const contenedorFichaSobrante = document.getElementById("fichaSobrante");
-	contenedorFichaSobrante.addEventListener("click",function(){rotarFichaSobrante(fichaSobrante,contenedorFichaSobrante);});
+	contenedorFichaSobrante.addEventListener("click",function(){avisarRotarFichaSobrante(fichaSobrante,contenedorFichaSobrante, partida, socket);});
 	contenedorFichaSobrante.src = "res/img/fichas/" + fichaSobrante.numeroActual + ".png";
+	partida.fichaSobrante = fichaSobrante;
+
 	partida.construirJugadores();
 	partida.asignarTesorosIniciales();
 
@@ -425,6 +450,10 @@ function inicializarVariables(estructura, socket)
 	socket.on("fin",function(data){
 		//alert("Partida Finalizada");
 		partida.finalizar();
+	});
+
+	socket.on("rotarFichaBroadcast",function(data){
+		rotarFichaSobrante(data,document.getElementById("fichaSobrante"),partida);
 	});
 
 

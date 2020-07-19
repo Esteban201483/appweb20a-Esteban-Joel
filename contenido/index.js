@@ -198,6 +198,12 @@ io.on("connection",function(socket) {
 		io.to(sesion.getId()).emit("comerTesoroBroadcast",msg);
 	});
 
+	socket.on("rotarFicha",function(msg)
+	{
+		console.log("Hubo una rotación");
+		io.to(sesion.getId()).emit("rotarFichaBroadcast",msg);
+	});
+
  
 
 }); 
