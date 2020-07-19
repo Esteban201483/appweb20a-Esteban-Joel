@@ -223,8 +223,29 @@ function flechaPresionada(partida,tablero, flechaPresionada)
 			redibujarFicha(0,columna,tablero.getFicha(0,columna).numeroActual);
 			
 			break;
+		case "vertical-inferior":
+			
+			fichaPerdida = tablero.getFicha(0, columna); //La que se pierde del tablero va a ser la primer ficha
+			fichaRemplazada = tablero.getFicha(tablero.filas-1,columna);
+
+			for(let fila = tablero.filas - 1; fila >= 0 ; --fila)
+			{
+				aux = tablero.getFicha(fila,columna);
+				tablero.setFicha(fichaRemplazada,fila,columna);
+				fichaRemplazada = aux;
+				//Indica al tablero que debe redibujar la ficha
+				redibujarFicha(fila,columna,tablero.getFicha(fila,columna).numeroActual);
+			}
+
+			//Intercambia la ficha rotada por la primer ficha
+			fichaRemplazada = partida.fichaSobrante;
+			partida.fichaSobrante = fichaPerdida;
+			tablero.setFicha(fichaRemplazada,tablero.filas-1,columna);
+			redibujarFicha(tablero.filas-1,columna,tablero.getFicha(tablero.filas-1,columna).numeroActual);
+			
+			break;
 		}
-		redibujarFichaSobrante(tablero.getFichaSobrante(),partida);
+		redibujarFichaSobrante(partida.fichaSobrante,partida);
 
 		//Una vez se ha presionado la flecha, se habilita el movimiento
 		deshabilitarInsercion(partida,tablero,0);
@@ -250,6 +271,7 @@ function toggleMovimientoVertical(idFlecha)
 {
 	toggleClaseAnimacion(idFlecha,"animacionFlechasVerticales");
 }
+
 
 function avisarFlecha(partida,tablero,flecha,socket)
 {
@@ -288,9 +310,10 @@ function habilitarInsercion(partida,tablero, socket)
 	
 		flechaActual = tablero.listaFlechas[flecha];
 		//Agrega efecto over a la flecha con las animaciones de CSS
-		if(flechaActual.orientacion === "vertical-superior")
+		if(flechaActual.orientacion === "vertical-superior" || flechaActual.orientacion === "vertical-inferior")
 		{
 			toggleMovimientoVertical("Flecha" + flechaActual.id);
+			
 		}
 
 	}
