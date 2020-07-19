@@ -3,16 +3,24 @@ const Sesion = require("./Sesion.js");
 const filesystem = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+//const cookiep = require("cookies");
+const cookie = require("socket.io-cookie-parser");
 
 
 const app = express(); // Hace uso del framework Express
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 
+io.use(cookie());
+
 
 //Permite que los recursos puedan ser accedidos de forma pública 
 const resources = require("path").join(__dirname + "/test/"); 
 app.use("", express.static(resources));
+app.use(cookieParser());
+
+
 
 //Permite que los datos de los formularios sean capturados mediante solicitudes POST
 const urlEncodedParser = bodyParser.urlencoded({extended : false});
@@ -26,6 +34,23 @@ let jugadoresEsperados = 2;
 
 const sesion = new Sesion("testing"); //Por ahora, existe una única sesión
 
+const listaSesiones = []; //Almacena todas las sesiones, las cuales deben incluir el room id
+
+
+function getSesionById(id)
+{
+	let sesionEncontrada = null;
+	console.log("buscando sesion: " + id);
+
+	for(let indiceSesion = 0; indiceSesion < listaSesiones.length && sesionEncontrada === null; ++indiceSesion)
+		if(Number(listaSesiones[indiceSesion].id) === Number(id))
+			sesionEncontrada = listaSesiones[indiceSesion];
+
+	console.log("Sesion encontrada: " + sesionEncontrada);
+
+
+	return sesionEncontrada;
+}
 
 /**
  * Envia un mensaje a todos los clientes cuyo id se encuentre en la lista de ids
@@ -76,6 +101,34 @@ function iniciarPartida(nuevaSesion)
 //Configura el websocket
 io.on("connection",function(socket) {
 	console.log("El socket "+socket.id+" se ha conectado a la partida");
+
+	//Conecta al jugador a la sala de espera
+	socket.on("Conecteme",function(msg) 
+	{
+
+
+		//Encuentra la sesión utilizando el roomID
+		const sesionActual = getSesionById(socket.request.cookies["roomID"]);
+
+		//Impide que alguien que meta la url de la sala de espera haga que el servidor se caiga >:V
+		if(sesionActual !== null)
+		{
+			//Conecta al socket con el respectivo room
+			socket.join(socket.request.cookies["roomID"]);
+
+			//El jugador se registra a la hora de crear la partida :v
+
+			//Obtiene el nombre de todos los jugadores conectados, incluido el de uno
+			const nombres = sesionActual.getNombreJugadores();
+
+			//Todos los conectados en la sala de espera actualizan su lista de nombres desde 0
+			io.to(sesionActual.id).emit("salaEsperaInicial",nombres); 
+
+			//Le envia al cliente los datos de la partida
+			socket.emit("datosPartida",[sesionActual.id,sesionActual.filas,sesionActual.columnas]);
+		}
+
+	});
 
 	socket.on("Listo", function(msg) 
 	{
@@ -131,7 +184,7 @@ io.on("connection",function(socket) {
 		{
 			
 			socket.emit("asignarTesoro","" + nuevoTesoroId);
-
+ 
 		}
 	});
 
@@ -181,6 +234,8 @@ app.post("/crearPartida",function(request,response)
 	let dificultad = "facil";
 	let nombreJugador = "";
 
+	sesionGeneral = request.session;
+
 	//Realiza validaciones a nivel de servidor
 	if(body.dificultad != null)
 		dificultad = "dificil";
@@ -192,7 +247,26 @@ app.post("/crearPartida",function(request,response)
 		idSesion += Math.floor(Math.random() * 9);
 
 	console.log(idSesion);
-	//Inicia la conexión con el websocket 
+
+	//Almacena el room id
+	response.cookie("roomID" , idSesion, {expire : new Date() + 999999});
+	response.cookie("NombreJugador" , nombreJugador, {expire : new Date() + 999999});
+
+	//Crea una nueva sesión
+	const sesionCreada = new Sesion(idSesion);
+	sesionCreada.cantidadMaximaJugadores = Number(body.cantidadJugadores);
+	sesionCreada.filas = Number(body.filas);
+	sesionCreada.columnas = Number(body.columnas);
+	sesionCreada.registrarJugador(nombreJugador);
+
+
+	listaSesiones.push(sesionCreada);
+
+	console.log("ListaSesiones: " + listaSesiones);
+
+
+	//Redirecciona a la sala de espera
+	response.redirect("/salaEspera");
 });
 
 //Despliega la página de unirse a una partida
@@ -209,7 +283,6 @@ app.post("/unirsePartida",function(request,response)
 {
 	const body = request.body;
 	console.log(body);
-	let idSesion = "";
 	let dificultad = "facil";
 	let nombreJugador = "";
 
@@ -218,8 +291,27 @@ app.post("/unirsePartida",function(request,response)
 		dificultad = "dificil";
 	if(body.nombreJugador != null)
 		nombreJugador = body.nombreJugador;
-	if(body.idSesion != null)
-		idSesion = body.sesion;
+
+
+	//Busca la sesión 
+	const sesionActual = getSesionById(body.sesion);
+
+	if(sesionActual !== null)
+	{
+		//Se registra a él mismo
+		sesionActual.registrarJugador(body.nombreJugador);
+
+		//Almacena datos importantes en las cookies
+		//Almacena el room id
+		response.cookie("roomID" , sesionActual.id, {expire : new Date() + 999999});
+		response.cookie("NombreJugador" , nombreJugador, {expire : new Date() + 999999});
+
+
+		//Redirecciona a la sala de espera
+		response.redirect("/salaEspera");
+	}
+	//BUG: Si el id sesión no existe, la página se queda cargando 
+
 });
 
 //Despliega la página del Tablero
@@ -234,7 +326,8 @@ app.get("/tablero", function(request,response){
 //Despliega la página de la Sala de espera
 app.get("/salaEspera", function(request,response){
 	filesystem.readFile("test/salaDeEspera.xhtml", function(error, data){
-		console.log(data);
+		console.log(request.cookies); //Debugea las cookies
+		
 		response.write(data);
 		response.end();
 	});

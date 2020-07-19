@@ -2,12 +2,14 @@
  * Almacena los datos requeridos para el manejo de cada room de socket.io.
  * Además construye algunos datos importantes, como el JSON o XML que define al tablero
  * tesoros y jugadores, en otros
+ * 
+ * SE ASUME QUE EL JUGADOR 0 ES EL HOST
  */
 module.exports = class Sesion
 {
 	constructor(id)
 	{
-		this.id = id;
+		this.id = id; //Room Id
 
 
 		this.filas = 111;
@@ -16,7 +18,18 @@ module.exports = class Sesion
 		this.tesorosPosibles = []; //Indice 0: id, 1: Imagen, 2: Kanji 3:Traduccion 4:Fila Inicial 5:Columna inicial
 		this.tesorosPorJugador = 2;
 		this.informacionInicial = "";
+		this.cantidadMaximaJugadores = 8;
 
+	}
+
+	getNombreJugadores()
+	{
+		const nombres = [];
+
+		for(let jugador = 0; jugador < this.jugadores.length; ++jugador)
+			nombres.push(this.jugadores[jugador][1]); //Mete el nombre de jugador en la lista
+
+		return nombres;
 	}
 
 	/**
@@ -155,6 +168,15 @@ module.exports = class Sesion
 	{
 		this.jugadores.push([this.jugadores.length,"","",0,0,socketId,-1]);
 	}
+
+	/**
+	 * Agrega el nombre y id de un nuevo jugador, para la sala de espera.
+	 * No realiza operaciones realizacionadas con el tablero
+	 */
+	registrarJugador(nombre)
+	{
+		this.jugadores.push([this.jugadores.length,nombre,"",0,0,0,-1]);
+	}	
 
 	obtenerJugador(indice)
 	{

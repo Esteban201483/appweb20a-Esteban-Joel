@@ -10,8 +10,10 @@
         <link rel="shortcut icon" href="res/img/logo/favicon.png"/>
        
         <link rel="stylesheet" href="res/css/general.css"/>
-        <link rel="stylesheet" href="res/css/JuegoLaberinto.css"/>
-
+		<link rel="stylesheet" href="res/css/JuegoLaberinto.css"/>
+		
+		<script src="/socket.io/socket.io.js"></script>
+		<script defer="defer" type="module" src="res/js/salaEspera.js"> </script>
         <script defer="defer" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script defer="defer" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
@@ -31,18 +33,23 @@
             <h1>Sala de espera</h1>
 
             <section class="itemForm">
-                <label>Datos de la Partida</label>
+                <h2 class="subseccionEspera">Datos de la Partida</h2>
+				<ul id="listaDatos" class="list-group">
+					<li id="idSesion" class="list-group-item"> </li>
+					<li id="dimensionTablero" class="list-group-item"> </li>
 
+
+				</ul>
             </section>
             
             <section class="itemForm">
-                <label>Jugadores Unidos</label>
+                <h2 class="subseccionEspera">Jugadores Unidos</h2>
         	
-                <ul class="list-group">
-                    <li class="list-group-item">Felix Kjerllberg</li>
+                <ul id="listaNombres" class="list-group">
+                    <!--li class="list-group-item">Felix Kjerllberg</li>
                     <li class="list-group-item">Elon Musk</li>
                     <li class="list-group-item">Esteban Rojas</li>
-                    <li class="list-group-item">Joel Chaves</li>
+                    <li class="list-group-item">Joel Chaves</li>-->
                 </ul>
                 <div class="loader"></div>
                 <div>
