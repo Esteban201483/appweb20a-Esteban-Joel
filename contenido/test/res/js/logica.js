@@ -5,7 +5,6 @@
 
 import Ficha 	   from "./clases/Ficha.js";
 import Jugador     from "./clases/Jugador.js";
-import Mensajero   from "./clases/Mensajero.js";
 import Partida     from "./clases/Partida.js";
 import Tablero     from "./clases/Tablero.js";
 import Tesoro      from "./clases/Tesoro.js";
@@ -24,13 +23,15 @@ function setTesoroAvatar(imgId,imageSrc)
 
 function rotarFichaSobrante(numeroFicha, contenedor, partida) 
 {
-	alert("Rotando: " + numeroFicha);
-	const nuevaFicha = new Ficha(numeroFicha);
+	if(partida.estaEnInsercion())
+	{
+		const nuevaFicha = new Ficha(numeroFicha);
 
-	nuevaFicha.rotarIzquierda();
-	contenedor.src = "res/img/fichas/" + nuevaFicha.numeroActual + ".png";
-	
-	partida.fichaSobrante = nuevaFicha;
+		nuevaFicha.rotarIzquierda();
+		contenedor.src = "res/img/fichas/" + nuevaFicha.numeroActual + ".png";
+		
+		partida.fichaSobrante = nuevaFicha;
+	}
 
 }
 
@@ -428,6 +429,8 @@ function inicializarVariables(estructura, socket)
 	const ayudas = true;
 
 	const partida = new Partida();
+	partida.tesorosPorJugador = Number(estructura["cantidadTesoros"]);
+
 	const tablero = new Tablero(filas,columnas,tiempoTurno,ayudas);
 
 	//Crea los jugadores

@@ -15,6 +15,7 @@ export default class Partida
 		this.miId = 0; //Indica cuál es mi ID. Este id es el que me diferencia de los demás jugadores
 
 		this.fichaSobrante = null;
+		this.tesorosPorJugador = 5;
 
 		this.fases = ["Insertando Ficha", "Realizando Movimiento", "Esperando"];
 	}

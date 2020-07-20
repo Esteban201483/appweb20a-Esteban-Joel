@@ -170,6 +170,8 @@ module.exports = class Sesion
 		this.informacionInicial += "\"jugadores\": " + this.jugadores.length + ",";
 		this.informacionInicial += "\"filas\": " + this.filas + ",";
 		this.informacionInicial += "\"columnas\": " + this.columnas + ",";
+		this.informacionInicial += "\"cantidadTesoros\": " + this.tesorosPorJugador + ",";
+
 
 		//Agrega los datos de los jugadores
 		//TODO: Usar los nombres capturados en los formularios
