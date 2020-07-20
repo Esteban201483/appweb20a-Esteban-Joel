@@ -19,6 +19,9 @@ module.exports = class Sesion
 		this.tesorosPorJugador = 3; //Todo: cambiar por 5
 		this.informacionInicial = "";
 		this.cantidadMaximaJugadores = 8;
+
+		this.partidaIniciada = false;
+		this.jugadoresEnTablero = 0;
 	}
 
 	/**
@@ -136,15 +139,15 @@ module.exports = class Sesion
 	 * id + contadorTesoros * total de jugadores
 	 * 
 	 * Además, se incrementa el contador de dicho jugador en 1
-	 * @param {Number} socketId 
+	 * @param {Number} id 
 	 */
-	obtenerProximoTesoro(socketId)
+	obtenerProximoTesoro(id)
 	{
 		let indiceJugador = -1;
 
 		for(let jugador = 0; jugador < this.jugadores.length && indiceJugador === -1; ++jugador)
 		{
-			if(this.jugadores[jugador][5] === socketId)
+			if(Number(this.jugadores[jugador][0]) === Number(id))
 				indiceJugador = jugador;
 		}
 
@@ -276,8 +279,8 @@ module.exports = class Sesion
 
 		//Agrega los datos de los jugadores
 		//TODO: Usar los nombres capturados en los formularios
-		this.jugadores[0] = ([0,"Jugador 1","avatar1",5,6,this.jugadores[0][5],0]);
-		this.jugadores[1] = ([1,"Jugador 2","avatar5",2,2,this.jugadores[1][5],0]);
+		//this.jugadores[0] = ([0,"Jugador 1","avatar1",5,6,this.jugadores[0][5],0]);
+		//this.jugadores[1] = ([1,"Jugador 2","avatar5",2,2,this.jugadores[1][5],0]);
 
 		this.posicionarElementos();
 		const fichasTablero = this.poblarTablero(fichas);
@@ -371,17 +374,6 @@ module.exports = class Sesion
 		return this.informacionInicial;	
 	}
 
-
-	agregarTesoro(id,imagen,kanji,traduccion,fila,columna)
-	{
-		//this.tesoros.push([id,imagen,kanji,traduccion,fila,columna]);
-	}
-
-	agregarJugador(/*id,nombre,avatar,fila,columna,*/socketId)
-	{
-		this.jugadores.push([this.jugadores.length,"","",0,0,socketId,-1]);
-	}
-
 	/**
 	 * Agrega el nombre y id de un nuevo jugador, para la sala de espera.
 	 * No realiza operaciones realizacionadas con el tablero
@@ -391,7 +383,7 @@ module.exports = class Sesion
 		const nuevoID = this.jugadores.length;
 		//Impide que alguien se ponga el emoji de estrella a proposito para confundir a los demas jugadores
 		nombre = nombre.replace("🌟","");
-		this.jugadores.push([nuevoID,nombre,"",0,0,0,-1]);
+		this.jugadores.push([nuevoID,nombre,"",0,0,0,0]);
 
 		return nuevoID;
 	}	

@@ -483,7 +483,7 @@ function inicializarVariables(estructura, socket)
 
 	console.log(tesoros);
 
-	socket.emit("solicitarTesoro","Por favor!");
+	//socket.emit("solicitarTesoro","Por favor!");
 	tablero.crearTablero(estructura["Tiles"]);
 
 	//Crea caminos de cruz alrededor del jugador y los tesoros para debugear
@@ -541,11 +541,16 @@ function inicializarVariables(estructura, socket)
 		moverJugador(partida,tablero,pos["fila"],pos["columna"], socket);
 	});
 
+	socket.on("GO",function(data){
+		socket.emit("solicitarTesoro","Por favor!");
+		proximoTurno(partida,tablero,socket);
+	});
+
 	socket.on("Asignar",function(data){
 		console.log("Soy el jugador con el id: " + data);
 		partida.miId = Number(data);
 		partida.distingame();
-		proximoTurno(partida,tablero,socket);
+		
 	});
 
 	socket.on("asignarTesoro",function(data){

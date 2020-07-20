@@ -35,7 +35,7 @@ const puerto = 80;
 let idJugadores = [];
 let jugadoresEsperados = 2;
 
-const sesion = new Sesion("testing"); //Por ahora, existe una única sesión
+//const sesion = new Sesion("testing"); //Por ahora, existe una única sesión
 
 const listaSesiones = []; //Almacena todas las sesiones, las cuales deben incluir el room id
 
@@ -81,22 +81,28 @@ function broadcastPartida(evento,mensaje, listaId)
  */
 function iniciarPartida(nuevaSesion)
 {
-
-	//Construye la información para que cada cliente construya el tablero
-	nuevaSesion.construirInformacionInicial();
-
-	//Indica a los demas jugadores que la partida ya empezó
-	console.log("La partida ha empezado.");
-	console.log("Jugadores Activos: " + nuevaSesion.jugadores.length);
-
-	io.to(nuevaSesion.getId()).emit("Inicio",nuevaSesion.getInformacionInicial());
-
-	//A cada jugador le indica su número de jugador
-	for(let i = 0; i < nuevaSesion.getCantidadJugadores(); ++i)
+	if(nuevaSesion != null)
 	{
-		//A cada jugador le envía su id de jugador, el cual determinara su orden de turno
-		io.to(nuevaSesion.jugadores[i][5]).emit("Asignar","" + nuevaSesion.jugadores[i][0]);
-		console.log("Socket id: " + nuevaSesion.jugadores[i][0] + " es el jugador: " + nuevaSesion.jugadores[i][5] );
+		//Construye la información para que cada cliente construya el tablero
+		nuevaSesion.construirInformacionInicial();
+
+		//Indica a los demas jugadores que la partida ya empezó
+		console.log("La partida ha empezado.");
+		console.log("Jugadores Activos: " + nuevaSesion.jugadores.length);
+
+		io.to(nuevaSesion.getId()).emit("Inicio",nuevaSesion.getInformacionInicial());
+		io.to(nuevaSesion.getId()).emit("GO",""); 
+
+		//A cada jugador le indica su número de jugador
+		/*for(let i = 0; i < nuevaSesion.getCantidadJugadores(); ++i)
+		{
+			//A cada jugador le envía su id de jugador, el cual determinara su orden de turno
+			//Mejorar!
+			//Registra el socketid del jugador
+
+
+			console.log("Socket id: " + nuevaSesion.jugadores[i][0] + " es el jugador: " + nuevaSesion.jugadores[i][5] );
+		}*/
 	}
 }
 
@@ -111,7 +117,7 @@ io.on("connection",function(socket) {
 
 
 		//Encuentra la sesión utilizando el roomID
-		const sesionActual = getSesionById(socket.request.cookies["roomID"]);
+		const sesionActual = getSesionById(socket.request.cookies["roomID"]); //Uso esta cookie para transmitir por toda la room
 
 		//Impide que alguien que meta la url de la sala de espera haga que el servidor se caiga >:V
 		if(sesionActual !== null)
@@ -141,12 +147,24 @@ io.on("connection",function(socket) {
 
 	socket.on("Listo", function(msg) 
 	{
-		socket.join(sesion.getId());
-		sesion.agregarJugador(socket.id);
-	
-		if(sesion.getCantidadJugadores() === jugadoresEsperados) //En este caso, espera que hayan  jugadores
-			//broadcastPartida("Inicio",tablero,idJugadores);
-			iniciarPartida(sesion);
+		socket.join(socket.request.cookies["roomID"]);
+		const sesion = getSesionById(socket.request.cookies["roomID"]);
+
+		console.log("El socket: " + socket.id + " está en el tablero");
+
+		sesion.jugadoresEnTablero++;
+
+		socket.emit("Asignar","" + socket.request.cookies["jugadorID"]); //Le da su id al jugador
+		
+		if(sesion !== null)
+		{
+			if(sesion.jugadoresEnTablero === sesion.cantidadMaximaJugadores && !sesion.partidaIniciada) //En este caso, espera que hayan  jugadores
+			{
+				sesion.partidaIniciada = true;
+				//broadcastPartida("Inicio",tablero,idJugadores);
+				iniciarPartida(sesion);
+			}
+		}
 
 	});
 
@@ -168,26 +186,26 @@ io.on("connection",function(socket) {
 	socket.on("insercion",function(msg){
 		console.log("Se ha realizado una inserción en la flecha: " + msg);
 
-		io.to(sesion.getId()).emit("insercionBroadcast",msg); //Envía por broadcast la inserción de la flecha
+		io.to(socket.request.cookies["roomID"]).emit("insercionBroadcast",msg); //Envía por broadcast la inserción de la flecha
 	});
 
 	socket.on("movimiento",function(msg){
-		io.to(sesion.getId()).emit("movimientoBroadcast",msg); //Envía por broadcast la inserción de la flecha
+		io.to(socket.request.cookies["roomID"]).emit("movimientoBroadcast",msg); //Envía por broadcast la inserción de la flecha
 	});
 
 	socket.on("solicitarTesoro",function(msg){
 		//La sesión encuentra el id del próximo tesoro y se lo envia al jugador
 		//console.log(socket.id + " me pidio un tesoro :v. Le envíe: " + sesion.obtenerProximoTesoro(socket.id));
 		//console.log("socket: " + socket.id + " ha pedido un tesoro");
-
-		const nuevoTesoroId = sesion.obtenerProximoTesoro(socket.id);
+		const sesion = getSesionById(socket.request.cookies["roomID"]);
+		const nuevoTesoroId = sesion.obtenerProximoTesoro(socket.request.cookies["jugadorID"]);
 
 		console.log("nuevoTesoroID: " + nuevoTesoroId + ", tesorosLength: " + sesion.tesorosPosibles.length);
 
 		if(nuevoTesoroId === -2)
 		{
 			//Significa que un jugador gano
-			io.to(sesion.getId()).emit("fin");
+			io.to(socket.request.cookies["roomID"]).emit("fin");
 		}
 		else
 		{
@@ -200,17 +218,17 @@ io.on("connection",function(socket) {
 
 	socket.on("finTurno",function(msg){
 		console.log("Ha terminado un turno;");
-		io.to(sesion.getId()).emit("finTurnoBroadcast","");
+		io.to(socket.request.cookies["roomID"]).emit("finTurnoBroadcast","");
 	});
 
 	socket.on("comerTesoro",function(msg){
-		io.to(sesion.getId()).emit("comerTesoroBroadcast",msg);
+		io.to(socket.request.cookies["roomID"]).emit("comerTesoroBroadcast",msg);
 	});
 
 	socket.on("rotarFicha",function(msg)
 	{
 		console.log("Hubo una rotación");
-		io.to(sesion.getId()).emit("rotarFichaBroadcast",msg);
+		io.to(socket.request.cookies["roomID"]).emit("rotarFichaBroadcast",msg);
 	});
 
 
@@ -265,8 +283,10 @@ app.post("/crearPartida",function(request,response)
 	console.log(idSesion);
 
 	//Almacena el room id
-	response.cookie("roomID" , idSesion, {expire : new Date() + 999999});
-	response.cookie("NombreJugador" , nombreJugador, {expire : new Date() + 999999});
+	response.cookie("roomID" , idSesion, {expire : new Date() +  999999999});
+	response.cookie("NombreJugador" , nombreJugador, {expire : new Date() +  999999999});
+	response.cookie("jugadorID" , 0, {expire : new Date() + 99999999});
+
 
 	//Crea una nueva sesión
 	const sesionCreada = new Sesion(idSesion);
@@ -316,12 +336,13 @@ app.post("/unirsePartida",function(request,response)
 	{
 		//Se registra a él mismo
 		const miID = sesionActual.registrarJugador(body.nombreJugador);
+		console.log("Me uni y me dieron el id: " + miID);
 
 		//Almacena datos importantes en las cookies
 		//Almacena el room id
-		response.cookie("roomID" , sesionActual.id, {expire : new Date() + 999999});
-		response.cookie("NombreJugador" , nombreJugador, {expire : new Date() + 999999});
-		response.cookie("jugadorID" , miID, {expire : new Date() + 999999});
+		response.cookie("roomID" , sesionActual.id, {expire : new Date() + 99999999});
+		response.cookie("NombreJugador" , nombreJugador, {expire : new Date() + 99999999});
+		response.cookie("jugadorID" , miID, {expire : new Date() + 99999999});
 
 
 		//Redirecciona a la sala de espera
