@@ -5,6 +5,17 @@ export default class FabricaHTMl
 		this.ruta = ruta;
 	}
 
+	//nombreFlecha+idFlecha,size,"res/img/flechas/flecha izquierda.png","contenedorImagen"
+	obtenerFlechaDiv(id,size,img,classElement)
+	{
+		let codigo = "";
+
+		codigo = "<div id=\"div"+id+"\"  width=\""+size+"\" height=\""+size+"\" class=\"contenedorImagen\">";
+		codigo += this.obtenerElementoImg(id,"100%",img,classElement);
+		codigo += "</div>";
+		return codigo;
+	}
+
 	/**
 	 * Devuelve el código de un salto de línea semánticamente correcto
 	 */

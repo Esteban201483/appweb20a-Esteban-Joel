@@ -199,9 +199,57 @@ function flechaPresionada(partida,tablero, flechaPresionada)
 
 		
 		const columna = flechaPresionada.columnaFilaAsociada;
+		const filaAsociada  = flechaPresionada.columnaFilaAsociada;
+
 		//Realiza la inserción según la posición de la flecha
 		switch(flechaPresionada.orientacion)
 		{
+
+		case "lateral-derecha":
+	
+			fichaPerdida = tablero.getFicha(filaAsociada,0); //La que se pierde del tablero sería la ficha más a la izquierda
+			fichaRemplazada = tablero.getFicha(filaAsociada, tablero.columnas -1); //La ficha a remplazar primero es la ficha más a la derecha
+
+			for(let columnai = tablero.filas-1; columnai >= 0; --columnai)
+			{
+				aux = tablero.getFicha(filaAsociada,columnai);
+				tablero.setFicha(fichaRemplazada,filaAsociada,columnai);
+				fichaRemplazada = aux;
+				//Indica al tablero que debe redibujar la ficha
+				redibujarFicha(filaAsociada,columnai,tablero.getFicha(filaAsociada,columnai).numeroActual);
+			}
+
+			//Intercambia la ficha rotada por la primer ficha
+			fichaRemplazada = partida.fichaSobrante;
+			partida.fichaSobrante = fichaPerdida;
+			tablero.setFicha(fichaRemplazada,filaAsociada,tablero.columnas -1);
+			redibujarFicha(filaAsociada,tablero.columnas -1,tablero.getFicha(filaAsociada,tablero.columnas -1).numeroActual);
+
+			break;
+
+
+		case "lateral-izquierda":
+		
+			fichaPerdida = tablero.getFicha(filaAsociada, tablero.columnas -1); //La que se pierde del tablero sería la ficha más a la derecha
+			fichaRemplazada = tablero.getFicha(filaAsociada,0); //La ficha a remplazar primero es la ficha más a la izquierda
+
+			for(let columnai = 1; columnai < tablero.filas; ++columnai)
+			{
+				aux = tablero.getFicha(filaAsociada,columnai);
+				tablero.setFicha(fichaRemplazada,filaAsociada,columnai);
+				fichaRemplazada = aux;
+				//Indica al tablero que debe redibujar la ficha
+				redibujarFicha(filaAsociada,columnai,tablero.getFicha(filaAsociada,columnai).numeroActual);
+			}
+
+			//Intercambia la ficha rotada por la primer ficha
+			fichaRemplazada = partida.fichaSobrante;
+			partida.fichaSobrante = fichaPerdida;
+			tablero.setFicha(fichaRemplazada,filaAsociada,0);
+			redibujarFicha(filaAsociada,0,tablero.getFicha(filaAsociada,0).numeroActual);
+
+			break;
+				
 		case "vertical-superior":
 			
 			fichaPerdida = tablero.getFicha(tablero.filas -1, columna); //La que se pierde del tablero
@@ -267,6 +315,12 @@ function toggleClaseAnimacion(idElemento, nombreAnimacion)
 	}
 }
 
+function toggleMovimientoHorizontal(idFlecha)
+{
+	//toggleClaseAnimacion(idFlecha,"animacionFlechasHorizontales");
+}
+
+
 function toggleMovimientoVertical(idFlecha)
 {
 	toggleClaseAnimacion(idFlecha,"animacionFlechasVerticales");
@@ -314,6 +368,10 @@ function habilitarInsercion(partida,tablero, socket)
 		{
 			toggleMovimientoVertical("Flecha" + flechaActual.id);
 			
+		}
+		else if(flechaActual.orientacion === "lateral-izquierda" || flechaActual.orientacion === "lateral-derecha")
+		{
+			toggleMovimientoHorizontal("Flecha" + flechaActual.id);
 		}
 
 	}
