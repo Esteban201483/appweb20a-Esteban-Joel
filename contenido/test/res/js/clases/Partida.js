@@ -12,7 +12,7 @@ export default class Partida
 		this.contadorTurnos = 0;
 		this.fase = 0; //0 => insercion, 1 => movimiento
 		this.tesoros = [];
-		this.miId = 0; //Indica cuál es mi ID. Este id es el que me diferencia de los demás jugadores
+		this.miId = -1; //Indica cuál es mi ID. Este id es el que me diferencia de los demás jugadores
 
 		this.fichaSobrante = null;
 		this.tesorosPorJugador = 5;
@@ -51,6 +51,7 @@ export default class Partida
 
 	esMiTurno()
 	{
+
 		console.log("Turno de: " + this.jugadorTurno + ", mi id: " + this.miId);
 		return this.jugadorTurno === this.miId;
 	}

@@ -145,19 +145,39 @@ io.on("connection",function(socket) {
 
 	});
 
+
+
+	socket.on('set', function (status, callback) {
+		console.log("Status: " + status);
+		callback('ok');
+	});
+
+
+	socket.on("Asigneme",function(data){
+
+		if(getSesionById(socket.request.cookies["roomID"]) != null)
+		{
+			console.log("Lo estoy asignando " + socket.request.cookies["jugadorID"] + ", " + socket.id);
+			io.to(socket.id).emit("deme",socket.request.cookies["jugadorID"]);
+		}
+	});
+
 	socket.on("Listo", function(msg) 
 	{
+		console.log("Listo");
 		socket.join(socket.request.cookies["roomID"]);
 		const sesion = getSesionById(socket.request.cookies["roomID"]);
 
 		console.log("El socket: " + socket.id + " está en el tablero");
 
-		sesion.jugadoresEnTablero++;
-
-		socket.emit("Asignar","" + socket.request.cookies["jugadorID"]); //Le da su id al jugador
 		
+		console.log("Le asigne: " +  socket.request.cookies["jugadorID"] + " al socket " + socket.id);
+
+
+
 		if(sesion !== null)
 		{
+			sesion.jugadoresEnTablero++;
 			if(sesion.jugadoresEnTablero === sesion.cantidadMaximaJugadores && !sesion.partidaIniciada) //En este caso, espera que hayan  jugadores
 			{
 				sesion.partidaIniciada = true;
@@ -190,6 +210,7 @@ io.on("connection",function(socket) {
 	});
 
 	socket.on("movimiento",function(msg){
+		console.log("Moviendose");
 		io.to(socket.request.cookies["roomID"]).emit("movimientoBroadcast",msg); //Envía por broadcast la inserción de la flecha
 	});
 
@@ -197,6 +218,7 @@ io.on("connection",function(socket) {
 		//La sesión encuentra el id del próximo tesoro y se lo envia al jugador
 		//console.log(socket.id + " me pidio un tesoro :v. Le envíe: " + sesion.obtenerProximoTesoro(socket.id));
 		//console.log("socket: " + socket.id + " ha pedido un tesoro");
+		console.log("Solicitando Tesoro");
 		const sesion = getSesionById(socket.request.cookies["roomID"]);
 		const nuevoTesoroId = sesion.obtenerProximoTesoro(socket.request.cookies["jugadorID"]);
 

@@ -431,6 +431,21 @@ function inicializarVariables(estructura, socket)
 	const partida = new Partida();
 	partida.tesorosPorJugador = Number(estructura["cantidadTesoros"]);
 
+
+	
+	socket.on("deme",function(data){
+		/*socket.emit("Asigneme","porfa", function (response) {
+			console.log(response);
+		});*/
+		console.log("Soy el jugador con el id: " + data);
+		partida.miId = Number(data);
+		partida.distingame();
+		
+		
+	}); 
+
+
+
 	const tablero = new Tablero(filas,columnas,tiempoTurno,ayudas);
 
 	//Crea los jugadores basados en la información sumistrada por el JSON
@@ -545,13 +560,9 @@ function inicializarVariables(estructura, socket)
 		socket.emit("solicitarTesoro","Por favor!");
 		proximoTurno(partida,tablero,socket);
 	});
+	
 
-	socket.on("Asignar",function(data){
-		console.log("Soy el jugador con el id: " + data);
-		partida.miId = Number(data);
-		partida.distingame();
-		
-	});
+
 
 	socket.on("asignarTesoro",function(data){
 		console.log("Me asignaron un tesoro: " + data);
@@ -599,11 +610,18 @@ $(document).ready(function()
 	socket.on("connect", function(data){
 		console.log("MI id Socket: " + this.id); //Agarra el id del socket
 
-
-
 		socket.emit("Listo",""); 
 
+		socket.emit("Asigneme","porfa", function (response) {
+			console.log(response);
+		}); 
+
 	});
+
+
+
+
+
 
 	socket.on("Inicio", function(data){
 
@@ -616,6 +634,11 @@ $(document).ready(function()
 		inicializarVariables(estructura, socket);
 		
 	});
+
+	socket.on("error", function (err) {
+		console.log("Error: " + err);
+	});
+
 
 
 
