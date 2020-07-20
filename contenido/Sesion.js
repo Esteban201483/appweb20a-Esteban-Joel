@@ -11,7 +11,7 @@ module.exports = class Sesion
 	{
 		this.id = id; //Room Id
 
-
+		//Valores por default
 		this.filas = 15;
 		this.columnas = 15; 
 		this.jugadores = []; //Indice 0: id, 1: Nombre, 2: Avatar 3:Fila Inicial 4:Columna inicial 5:SocketId 6:contadorTesoros
@@ -19,7 +19,12 @@ module.exports = class Sesion
 		this.tesorosPorJugador = 1; //Todo: cambiar por 5
 		this.informacionInicial = "";
 		this.cantidadMaximaJugadores = 8;
+	}
 
+	listo()
+	{
+		console.log("Listo? " + this.jugadores.length + " === " + this.cantidadMaximaJugadores);
+		return (this.jugadores.length  === this.cantidadMaximaJugadores);
 	}
 
 	getNombreJugadores()
@@ -79,6 +84,9 @@ module.exports = class Sesion
 		return nuevoIdTesoro;
 	}	
 
+	/**
+	 * Carga todos los tesoros disponibles y les asigna un ID aleatorio
+	 */
 	poblarTesoros()
 	{
 		this.tesorosPosibles.push([0,"apple_red","apple_red","manzana",0,0]);
@@ -283,9 +291,12 @@ module.exports = class Sesion
 	 */
 	registrarJugador(nombre)
 	{
+		const nuevoID = this.jugadores.length;
 		//Impide que alguien se ponga el emoji de estrella a proposito para confundir a los demas jugadores
 		nombre = nombre.replace("🌟","");
-		this.jugadores.push([this.jugadores.length,nombre,"",0,0,0,-1]);
+		this.jugadores.push([nuevoID,nombre,"",0,0,0,-1]);
+
+		return nuevoID;
 	}	
 
 	obtenerJugador(indice)

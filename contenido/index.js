@@ -10,7 +10,10 @@ const cookie = require("socket.io-cookie-parser");
 
 const app = express(); // Hace uso del framework Express
 const http = require("http").createServer(app);
-const io = require("socket.io")(http);
+const io = require("socket.io")(http,
+	{
+		pingTimeout: 500000 //Deja un buen timeout
+	});
 
 io.use(cookie());
 
@@ -125,7 +128,13 @@ io.on("connection",function(socket) {
 			io.to(sesionActual.id).emit("salaEsperaInicial",nombres); 
 
 			//Le envia al cliente los datos de la partida
-			socket.emit("datosPartida",[sesionActual.id,sesionActual.filas,sesionActual.columnas]);
+			socket.emit("datosPartida",[sesionActual.id,sesionActual.filas,sesionActual.columnas,sesionActual.cantidadMaximaJugadores]);
+
+
+			//Si esta conexión ya permitió que se alcanzara la cantidad máxima de jugadores, entonces los redirige a todos al tablero
+			if(sesionActual.listo())
+				io.to(sesionActual.id).emit("redireccionarTablero",""); 
+			
 		}
 
 	});
@@ -203,6 +212,7 @@ io.on("connection",function(socket) {
 		console.log("Hubo una rotación");
 		io.to(sesion.getId()).emit("rotarFichaBroadcast",msg);
 	});
+
 
  
 
@@ -305,12 +315,13 @@ app.post("/unirsePartida",function(request,response)
 	if(sesionActual !== null)
 	{
 		//Se registra a él mismo
-		sesionActual.registrarJugador(body.nombreJugador);
+		const miID = sesionActual.registrarJugador(body.nombreJugador);
 
 		//Almacena datos importantes en las cookies
 		//Almacena el room id
 		response.cookie("roomID" , sesionActual.id, {expire : new Date() + 999999});
 		response.cookie("NombreJugador" , nombreJugador, {expire : new Date() + 999999});
+		response.cookie("jugadorID" , miID, {expire : new Date() + 999999});
 
 
 		//Redirecciona a la sala de espera

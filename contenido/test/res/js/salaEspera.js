@@ -1,3 +1,4 @@
+
 //Conecta el socket
 const socket = io().connect( "http://localhost", {
 	"sync disconnect on unload": true });
@@ -34,4 +35,13 @@ socket.on("datosPartida",function(data)
 	document.getElementById("idSesion").innerHTML = "ID sesión: " + data[0];
 
 	document.getElementById("dimensionTablero").innerHTML = "Dimensión Tablero: " + data[1] + " X " + data[2];
+
+	document.getElementById("cantidadJugadores").innerHTML = "Cantidad de Jugadores Necesarios: " + data[3];
+});
+
+//Solución al problema de la redirección adaptado de la respuesta del usuario Max en
+//https://stackoverflow.com/questions/33321792/how-to-redirect-a-client-after-a-socket-io-event
+
+socket.on("redireccionarTablero",function(data){
+	window.location.href = "/Tablero"; //No necesita enviar parámetros porque todo ya esta en las cookies
 });
