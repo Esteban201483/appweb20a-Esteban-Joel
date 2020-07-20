@@ -16,7 +16,7 @@ module.exports = class Sesion
 		this.columnas = 15; 
 		this.jugadores = []; //Indice 0: id, 1: Nombre, 2: Avatar 3:Fila Inicial 4:Columna inicial 5:SocketId 6:contadorTesoros
 		this.tesorosPosibles = []; //Indice 0: id, 1: Imagen, 2: Kanji 3:Traduccion 4:Fila Inicial 5:Columna inicial
-		this.tesorosPorJugador = 3; //Todo: cambiar por 5
+		this.tesorosPorJugador = 5; //Todo: cambiar por 5
 		this.informacionInicial = "";
 		this.cantidadMaximaJugadores = 8;
 
@@ -228,8 +228,8 @@ module.exports = class Sesion
 		for(let fila = 0; fila < this.filas; ++fila)
 		{
 			for(let columna = 0; columna < this.columnas; ++ columna)
-				//tablero.push(fichas[Math.floor(Math.random() * fichas.length)]);
-				tablero.push(15);
+				tablero.push(fichas[Math.floor(Math.random() * fichas.length)]);
+				//tablero.push(15);
 		}
 
 		//Setea las esquinas con valores obligatorios
