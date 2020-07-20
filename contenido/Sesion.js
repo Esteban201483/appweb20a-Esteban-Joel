@@ -12,8 +12,8 @@ module.exports = class Sesion
 		this.id = id; //Room Id
 
 
-		this.filas = 111;
-		this.columnas = 11; 
+		this.filas = 15;
+		this.columnas = 15; 
 		this.jugadores = []; //Indice 0: id, 1: Nombre, 2: Avatar 3:Fila Inicial 4:Columna inicial 5:SocketId 6:contadorTesoros
 		this.tesorosPosibles = []; //Indice 0: id, 1: Imagen, 2: Kanji 3:Traduccion 4:Fila Inicial 5:Columna inicial
 		this.tesorosPorJugador = 2;

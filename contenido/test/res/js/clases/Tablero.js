@@ -197,7 +197,7 @@ export default class Tablero
 
 		innerHTML += (fabrica.obtenerElementoImg("",size, "res/img/fichas/vacia.png","contenedorImagen"));
 		//crea las flechas superiores
-		for(let columna = 0; columna < (this.columnas); ++columna)
+		for(let columna = 0; columna < (this.columnas-1); ++columna)
 		{
 			if((columna % 2) === 0) //Coloca imagenes vacias en las posiciones pares
 				innerHTML += (fabrica.obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
@@ -263,7 +263,7 @@ export default class Tablero
 
 		//crea las flechas Inferiores
 		innerHTML += (fabrica.obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen"));
-		for(let columna = 0; columna < (this.columnas); ++columna)
+		for(let columna = 0; columna < (this.columnas-1); ++columna)
 		{
 			if(columna % 2 === 0) //Coloca imagenes vacias en las posiciones pares
 				innerHTML += (fabrica.obtenerElementoImg("",size,"res/img/fichas/vacia.png","contenedorImagen") );

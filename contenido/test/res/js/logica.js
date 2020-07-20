@@ -422,8 +422,8 @@ function avisarRotarFichaSobrante(fichaSobrante,contenedorFichaSobrante, partida
 function inicializarVariables(estructura, socket)
 {
 	
-	const filas = 13;
-	const columnas = 13;
+	const filas = Number(estructura["filas"]);
+	const columnas = Number(estructura["columnas"]);
 	const tiempoTurno = 120;
 	const ayudas = true;
 
