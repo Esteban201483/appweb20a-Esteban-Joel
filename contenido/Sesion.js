@@ -66,6 +66,25 @@ module.exports = class Sesion
 		return nuevoIdTesoro;
 	}	
 
+	poblarTablero(fichas,fichasTablero)
+	{
+		const tablero = [];
+
+		for(let fila = 0; fila < this.filas; ++fila)
+		{
+			for(let columna = 0; columna < this.columnas; ++ columna)
+				tablero.push(fichas[Math.floor(Math.random() * fichas.length)]);
+		}
+
+		//Setea las esquinas con valores obligatorios
+		tablero[0] = 5;
+		tablero[this.columnas-1] = 6;
+		tablero[tablero.length - this.columnas] = 9;
+		tablero[tablero.length - 1] = 10; 
+
+		return tablero;
+	}
+
 	/**
 	 * Representa los datos iniciales de la partida. Dicha información se debe enviar a cada uno de los clientes, el cual se encarga de construir la partida
 	 * Los datos se construyen en formato JSON
@@ -73,6 +92,9 @@ module.exports = class Sesion
 	construirInformacionInicial()
 	{
 		const fichas = [0,3,5,6,7,9,10,11,12,13,14,15];
+
+		const fichasTablero = this.poblarTablero(fichas);
+		let contadorFichasTablero = 0;
 
 		this.tesorosPosibles.push([0,"apple_red","apple_red","Manzana"]);
 		this.tesorosPosibles.push([1,"chest","chest","Cofre"]);
@@ -133,7 +155,8 @@ module.exports = class Sesion
 				//Agrega una ficha de forma aleatoria
 				this.informacionInicial += "{\n";	
  
-				this.informacionInicial += "\t\"numero\": " + fichas[Math.floor(Math.random() * fichas.length)];
+				this.informacionInicial += "\t\"numero\": " + fichasTablero[contadorFichasTablero];
+				++contadorFichasTablero;
 
 
 				this.informacionInicial += "\n},\n";
