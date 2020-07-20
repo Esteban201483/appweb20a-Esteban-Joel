@@ -433,11 +433,27 @@ function inicializarVariables(estructura, socket)
 
 	const tablero = new Tablero(filas,columnas,tiempoTurno,ayudas);
 
-	//Crea los jugadores
-	//TODO: Generarlos automáticamente
+	//Crea los jugadores basados en la información sumistrada por el JSON
 	const jugadores = Array();
-	jugadores.push(new Jugador("Esteban",1,"avatar1",7,8));
-	jugadores.push(new Jugador("Joel",2,"avatar5",4,4));
+	//jugadores.push(new Jugador("Esteban",1,"avatar1",7,8));
+	//jugadores.push(new Jugador("Joel",2,"avatar5",4,4));
+
+
+	const bancoJugadores = estructura["Jugadores"];
+
+	for(let jugador = 0; jugador < bancoJugadores.length; ++jugador)
+	{
+		// ID = AVATAR
+		jugadores.push(new Jugador(
+			bancoJugadores[jugador]["nombre"],
+			bancoJugadores[jugador]["id"],
+			"avatar" + bancoJugadores[jugador]["id"],
+			bancoJugadores[jugador]["fila"],
+			bancoJugadores[jugador]["columna"]
+		));
+	}
+
+
 	partida.jugadores = jugadores;
 
 	
@@ -449,41 +465,20 @@ function inicializarVariables(estructura, socket)
 	const bancoTesoros = estructura["Tesoros"];
 
 	//Por el momento solo asigna 2 tesoros por cada jugador
-	for(let tesoro = 0; tesoro < jugadores.length * 2; ++tesoro)
+	for(let tesoro = 0; tesoro < jugadores.length * partida.tesorosPorJugador; ++tesoro)
 	{
 		tesoros.push(new Tesoro(
 			bancoTesoros[tesoro]["id"],
 			bancoTesoros[tesoro]["imagen"],
 			bancoTesoros[tesoro]["kanji"],
 			bancoTesoros[tesoro]["traduccion"],
-			0,
-			0,
+			bancoTesoros[tesoro]["fila"],
+			bancoTesoros[tesoro]["columna"],
 			0
 		));
 	}
 
-	//Cambia a pata las posiciones de los tesoros
-	tesoros[0].columnaActual = 8;
-	tesoros[0].filaActual = 9;
 
-	tesoros[1].columnaActual = 9;
-	tesoros[1].filaActual = 8;
-
-	tesoros[2].columnaActual = 4;
-	tesoros[2].filaActual = 5;
-
-	tesoros[3].columnaActual = 5;
-	tesoros[3].filaActual = 4;
-
-
-
-
-
-
-	/*tesoros.push(new Tesoro(0,"crown","crown","Corona",8,8,1)); //Asocia el tesoro a Esteban
-	tesoros.push(new Tesoro(1,"chest","chest","Cofre del tesoro",9,8,1)); 
-	tesoros.push(new Tesoro(2,"sword_iron","sword_iron","Espada",4,5,2)); //Asocia el tesoro a Joel
-	tesoros.push(new Tesoro(3,"potion_red_small","potion_red_small","Pocion",5,4,2));*/
 	partida.tesoros = tesoros;
 
 	console.log(tesoros);
@@ -613,7 +608,6 @@ $(document).ready(function()
 
 		console.log(data);
 		const estructura = JSON.parse(data);
-		//console.log(estructura);
 		inicializarVariables(estructura, socket);
 		
 	});

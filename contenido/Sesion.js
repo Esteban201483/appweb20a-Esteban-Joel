@@ -16,9 +16,89 @@ module.exports = class Sesion
 		this.columnas = 15; 
 		this.jugadores = []; //Indice 0: id, 1: Nombre, 2: Avatar 3:Fila Inicial 4:Columna inicial 5:SocketId 6:contadorTesoros
 		this.tesorosPosibles = []; //Indice 0: id, 1: Imagen, 2: Kanji 3:Traduccion 4:Fila Inicial 5:Columna inicial
-		this.tesorosPorJugador = 1; //Todo: cambiar por 5
+		this.tesorosPorJugador = 3; //Todo: cambiar por 5
 		this.informacionInicial = "";
 		this.cantidadMaximaJugadores = 8;
+	}
+
+	/**
+	 * Asigna una posición a todos los tesoros y jugadores en el tablero.
+	 * Soporta máximo 8 jugadores, pero lo ideal serian 2-3
+	 */
+	posicionarElementos()
+	{
+		//Posiciona a los jugadores
+		let posicionesDisponibles = [];
+
+		//Agrega las 8 posiciones posibles
+		posicionesDisponibles.push([0,0]);
+		posicionesDisponibles.push([0,Math.floor(this.columnas/2)]);
+		posicionesDisponibles.push([this.filas-1,Math.floor(this.columnas/2)]);
+		posicionesDisponibles.push([Math.floor(this.filas/2),Math.floor(this.columnas/2)]);
+		posicionesDisponibles.push([Math.floor(this.filas/2),0]);
+		posicionesDisponibles.push([0,this.columnas-1]);
+		posicionesDisponibles.push([this.filas-1,0]);
+		posicionesDisponibles.push([this.filas-1,this.columnas-1]);
+
+
+
+		//Ordena el vector
+		for(let iteracion = 0; iteracion < 8; ++iteracion)
+		{
+			const id1 = Math.floor(Math.random() * posicionesDisponibles.length);	
+			const id2 = Math.floor(Math.random() * posicionesDisponibles.length);
+
+			const aux = posicionesDisponibles[id1];
+			posicionesDisponibles[id1] = posicionesDisponibles[id2];
+			posicionesDisponibles[id2] = aux; 
+
+		}
+
+
+		for(let indiceJugador = 0; indiceJugador < this.jugadores.length; ++ indiceJugador)
+		{
+			const jugador = this.jugadores[indiceJugador];
+			jugador[3] = posicionesDisponibles[indiceJugador][0]; //Asigna la fila
+			jugador[4] = posicionesDisponibles[indiceJugador][1]; //Asigna la columna
+			console.log("Al jugador con id: " + indiceJugador + " le asigné la posición: " + posicionesDisponibles[indiceJugador][0] + "," + posicionesDisponibles[indiceJugador][1]);
+		}
+
+
+		//Posiciona los tesoros
+		//Crea todas las posiciones posibles (NO permite que queden alineados con los bordes)
+		posicionesDisponibles = [];
+
+		for(let fila = 1; fila < this.filas; ++fila)
+		{
+			for(let columna = 1; columna < this.columnas; ++columna)
+			{
+				posicionesDisponibles.push([fila,columna]);
+			}
+		}
+
+		//Ordena el vector
+		for(let iteracion = 0; iteracion < (this.filas + this.columnas) * 5; ++iteracion)
+		{
+			const id1 = Math.floor(Math.random() * posicionesDisponibles.length);	
+			const id2 = Math.floor(Math.random() * posicionesDisponibles.length);
+
+			const aux = posicionesDisponibles[id1];
+			posicionesDisponibles[id1] = posicionesDisponibles[id2];
+			posicionesDisponibles[id2] = aux; 
+
+		}
+
+		//A cada tesoro le asigna una de las posiciones
+		for(let tesoro =0 ; tesoro < this.jugadores.length * this.tesorosPorJugador; ++tesoro)
+		{
+			const tesoroActual = this.getTesoroById(tesoro);
+			tesoroActual[4] = posicionesDisponibles[tesoro][0]; 
+			tesoroActual[5] = posicionesDisponibles[tesoro][1]; 
+
+			console.log("Asigné: " + posicionesDisponibles[tesoro][0] + ", " + posicionesDisponibles[tesoro][1] + " a algún tesoro xdddd");
+		}
+
+
 	}
 
 	listo()
@@ -134,6 +214,9 @@ module.exports = class Sesion
 			console.log(this.tesorosPosibles[t]);
 	}
 
+
+
+
 	poblarTablero(fichas,fichasTablero)
 	{
 		const tablero = [];
@@ -150,6 +233,15 @@ module.exports = class Sesion
 		tablero[tablero.length - this.columnas] = 9;
 		tablero[tablero.length - 1] = 10; 
 
+
+		//A cada posición del tesoro le asigna una ficha 15
+		for(let tesoro = 0; tesoro < this.jugadores.length * this.tesorosPorJugador; ++ tesoro)
+		{
+			const tesoroActual = this.getTesoroById([tesoro]);
+			tablero[tesoroActual[4] * this.columnas + tesoroActual[5]] = 15;
+			
+		}
+
 		return tablero;
 	}
 
@@ -162,8 +254,9 @@ module.exports = class Sesion
 		const fichas = [0,3,5,6,7,9,10,11,12,13,14,15];
 
 		this.poblarTesoros();
+		
 
-		const fichasTablero = this.poblarTablero(fichas);
+		
 		let contadorFichasTablero = 0;
 
 		/*this.tesorosPosibles.push([0,"apple_red","apple_red","Manzana"]);
@@ -183,8 +276,12 @@ module.exports = class Sesion
 
 		//Agrega los datos de los jugadores
 		//TODO: Usar los nombres capturados en los formularios
-		this.jugadores[0] = ([0,"Esteban","avatar1",5,6,this.jugadores[0][5],0]);
-		this.jugadores[1] = ([1,"Joel","avatar5",2,2,this.jugadores[1][5],0]);
+		this.jugadores[0] = ([0,"Jugador 1","avatar1",5,6,this.jugadores[0][5],0]);
+		this.jugadores[1] = ([1,"Jugador 2","avatar5",2,2,this.jugadores[1][5],0]);
+
+		this.posicionarElementos();
+		const fichasTablero = this.poblarTablero(fichas);
+
 
 		//Agrega los datos de los tesoros
 		this.informacionInicial += "\"Tesoros\":\n[\n";
