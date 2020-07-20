@@ -20,12 +20,21 @@ export default class Partida
 	}
 
 	/**
+	 * Coloca un emoji de estrella al final del nombre del panel del jugador actual 
+	 */
+	distingame()
+	{
+		this.jugadores[this.miId].agregarEstrella();
+	}
+
+	/**
 	 * Cambia mi tesoro asignado
 	 * @param {} idTesoro 
 	 */
 	cambiarMiTesoroAsignado(idTesoro)
 	{
 		let tesoro = null;
+
 		//Busca la instancia del tesoro que coincida con el id
 		for(let indiceTesoro = 0; indiceTesoro < this.tesoros.length && tesoro === null; ++indiceTesoro)
 		{
@@ -51,23 +60,23 @@ export default class Partida
 	finalizar()
 	{
 		this.fase = -1;
+		this.finalizada = true;
 
 		alert("Felicidades, el jugador " + this.jugadores[this. jugadorTurno].nombre + " ha ganado la partida");
+
+
 
 		//Recorre todas las secciones de los jugadores e indica quien ganó
 		for(let jugador = 0; jugador < this.jugadores.length; ++jugador)
 		{
 			const jugadorActual = this.jugadores[jugador];
 
-			if(jugador !== this.jugadorTurno)
-			{
-				jugadorActual.actualizarEstado(".");
-			}
-			else
-			{
-				jugadorActual.actualizarEstado("Ganador");
-			}
+			jugadorActual.actualizarEstado(".");
+
 		}
+		
+
+		this.jugadores[this. jugadorTurno].actualizarEstado("Ganador");
 	}
 
 	comerTesoro(fila,columna, tesoroId)
@@ -140,9 +149,12 @@ export default class Partida
 
 	asignarProximoJugador()
 	{
-		if(this.jugadorTurno !== -1)
-			this.jugadores[this.jugadorTurno].actualizarEstado(this.fases[2]);
-		this.jugadorTurno = (this.jugadorTurno + 1) % this.jugadores.length;
+		if(!this.finalizada)
+		{
+			if(this.jugadorTurno !== -1)
+				this.jugadores[this.jugadorTurno].actualizarEstado(this.fases[2]);
+			this.jugadorTurno = (this.jugadorTurno + 1) % this.jugadores.length;
+		}
 	}
 
 	estaEnInsercion()

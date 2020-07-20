@@ -178,7 +178,7 @@ io.on("connection",function(socket) {
 		if(nuevoTesoroId === -2)
 		{
 			//Significa que un jugador gano
-			io.to(sesion.getId()).emit("fin","");
+			io.to(sesion.getId()).emit("fin");
 		}
 		else
 		{

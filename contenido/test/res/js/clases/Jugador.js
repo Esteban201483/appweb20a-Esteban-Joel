@@ -67,6 +67,10 @@ export default class Jugador
 		$("#kanjiTesoro").attr("src","res/img/kanjis/" + tesoroAsignado.kanji + ".png");
 	}
 
+	agregarEstrella()
+	{
+		$("#parrafoJugador" + this.id).text($("#parrafoJugador" + this.id).text() + "🌟");
+	}
 
 	actualizarEstado(nuevoEstado)
 	{
