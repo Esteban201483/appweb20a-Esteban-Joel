@@ -272,6 +272,16 @@ app.get("/", function(request,response){
 	});
 });
 
+
+//Despliega la página de crear partida
+app.get("/acerca", function(request,response){
+	filesystem.readFile("test/acercaDe.xhtml", function(error, data){
+		console.log(data);
+		response.write(data);
+		response.end();
+	});
+});
+
 //Despliega la página de crear partida
 app.get("/crearPartida", function(request,response){
 	filesystem.readFile("test/crearPartida.xhtml", function(error, data){
