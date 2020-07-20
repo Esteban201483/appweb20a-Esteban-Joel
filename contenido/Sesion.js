@@ -157,7 +157,8 @@ module.exports = class Sesion
 			nuevoIdTesoro = -2;
 		else
 		{
-			nuevoIdTesoro = this.jugadores[indiceJugador][6] +  this.jugadores.length * this.jugadores[indiceJugador][0];
+			//nuevoIdTesoro = this.jugadores[indiceJugador][6] +  this.jugadores.length * this.jugadores[indiceJugador][0];
+			nuevoIdTesoro = this.jugadores[indiceJugador][6] +  this.jugadores[indiceJugador][0] * this.tesorosPorJugador;
 			this.jugadores[indiceJugador][6] += 1;
 		}
 		
