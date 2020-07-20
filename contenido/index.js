@@ -30,7 +30,7 @@ const urlEncodedParser = bodyParser.urlencoded({extended : false});
 app.use(urlEncodedParser);
 
 const directorioPaginas = "/test/"; //TODO: Reestructurar proyecto
-const puerto = 80;
+const puerto = 2020;
 
 let idJugadores = [];
 let jugadoresEsperados = 2;
@@ -316,6 +316,7 @@ app.post("/crearPartida",function(request,response)
 	sesionCreada.filas = Number(body.filas);
 	sesionCreada.columnas = Number(body.columnas);
 	sesionCreada.registrarJugador(nombreJugador);
+	sesionCreada.validar();
 
 
 	listaSesiones.push(sesionCreada);

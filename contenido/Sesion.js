@@ -249,16 +249,45 @@ module.exports = class Sesion
 		return tablero;
 	}
 
+	validar()
+	{
+		
+		if(this.filas < 10 || isNaN(this.filas))
+			this.filas = 10;
+
+		if(this.filas > 15)
+			this.filas = 15;
+
+			
+		if(this.columnas < 10 || isNaN(this.columnas))
+			this.columnas = 10;
+
+		if(this.columnas > 15)
+			this.columnas = 15;
+
+		if(this.cantidadMaximaJugadores < 1 || isNaN(this.cantidadMaximaJugadores)) //Permite partidas de un solo jugador a propósito
+			this.cantidadMaximaJugadores = 2;
+
+		if(this.cantidadMaximaJugadores > 4)
+			this.cantidadMaximaJugadores = 4;
+	}
+
 	/**
 	 * Representa los datos iniciales de la partida. Dicha información se debe enviar a cada uno de los clientes, el cual se encarga de construir la partida
 	 * Los datos se construyen en formato JSON
 	 */
 	construirInformacionInicial()
 	{
+
+		this.validar();
+
+
+
 		const fichas = [0,3,5,6,7,9,10,11,12,13,14,15];
 
 		this.poblarTesoros();
-		
+
+
 
 		
 		let contadorFichasTablero = 0;
