@@ -431,6 +431,11 @@ function inicializarVariables(estructura, socket)
 	const partida = new Partida();
 	partida.tesorosPorJugador = Number(estructura["cantidadTesoros"]);
 
+	if(partida.miId < 0)
+		socket.emit("Asigneme","porfa", function (response) {
+			console.log(response);
+		});
+
 
 	
 	socket.on("deme",function(data){
@@ -440,6 +445,8 @@ function inicializarVariables(estructura, socket)
 		console.log("Soy el jugador con el id: " + data);
 		partida.miId = Number(data);
 		partida.distingame();
+		socket.emit("solicitarTesoro","Por favor!");
+		proximoTurno(partida,tablero,socket);
 		
 		
 	}); 
@@ -487,8 +494,8 @@ function inicializarVariables(estructura, socket)
 			bancoTesoros[tesoro]["imagen"],
 			bancoTesoros[tesoro]["kanji"],
 			bancoTesoros[tesoro]["traduccion"],
-			bancoTesoros[tesoro]["fila"],
-			bancoTesoros[tesoro]["columna"],
+			Number(bancoTesoros[tesoro]["fila"]),
+			Number(bancoTesoros[tesoro]["columna"]),
 			0
 		));
 	}
@@ -557,8 +564,8 @@ function inicializarVariables(estructura, socket)
 	});
 
 	socket.on("GO",function(data){
-		socket.emit("solicitarTesoro","Por favor!");
-		proximoTurno(partida,tablero,socket);
+		//socket.emit("solicitarTesoro","Por favor!");
+		//proximoTurno(partida,tablero,socket);
 	});
 	
 
@@ -612,9 +619,9 @@ $(document).ready(function()
 
 		socket.emit("Listo",""); 
 
-		socket.emit("Asigneme","porfa", function (response) {
+		/*socket.emit("Asigneme","porfa", function (response) {
 			console.log(response);
-		}); 
+		}); */
 
 	});
 

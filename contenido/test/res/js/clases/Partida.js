@@ -30,7 +30,7 @@ export default class Partida
 
 	/**
 	 * Cambia mi tesoro asignado
-	 * @param {} idTesoro 
+	 * @param {Number} idTesoro 
 	 */
 	cambiarMiTesoroAsignado(idTesoro)
 	{
@@ -42,8 +42,6 @@ export default class Partida
 			if(Number(this.tesoros[indiceTesoro].id) === Number(idTesoro))
 				tesoro = this.tesoros[indiceTesoro];
 		}
-
-
 		//Actualiza el tesoro del jugador
 		this.jugadores[this.miId].asignarTesoro(tesoro);
 
@@ -94,7 +92,6 @@ export default class Partida
 	tesoroEncontrado(fila,columna)
 	{
 		const encontrado = this.jugadores[this.jugadorTurno].verificarTesoroEncontrado(fila,columna);
-
 
 		return encontrado;
 	}

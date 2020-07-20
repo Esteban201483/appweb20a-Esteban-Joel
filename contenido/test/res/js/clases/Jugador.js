@@ -39,7 +39,7 @@ export default class Jugador
 	verificarTesoroEncontrado(fila,columna)
 	{
 		if(this.tesoroAsignado !== null)
-			return  (this.tesoroAsignado.filaActual === fila && this.tesoroAsignado.columnaActual === columna);
+			return  (Number(this.tesoroAsignado.filaActual) === Number(fila) && Number(this.tesoroAsignado.columnaActual) === Number(columna));
 		else
 			return false;
 	}
@@ -59,7 +59,7 @@ export default class Jugador
 	 */
 	asignarTesoro(tesoroAsignado)
 	{
-		console.log("Mi tesoro :3 " + tesoroAsignado);
+		console.log("Mi tesoro :3 " + tesoroAsignado.filaActual);
 		this.tesoroAsignado = tesoroAsignado;
 
 		//Modifica la información del tesoro buscado

@@ -227,14 +227,15 @@ module.exports = class Sesion
 		for(let fila = 0; fila < this.filas; ++fila)
 		{
 			for(let columna = 0; columna < this.columnas; ++ columna)
-				tablero.push(fichas[Math.floor(Math.random() * fichas.length)]);
+				//tablero.push(fichas[Math.floor(Math.random() * fichas.length)]);
+				tablero.push(15);
 		}
 
 		//Setea las esquinas con valores obligatorios
-		tablero[0] = 5;
+		/*tablero[0] = 5;
 		tablero[this.columnas-1] = 6;
 		tablero[tablero.length - this.columnas] = 9;
-		tablero[tablero.length - 1] = 10; 
+		tablero[tablero.length - 1] = 10; */
 
 
 		//A cada posición del tesoro le asigna una ficha 15
